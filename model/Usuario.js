@@ -6,5 +6,4 @@ const UserSchema = new mongoose.Schema({
   senha: String,
   moedasNaCarteira: String,
 });
-
 module.exports = mongoose.model("Usuario", UserSchema);

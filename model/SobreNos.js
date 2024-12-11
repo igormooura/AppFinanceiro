@@ -17,5 +17,4 @@ const SobreNosSchema = new mongoose.Schema({
     default: 2024,
   },
 });
-
 module.exports = mongoose.model("SobreNos", SobreNosSchema);

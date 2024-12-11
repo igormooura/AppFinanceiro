@@ -4,7 +4,6 @@ exports.getSobreNos = async (req, res) => {
   try {
     // Tenta encontrar o documento na coleção
     let sobreNos = await SobreNos.findOne();
-
     // Se não encontrar nenhum dado, insere o dado fixo
     if (!sobreNos) {
       sobreNos = new SobreNos({
@@ -15,7 +14,6 @@ exports.getSobreNos = async (req, res) => {
       });
       await sobreNos.save(); // Salva o documento na coleção
     }
-
     res.status(200).json(sobreNos); // Retorna o documento
   } catch (error) {
     console.error("Erro ao obter dados:", error);

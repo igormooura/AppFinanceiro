@@ -7,4 +7,4 @@ router.get("/:id", noticiaController.getNoticiaById); // Buscar notícia por ID
 router.put("/:id", noticiaController.updateNoticia); // Atualizar notícia
 router.delete("/:id", noticiaController.deleteNoticia); // Deletar notícia
 module.exports = router;
-// 2
+// 2 rotas

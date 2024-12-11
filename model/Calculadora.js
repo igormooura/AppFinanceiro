@@ -23,5 +23,4 @@ const conversaoSchema = new Schema({
     default: Date.now,
   },
 });
-
 module.exports = model("Conversao", conversaoSchema);
