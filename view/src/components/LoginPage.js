@@ -17,9 +17,9 @@ const LoginPage = () => {
     e.preventDefault();
     try {
       // Make POST request to login route
-      const response = await axios.post("http://localhost:5000/auth/login", {
+      const response = await axios.post("http://localhost:5000/usuarios/auth/login", {
         email,
-        password,
+        senha: password,
       });
 
       // If Remember Me is active, store the token
@@ -33,7 +33,7 @@ const LoginPage = () => {
       }
 
       // Navigate to another page after login
-      navigate("/dashboard");
+      navigate("/grafico");
     } catch (err) {
       console.error(err);
       setError("Invalid email or password");
@@ -76,7 +76,7 @@ const LoginPage = () => {
 
           <div className="mb-4">
             <label className="block text-white text-sm mb-1">Senha</label>
-            <input
+          <input
               type="password"
               value={password}
               placeholder="Insira a senha"
@@ -105,7 +105,7 @@ const LoginPage = () => {
             </div>
 
             <div className="ml-auto mr-2">
-              <a href="#" className="text-blue-600 font-semibold">
+              <a href="/esquecer" className="text-blue-600 font-semibold">
                 Esqueci minha senha
               </a>
             </div>
@@ -118,7 +118,7 @@ const LoginPage = () => {
             Login
           </button>
             <hr class = "w-full h-[0.1px] bg-white mt-14"></hr>
-            <p class = "text-white text-xl mx-auto items-center justify-center flex mt-10">Não possui uma conta?&nbsp; <a href = "#" class = "text-blue-500"> Cadastro</a></p>
+            <p class = "text-white text-xl mx-auto items-center justify-center flex mt-10">Não possui uma conta?&nbsp; <a href = "/register" class = "text-blue-500"> Cadastro</a></p>
         </form>
     
       </nav>

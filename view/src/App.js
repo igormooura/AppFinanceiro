@@ -3,6 +3,9 @@ import axios from 'axios';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import SobreNos from './components/SobreNos';
 import LoginPage from './components/LoginPage'
+import Register from './components/Register'
+import Forgot from './components/Forgot'
+import Grafico from './components/Grafico.js'
 function App() {
     const [data, setData] = useState(null);
 
@@ -30,7 +33,9 @@ function App() {
             <Route path="/" element={<LoginPage
              
             />}/>
-             
+            <Route path="/register" element={<Register />} />
+            <Route path="/esquecer" element={<Forgot />} />
+            <Route path="/grafico" element = {<Grafico />} />
             <Route path="/sobrenos" element={<SobreNos />} />
           </Routes>
         </BrowserRouter>
