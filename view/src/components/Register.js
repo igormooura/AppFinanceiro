@@ -1,85 +1,95 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-
 
 const Register = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const [name, setName] = useState("");
-    const[moedasNaCarteira, setMoedasnaCarteira] = useState("");
+    const [moedasNaCarteira, setMoedasNaCarteira] = useState("");
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try{
-            const response = await axios.post("http://localhost:5000/usuarios/auth/cadastrar", {
+        try {
+            await axios.post("http://localhost:5000/usuarios/auth/cadastrar", {
                 nome: name,
                 email,
                 senha: password,
                 moedasNaCarteira,
             });
-            setError(""); 
-        }
-        catch(err){
+            setError("");
+        } catch (err) {
             console.error(err);
-            setError("Invalid email");
+            setError("Erro ao cadastrar. Verifique os dados informados.");
         }
     };
-    return(
-        <div class = "border-8 rounded-2xl border-white flex bg-gradient-to-t from-green-500 to-green-400/70 w-full h-screen">
-            <div class = "h-[85%] w-[30%]    mx-auto items-center my-auto   ">
-                <p class = "text-white text-4xl font-bold mx-auto flex justify-center ">
+
+    return (
+        <div className="flex items-center justify-center w-full h-screen bg-gradient-to-t from-green-500 to-green-400/70">
+            <div className="w-[90%] max-w-lg">
+                <h1 className="text-4xl font-bold text-center text-white mb-10">
                     Crie sua Conta
-                </p>
-                <form onSubmit={handleSubmit} class = "space-y-9 ">
-                <div class ="mt-20 ">
-                    <label class = "block text-white text-2xl ">Name:</label>
-                    <input
-                        type="text"
-                        value={name}
-                        placeholder="example@email.com"
-                        className="w-full border-2 placeholder-gray-300 bg-transparent  border-gray-500/40 shadow-2xl rounded-lg p-4"
-                        onChange={(e) => setName(e.target.value)}
-                    />
-                </div>
-                <div>
-                    <label class = "block text-white text-2xl">Email:</label>
-                    <input
-                        type="email"
-                        value={email}
-                        className="w-full border-2 placeholder-gray-300 bg-transparent  border-gray-500/40 shadow-2xl rounded-lg p-4"
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                </div>
-                <div>
-                    <label class = "block text-white text-2xl">Password:</label>
-                    <input
-                        type="password"
-                        value={password}
-                        className="w-full border-2 placeholder-gray-300 bg-transparent  border-gray-500/40 shadow-2xl rounded-lg p-4"
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                </div>
-                <div class = "pb-52">
-                    <label class = "block text-white text-2xl">Moedas na Carteira:</label>
-                    <input
-                        type="text"
-                        value={moedasNaCarteira}
-                        className="w-full border-2 placeholder-gray-300 bg-transparent  border-gray-500/40 shadow-2xl rounded-lg p-4"
-                        onChange={(e) => setMoedasnaCarteira(e.target.value)}
-                    />
-                </div>
-                {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
-                <button type="submit" class = " bg-black rounded-xl text-white font-bold text-2xl py-3 px-40 mx-auto flex justify-center ">Criar Conta</button>
-                <p class = "flex justify-center -mt-5 text-lg mx-auto text-white">Já possui uma conta?&nbsp;<a href = "/" class = "text-blue-700">Log in  </a></p>
-            </form>
+                </h1>
+                <form onSubmit={handleSubmit} className="space-y-6">
+                    <div>
+                        <label className="block text-lg font-medium text-white">Nome:</label>
+                        <input
+                            type="text"
+                            value={name}
+                            className="w-full px-4 py-3 rounded-lg bg-white/20 text-white placeholder-gray-200 focus:outline-none focus:ring-2 focus:ring-white"
+                            placeholder="Seu nome"
+                            onChange={(e) => setName(e.target.value)}
+                        />
+                    </div>
+                    <div>
+                        <label className="block text-lg font-medium text-white">Email:</label>
+                        <input
+                            type="email"
+                            value={email}
+                            className="w-full px-4 py-3 rounded-lg bg-white/20 text-white placeholder-gray-200 focus:outline-none focus:ring-2 focus:ring-white p-4"
+                            placeholder="example@email.com"
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                    </div>
+                    <div>
+                        <label className="block text-lg font-medium text-white">Senha:</label>
+                        <input
+                            type="password"
+                            value={password}
+                            className="w-full px-4 py-3 rounded-lg bg-white/20 text-white placeholder-gray-200 focus:outline-none focus:ring-2 focus:ring-white"
+                            placeholder="Sua senha"
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                    </div>
+                    <div>
+                        <label className="block text-lg font-medium text-white drop-shadow-lg">
+                            Moedas na Carteira:
+                        </label>
+                        <input
+                            type="text"
+                            value={moedasNaCarteira}
+                            className="w-full px-4 py-3 rounded-lg bg-white/20 text-white placeholder-gray-200 focus:outline-none focus:ring-2 focus:ring-white"
+                            placeholder="Quantidade de moedas"
+                            onChange={(e) => setMoedasNaCarteira(e.target.value)}
+                        />
+                    </div>
+                    <button
+                        type="submit"
+                        className="w-full py-3 text-lg font-bold text-green-700 bg-white rounded-lg hover:bg-white/90 focus:outline-none"
+                    >
+                        Criar Conta
+                    </button>
+                    <p className="mt-4 text-center text-white text-base  drop-shadow">
+                        Já possui uma conta?{" "}
+                        <a href="/" className="text-blue-500 hover:underline  drop-shadow-lm">
+                            Faça login
+                        </a>
+                    </p>
+                    {error && <p className="mt-4 text-sm text-center text-red-500  drop-shadow">{error}</p>}
+                </form>
             </div>
         </div>
-
-
-
     );
+};
 
-}
-
-export default Register
+export default Register;
