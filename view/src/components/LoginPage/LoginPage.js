@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import EmailInput from "../Inputs/EmailInput/EmailInput";
+import PasswordField from "../Inputs/PasswordInput/Password";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [rememberMe, setRememberMe] = useState(false); // State for Remember Me
+  const [rememberMe, setRememberMe] = useState(false); 
+  const [showPassword, setShowPassword] = useState(false); 
   const navigate = useNavigate();
+
 
   const handleRememberMe = () => {
     setRememberMe((prev) => !prev); // Toggle the remember state
@@ -63,31 +67,20 @@ const LoginPage = () => {
           {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
 
           <div className="mb-4">
-            <label className="block text-sm text-white mb-1">Login</label>
-            <input
-              type="email"
-              value={email}
-              placeholder="Insira o Email"
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full border-2 border-gray-300 shadow-2xl rounded-lg p-4"
-              required
-            />
+            <EmailInput email={email} setEmail={setEmail} placeholder={"Insira seu email"} />
           </div>
 
           <div className="mb-4">
-            <label className="block text-white text-sm mb-1">Senha</label>
-          <input
-              type="password"
-              value={password}
-              placeholder="Insira a senha"
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full border-2 border-gray-300 shadow-2xl rounded-lg p-4"
-              required
-            />
+          <PasswordField
+                        password={password}
+                        setPassword={setPassword}
+                        showPassword={showPassword}
+                        setShowPassword={setShowPassword}
+                        placeholder={"Insira sua senha"}
+                    />
           </div>
 
           <div className="flex mb-7">
-            {/* Remember Me Toggle */}
             <div className="flex mr-auto ml-2 items-center">
               <div
                 className={`rounded-3xl w-[60px] flex items-center h-[30px] cursor-pointer ${
