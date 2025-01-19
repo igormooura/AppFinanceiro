@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import EmailInput from "../Inputs/EmailInput/EmailInput";
-import PasswordField from "../Inputs/PasswordInput/Password";
+import EmailInput from "../../components/Inputs/EmailInput/EmailInput";
+import PasswordField from "../../components/Inputs/PasswordInput/Password";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
-import PasswordField from "../Inputs/PasswordInput/Password"; 
-import EmailInput from "../Inputs/EmailInput/EmailInput"; 
+import PasswordField from "../../components/Inputs/PasswordInput/Password"; 
+import EmailInput from "../../components/Inputs/EmailInput/EmailInput"; 
 
 const Register = () => {
     const [email, setEmail] = useState("");

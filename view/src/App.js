@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import SobreNos from './components/AboutUs/SobreNos';
-import LoginPage from './components/LoginPage/LoginPage'
-import Register from './components/RegisterPage/Register'
-import Forgot from './components/Forgot/Forgot'
-import Grafico from './components/Grafico/Grafico'
+import SobreNos from './pages/AboutUs/SobreNos.js';
+import LoginPage from './pages/LoginPage/LoginPage.js'
+import Register from './pages/RegisterPage/Register.js'
+import Forgot from './pages/Forgot/Forgot.js'
+import Grafico from './pages/Grafico/Grafico.js'
 function App() {
     const [data, setData] = useState(null);
 
