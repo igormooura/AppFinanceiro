@@ -17,9 +17,9 @@ const Grafico = () => {
     <div class="flex h-screen w-full">
       <Sidebar />
 
-      <div class="h-screen w-[90%] bg-gradient-to-b from-green-400/50 to-green-200">
+      <div class="h-screen w-[90%] bg-gradient-to-b from-[#C0F0B1] to-white h-screen">
         <div class="flex mt-8 items-center">
-          <p class="mr-auto ml-10 text-gray-50 font-bold text-3xl  ">
+          <p class="mr-auto ml-10 text-gray-50 font-bold text-3xl font-semibold drop-shadow-lm  ">
             Acompanhador de moedas
           </p>
           <div>
