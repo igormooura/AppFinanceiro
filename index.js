@@ -9,6 +9,7 @@ const graficoRoutes = require("./Routes/GraficoRoutes.js");
 const noticiaRoutes = require("./Routes/NoticiaRoutes.js");
 const sobreNosRoutes = require("./Routes/SobreNosRoutes.js");
 const usuarioRoutes = require("./Routes/UsuarioRoutes.js");
+const authPerfilRoutes = require("./Routes/AuthPerfilRoutes.js");
 
 // Inicializando o app Express
 const app = express();
@@ -36,6 +37,7 @@ app.use("/grafico", graficoRoutes);  // Rota para gráficos
 app.use("/noticias", noticiaRoutes);  // Rota para notícias
 app.use("/sobrenos", sobreNosRoutes);  // Rota para "Sobre Nós"
 app.use("/usuarios", usuarioRoutes);  // Rota para usuários
+app.use("/auth", authPerfilRoutes); // Rota para autenticação de perfil
 
 // Rota de boas-vindas
 app.get("/", (req, res) => {
