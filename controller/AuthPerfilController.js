@@ -1,0 +1,87 @@
+const AuthPerfil = require("../model/AuthPerfil.js");
+
+// Criar um novo Usuario - Tela Cadastro
+exports.createUser = async (req, res) => {
+  try {
+    const { email, senha } = req.body;
+    // Validação de campos obrigatórios
+    if (!email || !senha) {
+      return res.status(400).json({ error: "Campos obrigatórios não preenchidos." });
+    }
+    // Verificar se o e-mail já existe
+    const usuarioExistente = await AuthPerfil.findOne({ email });
+    if (usuarioExistente) {
+      return res.status(400).json({ error: "E-mail já cadastrado." });
+    }
+    // Criar o novo usuário
+    const novoUsuario = new AuthPerfil({ 
+      email, 
+      senha
+    });
+    // Salvar no banco de dados
+    const usuarioSalvo = await novoUsuario.save();
+    // Retornar o usuário salvo
+    res.status(201).json(usuarioSalvo);
+  } catch (error) {
+    console.error("Erro ao criar usuário:", error);
+    res.status(500).json({ error: "Erro interno do servidor." });
+  }
+};
+
+// Login de usuário - Tela Login
+exports.loginUser = async (req, res) => {
+  try {
+    const { email, senha } = req.body;
+    // Verificar se os campos foram preenchidos
+    if (!email || !senha) {
+      return res.status(400).json({ error: "Campos obrigatórios não preenchidos." });
+    }
+    // Procurar o usuário pelo e-mail
+    const usuario = await AuthPerfil.findOne({ email });
+    if (!usuario) {
+      return res.status(404).json({ error: "Usuário não encontrado." });
+    }
+    // Validar a senha
+    if (usuario.senha != senha) {
+      return res.status(401).json({ error: "Senha incorreta." });
+    }
+    res.status(200).json({ 
+      message: "Login realizado com sucesso.",
+      usuario: {
+        id: usuario._id,
+        email: usuario.email,
+      }
+    });
+  } catch (error) {
+    console.error("Erro ao realizar login:", error);
+    res.status(500).json({ error: "Erro interno do servidor." });
+  }
+};
+
+// Redefinir senha do usuário - Tela esqueci a senha
+exports.forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+    // Verificar se o e-mail foi fornecido
+    if (!email) {
+      return res.status(400).json({ error: "E-mail não fornecido." });
+    }
+    // Buscar o usuário pelo e-mail
+    const usuario = await AuthPerfil.findOne({ email });
+    if (!usuario) {
+      return res.status(404).json({ error: "Usuário não encontrado." });
+    }
+    // Gerar uma nova senha temporária simples
+    const novaSenha = Math.random().toString(36).slice(-8); // Gera uma string aleatória de 8 caracteres
+    // Atualizar o usuário com a nova senha
+    usuario.senha = novaSenha;
+    await usuario.save();
+    res.status(200).json({ 
+      message: "Senha redefinida com sucesso. Confira sua nova senha.",
+      novaSenha 
+    });
+  } catch (error) {
+    console.error("Erro ao redefinir senha:", error);
+    res.status(500).json({ error: "Erro interno do servidor." });
+  }
+};
