@@ -3,14 +3,11 @@ const usuarioController = require("../controller/UsuarioController.js");
 
 const router = express.Router();
 
-router.get("/", usuarioController.getAllUsers); // Buscar todos os usuários
-router.post("/auth/login", usuarioController.loginUser); // Login de usuário
-router.post("/auth/cadastrar", usuarioController.createUser); // Criar usuário
-router.post("/auth/esquecersenha", usuarioController.forgotPassword); // Redefinir senha
-router.get("/:id", usuarioController.getUserById); // Buscar usuário por ID
-router.put("/:id", usuarioController.updateUser); // Atualizar usuário
-router.delete("/:id", usuarioController.deleteUser); // Deletar usuário
+router.get("/", usuarioController.getAllPerfis); // Buscar todos os Perfis
+router.get("/perfil/:id", usuarioController.getPerfilById); // Buscar Perfil por ID
+router.put("/perfil/:id", usuarioController.updatePerfil); // Atualizar Perfil
+router.delete("/perfil/:id", usuarioController.deletePerfil); // Deletar Perfil
 
 module.exports = router;
 
-// 5 rotas
+// 2 rotas
