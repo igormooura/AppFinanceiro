@@ -1,7 +1,7 @@
 const Usuario = require("../model/Usuario.js");
 
 // Buscar todos os usuários
-exports.getAllUsers = async (req, res) => {
+exports.getAllPerfis = async (req, res) => {
   try {
     const usuarios = await Usuario.find();
     res.status(200).json(usuarios);
@@ -10,98 +10,8 @@ exports.getAllUsers = async (req, res) => {
   }
 };
 
-// Criar um novo usuário
-exports.createUser = async (req, res) => {
-  try {
-    const { nome, email, senha, moedasNaCarteira } = req.body;
-    // Validação de campos obrigatórios
-    if (!nome || !email || !senha) {
-      return res.status(400).json({ error: "Campos obrigatórios não preenchidos." });
-    }
-    // Verificar se o e-mail já existe
-    const usuarioExistente = await Usuario.findOne({ email });
-    if (usuarioExistente) {
-      return res.status(400).json({ error: "E-mail já cadastrado." });
-    }
-    // Criar o novo usuário
-    const novoUsuario = new Usuario({ 
-      nome, 
-      email, 
-      senha, 
-      moedasNaCarteira: moedasNaCarteira || [] // Garantir um valor padrão
-    });
-    // Salvar no banco de dados
-    const usuarioSalvo = await novoUsuario.save();
-    // Retornar o usuário salvo
-    res.status(201).json(usuarioSalvo);
-  } catch (error) {
-    console.error("Erro ao criar usuário:", error);
-    res.status(500).json({ error: "Erro interno do servidor." });
-  }
-};
-
-// Login de usuário
-exports.loginUser = async (req, res) => {
-  try {
-    const { email, senha } = req.body;
-    // Verificar se os campos foram preenchidos
-    if (!email || !senha) {
-      return res.status(400).json({ error: "Campos obrigatórios não preenchidos." });
-    }
-    // Procurar o usuário pelo e-mail
-    const usuario = await Usuario.findOne({ email });
-    if (!usuario) {
-      return res.status(404).json({ error: "Usuário não encontrado." });
-    }
-    // Validar a senha
-    if (usuario.senha !== senha) {
-      return res.status(401).json({ error: "Senha incorreta." });
-    }
-    res.status(200).json({ 
-      message: "Login realizado com sucesso.",
-      usuario: {
-        id: usuario._id,
-        nome: usuario.nome,
-        email: usuario.email,
-        moedasNaCarteira: usuario.moedasNaCarteira,
-      }
-    });
-  } catch (error) {
-    console.error("Erro ao realizar login:", error);
-    res.status(500).json({ error: "Erro interno do servidor." });
-  }
-};
-
-// Redefinir senha do usuário
-exports.forgotPassword = async (req, res) => {
-  try {
-    const { email } = req.body;
-    // Verificar se o e-mail foi fornecido
-    if (!email) {
-      return res.status(400).json({ error: "E-mail não fornecido." });
-    }
-    // Buscar o usuário pelo e-mail
-    const usuario = await Usuario.findOne({ email });
-    if (!usuario) {
-      return res.status(404).json({ error: "Usuário não encontrado." });
-    }
-    // Gerar uma nova senha temporária simples
-    const novaSenha = Math.random().toString(36).slice(-8); // Gera uma string aleatória de 8 caracteres
-    // Atualizar o usuário com a nova senha
-    usuario.senha = novaSenha;
-    await usuario.save();
-    res.status(200).json({ 
-      message: "Senha redefinida com sucesso. Confira sua nova senha.",
-      novaSenha 
-    });
-  } catch (error) {
-    console.error("Erro ao redefinir senha:", error);
-    res.status(500).json({ error: "Erro interno do servidor." });
-  }
-};
-
-// Buscar usuário por ID
-exports.getUserById = async (req, res) => {
+// Buscar usuário por ID - Tela Perfil Usuario
+exports.getPerfilById = async (req, res) => {
   try {
     const { id } = req.params;
     const usuario = await Usuario.findById(id);
@@ -115,14 +25,14 @@ exports.getUserById = async (req, res) => {
   }
 };
 
-// Atualizar informações de um usuário
-exports.updateUser = async (req, res) => {
+// Atualizar informações de um usuário - Tela Perfil Usuario
+exports.updatePerfil = async (req, res) => {
   try {
     const { id } = req.params;
-    const { nome, email, senha, moedasNaCarteira } = req.body;
+    const { nome, apelido, email, genero, country } = req.body;
     const usuarioAtualizado = await Usuario.findByIdAndUpdate(
       id,
-      { nome, email, senha, moedasNaCarteira },
+      { nome, apelido, email, genero, country },
       { new: true } // Retorna o documento atualizado
     );
     if (!usuarioAtualizado) {
@@ -135,7 +45,7 @@ exports.updateUser = async (req, res) => {
 };
 
 // Deletar um usuário
-exports.deleteUser = async (req, res) => {
+exports.deletePerfil = async (req, res) => {
   try {
     const { id } = req.params;
     const usuarioDeletado = await Usuario.findByIdAndDelete(id);
