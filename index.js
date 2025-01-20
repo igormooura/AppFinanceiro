@@ -17,18 +17,23 @@ const app = express();
 // Middleware para parsing JSON
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
 
 // Habilitando CORS para permitir acesso de diferentes origens
 app.use(cors());
 
 // Conexão com o MongoDB
 mongoose
-  .connect("mongodb+srv://pc3:123@cluster0.nhz6e.mongodb.net/?retryWrites=true&w=majority")
-  .then(() => {
-    console.log("Conectado ao MongoDB");
+  .connect("mongodb+srv://pc3:123@cluster0.nhz6e.mongodb.net/?retryWrites=true&w=majority", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true, 
   })
-  .catch((err) => {
-    console.error("Erro ao conectar ao MongoDB:", err);
+  .then(() => {
+    console.log("Conectado ao MongoDB com sucesso!");
+  })
+  .catch((error) => {
+    console.error("Erro ao conectar ao MongoDB:", error);
   });
 
 // Usando as rotas
