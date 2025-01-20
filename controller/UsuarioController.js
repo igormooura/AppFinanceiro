@@ -45,7 +45,7 @@ exports.updatePerfil = async (req, res) => {
 };
 
 // Deletar um usuário
-exports.deleteUser = async (req, res) => {
+exports.deletePerfil = async (req, res) => {
   try {
     const { id } = req.params;
     const usuarioDeletado = await Usuario.findByIdAndDelete(id);
