@@ -1,6 +1,4 @@
 const AuthPerfil = require("../model/AuthPerfil.js");
-const Usuario = require("../model/Usuario.js");
-
 // Criar um novo Usuario - Tela Cadastro
 const Usuario = require("../model/Usuario.js");
 

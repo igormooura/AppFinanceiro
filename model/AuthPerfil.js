@@ -5,4 +5,5 @@ const AuthPerfilSchema = new mongoose.Schema({
   senha: { type: String, required: true },
   usuarioId: { type: mongoose.Schema.Types.ObjectId, ref: "Usuario" }
 });
-module.exports = mongoose.model("AuthPerfil", AuthSchema);
+
+module.exports = mongoose.model("AuthPerfil", AuthPerfilSchema);

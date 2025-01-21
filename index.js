@@ -25,9 +25,6 @@ app.use(cors());
 // Conexão com o MongoDB
 mongoose
   .connect("mongodb+srv://pc3:123@cluster0.nhz6e.mongodb.net/?retryWrites=true&w=majority", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true, 
   })
   .then(() => {
     console.log("Conectado ao MongoDB com sucesso!");
