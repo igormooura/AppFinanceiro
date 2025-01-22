@@ -8,6 +8,7 @@ const Register = () => {
     const [password, setPassword] = useState(""); 
     const [error, setError] = useState("");
     const [name, setName] = useState("");
+    const [lastName, setlastName] = useState("");
     const [moedasNaCarteira, setMoedasNaCarteira] = useState("");
     const [showPassword, setShowPassword] = useState(false); 
 
@@ -40,12 +41,23 @@ const Register = () => {
                             type="text"
                             value={name}
                             className="w-full px-4 py-3 rounded-lg bg-white text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white border-2 border-gray-300 shadow-2xl"
-                            placeholder="Seu nome"
+                            placeholder="Ex: Ciro"
                             onChange={(e) => setName(e.target.value)}
                         />
                     </div>
 
-                    <EmailInput email={email} setEmail={setEmail} placeholder={"example@email.com"}/>
+                    <div>
+                        <label className="block text-lg font-medium text-white">Sobrenome:</label>
+                        <input
+                            type="text"
+                            value={lastName}
+                            className="w-full px-4 py-3 rounded-lg bg-white text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white border-2 border-gray-300 shadow-2xl"
+                            placeholder="Ex: Moraes"
+                            onChange={(e) => setlastName(e.target.value)}
+                        />
+                    </div>
+
+                    <EmailInput email={email} setEmail={setEmail} placeholder={"Ex: example@email.com"}/>
 
                     <PasswordField password={password} setPassword={setPassword} showPassword={showPassword} setShowPassword={setShowPassword} placeholder={"Senha"}/>
 

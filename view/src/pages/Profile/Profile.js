@@ -8,6 +8,8 @@ function Profile() {
   const [genero, setGenero] = useState("");
   const [nome, setNome] = useState("");
   const [sobrenome, setSobrenome] = useState("");
+  const [CPF, setCPF] = useState("");
+  const [telefone, setTelefone] = useState("");
 
   useEffect(() => {
     const today = new Date();
@@ -19,11 +21,32 @@ function Profile() {
     setGenero(event.target.value);
   };
 
+  // Função para aplicar máscara de telefone
+  const handleTelefoneChange = (e) => {
+    let value = e.target.value.replace(/\D/g, ""); // Remove caracteres não numéricos
+    if (value.length > 10) {
+      value = value.replace(/^(\d{2})(\d{5})(\d{4}).*/, "($1) $2-$3");
+    } else if (value.length > 6) {
+      value = value.replace(/^(\d{2})(\d{4})(\d{0,4}).*/, "($1) $2-$3");
+    } else if (value.length > 2) {
+      value = value.replace(/^(\d{2})(\d{0,4}).*/, "($1) $2");
+    } else {
+      value = value.replace(/^(\d*)/, "($1");
+    }
+    setTelefone(value);
+  };
+
+  // Função para aplicar máscara de CPF
+  const handleCPFChange = (e) => {
+    let value = e.target.value.replace(/\D/g, ""); // Remove caracteres não numéricos
+    value = value.replace(/^(\d{3})(\d{3})(\d{3})(\d{0,2}).*/, "$1.$2.$3-$4");
+    setCPF(value);
+  };
+
   return (
     <div className="flex h-screen w-full">
-     
-     <Sidebar />
-    
+      <Sidebar />
+
       <div className="flex-1 bg-gradient-to-b from-[#C0F0B1] to-white p-5">
         <div className="ml-10 mt-5">
           <div className="text-left">
@@ -86,6 +109,40 @@ function Profile() {
                 id="sobrenome"
                 className="w-full px-4 py-3 rounded-lg bg-white text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white border-2 border-gray-300 shadow-2xl"
                 placeholder="Sobrenome"
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor="telefone"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Telefone
+              </label>
+              <input
+                type="text"
+                value={telefone}
+                onChange={handleTelefoneChange}
+                id="telefone"
+                className="w-full px-4 py-3 rounded-lg bg-white text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white border-2 border-gray-300 shadow-2xl"
+                placeholder="Ex (XX) XXXXX-XXXX"
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor="CPF"
+                className="block text-sm font-medium text-gray-700"
+              >
+                CPF
+              </label>
+              <input
+                type="text"
+                value={CPF}
+                onChange={handleCPFChange}
+                id="CPF"
+                className="w-full px-4 py-3 rounded-lg bg-white text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white border-2 border-gray-300 shadow-2xl"
+                placeholder="Ex: 000.000.000-00"
               />
             </div>
 
