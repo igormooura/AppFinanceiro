@@ -21,9 +21,8 @@ function Profile() {
     setGenero(event.target.value);
   };
 
-  // Função para aplicar máscara de telefone
   const handleTelefoneChange = (e) => {
-    let value = e.target.value.replace(/\D/g, ""); // Remove caracteres não numéricos
+    let value = e.target.value.replace(/\D/g, "");
     if (value.length > 10) {
       value = value.replace(/^(\d{2})(\d{5})(\d{4}).*/, "($1) $2-$3");
     } else if (value.length > 6) {
@@ -36,9 +35,8 @@ function Profile() {
     setTelefone(value);
   };
 
-  // Função para aplicar máscara de CPF
   const handleCPFChange = (e) => {
-    let value = e.target.value.replace(/\D/g, ""); // Remove caracteres não numéricos
+    let value = e.target.value.replace(/\D/g, "");
     value = value.replace(/^(\d{3})(\d{3})(\d{3})(\d{0,2}).*/, "$1.$2.$3-$4");
     setCPF(value);
   };
