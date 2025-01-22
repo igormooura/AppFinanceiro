@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Sidebar from "../../components/SideBar/Sidebar";
+import Title from "../../components/Title/Title";
 
 const Grafico = () => {
   const [graficos, setGraficos] = useState([]);
@@ -19,19 +20,19 @@ const Grafico = () => {
 
       <div class="h-screen w-[90%] bg-gradient-to-b from-[#C0F0B1] to-white h-screen">
         <div class="flex mt-8 items-center">
-          <p class="mr-auto ml-10 text-gray-50 font-bold text-3xl font-semibold drop-shadow-lm  ">
-            Acompanhador de moedas
-          </p>
+          <Title /> {/* Corrigir */ }
           <div>
             <a
               href="#"
               class="hover:scale-105 duration-500 flex items-center ml-auto mr-10 rounded-2xl w-60 h-16 border-[1px] border-gray-400 shadow-xl"
             >
               <div class="h-10 w-10 bg-blue-400 rounded-full my-auto ml-3"></div>
-              <div class="ml-3 -space-y-1">
-                <p class="text-xl font-semibold text-black">Nome Completo</p>
-                <p class="text-gray-400">example@email.com</p>
-              </div>
+              <Link to="/perfil">
+                <div class="ml-3 -space-y-1">
+                  <p class="text-xl font-semibold text-black">Nome Completo</p>
+                  <p class="text-gray-400">example@email.com</p>
+                </div>
+              </Link>
             </a>
             <form>
               <div class="w-[350px] mt-2 mr-10 rounded-full bg-green-100 h-9 flex  shadow-lg shadow-gray-500 items-center">

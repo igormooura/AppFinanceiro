@@ -49,16 +49,6 @@ const Register = () => {
 
                     <PasswordField password={password} setPassword={setPassword} showPassword={showPassword} setShowPassword={setShowPassword} placeholder={"Senha"}/>
 
-                    <div>
-                        <label className="block text-lg font-medium text-white">Moedas na Carteira:</label>
-                        <input
-                            type="text"
-                            value={moedasNaCarteira}
-                            className="w-full px-4 py-3 rounded-lg bg-white text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white border-2 border-gray-300 shadow-2xl"
-                            placeholder="Quantidade de moedas"
-                            onChange={(e) => setMoedasNaCarteira(e.target.value)}
-                        />
-                    </div>
                     <button
                         type="submit"
                         className="w-full bg-blue-500 text-white text-2xl font-bold shadow-xl p-2 rounded-lg hover:bg-blue-600 focus:outline-none"
