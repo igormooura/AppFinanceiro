@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import Sidebar from "../../components/SideBar/Sidebar";
 import Title from "../../components/Title/Title";
+import PageName from "../../components/PageName/PageName";
 
 const Grafico = () => {
   const [graficos, setGraficos] = useState([]);
@@ -77,13 +78,8 @@ const Grafico = () => {
             </form>
           </div>
         </div>
-        <div class="mt-[5%]">
-          <div class="w-[300px] h-12 rounded-2xl bg-gray-800/80 ml-20  border-y-4 border-gray-200/40">
-            <p class="text-white font-serif text-3xl flex justify-center items-center">
-              Moedas Expostas
-            </p>
-          </div>
-        </div>
+
+        <PageName name="Moedas Expostas"/>
 
         <div class="h-[500px] w-[90%]  flex space-x-3 items-center  justify-center mx-auto mt-10 ">
           <div class="w-2/3 h-full bg-green-950 rounded-lg border-[6px] border-gray-400/40"></div>
