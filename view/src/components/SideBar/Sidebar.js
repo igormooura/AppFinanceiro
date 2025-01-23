@@ -1,7 +1,27 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Sidebar = () => {
+  const location = useLocation();
+
+
+  const getSelected = () => {
+    switch (location.pathname) {
+      case "/grafico":
+        return "grafico";
+      case "/noticias":
+        return "noticias";
+      case "/sobrenos":
+        return "sobrenos";
+      case "/calculadora":
+        return "calculadora";
+      default:
+        return "";
+    }
+  };
+
+  const selected = getSelected();
+
   return (
     <div className="h-screen border-r-[4px] border-gray-500/60 w-[10%] bg-gradient-to-t from-green-600/90 to-green-200/40">
       <a className="flex justify-center mt-10">
@@ -30,7 +50,7 @@ const Sidebar = () => {
       <ul className="mt-20 w-full space-y-6">
         <li className="flex justify-center items-center">
           <Link to="/grafico">
-            <div className="bg-gray-200 border-2 border-gray-400 shadow-inner rounded-full mx-auto w-20">
+            <div className={`rounded-full mx-auto w-20 ${selected === "grafico" ? "bg-gray-200 border-2 border-gray-400 shadow-inner" : ""}`}>
               <svg
                 viewBox="0 0 24 24"
                 className="w-10 mx-auto h-10"
@@ -62,7 +82,7 @@ const Sidebar = () => {
         </li>
         <li>
           <Link to="/noticias">
-            <div className="rounded-full mx-auto w-20">
+            <div className={`rounded-full mx-auto w-20 ${selected === "noticias" ? "bg-gray-200 border-2 border-gray-400 shadow-inner" : ""}`}>
               <img src="static/group.png" className="w-10 h-10 mx-auto" alt="Grupo" />
             </div>
             <p className="font-bold flex justify-center">Notícias</p>
@@ -70,7 +90,7 @@ const Sidebar = () => {
         </li>
         <li>
           <Link to="/sobrenos">
-            <div className="rounded-full mx-auto w-20">
+            <div className={`rounded-full mx-auto w-20 ${selected === "sobrenos" ? "bg-gray-200 border-2 border-gray-400 shadow-inner" : ""}`}>
               <img src="static/news.png" className="w-10 h-10 mx-auto" alt="Notícias" />
             </div>
             <p className="font-bold flex justify-center">Sobre Nós</p>
@@ -78,7 +98,7 @@ const Sidebar = () => {
         </li>
         <li>
           <Link to="/calculadora">
-            <div className="rounded-full mx-auto w-20">
+            <div className={`rounded-full mx-auto w-20 ${selected === "calculadora" ? "bg-gray-200 border-2 border-gray-400 shadow-inner" : ""}`}>
               <img src="static/calc.png" className="w-10 h-9 mx-auto" alt="Calculadora" />
             </div>
             <p className="font-bold flex justify-center">Calculadora</p>
