@@ -19,11 +19,10 @@ function SobreNos() {
           </div>
         </div>
 
-        {/* Box central com fonte Negrito */}
         <div
           className="absolute left-1/2 transform -translate-x-1/2"
           style={{
-            top: "40%", // Ajusta posição vertical
+            top: "40%",
             width: "600px",
           }}
         >
