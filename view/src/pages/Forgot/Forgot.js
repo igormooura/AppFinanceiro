@@ -24,9 +24,9 @@ const Forgot = () => {
   };
 
   return (
-    <div class="flex items-center justify-center bg-gradient-to-t to-[#C0F0B1] from-[#47A663] w-full h-screen">
-      <div class=" mx-auto items-center my-auto   ">
-        <p class="text-white text-4xl font-montserrat-negrito mx-auto flex justify-center ">
+    <div class="border-8 rounded-2xl border-white flex bg-gradient-to-t from-green-500 to-green-400/70 w-full mx-auto h-screen">
+      <div class="h-[85%] w-[30%]    mx-auto items-center my-auto   ">
+        <p class="text-white text-4xl font-bold mx-auto flex justify-center ">
           Redefinir senha
         </p>
         <form onSubmit={handleSubmit} class="space-y-9 ">
@@ -59,9 +59,9 @@ const Forgot = () => {
           )}
           <button
             type="submit"
-            class=" bg-black rounded-xl text-white font-montserrat-negrito text-2xl py-3 px-40 mx-auto flex justify-center "
+            class=" bg-black rounded-xl text-white font-bold text-2xl py-3 px-40 mx-auto flex justify-center "
           >
-            Enviar senha temporária
+            Pedir Senha Nova
           </button>
         </form>
       </div>

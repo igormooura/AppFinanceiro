@@ -19,10 +19,18 @@ const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (email.trim() === "") {
+      setError("Please enter a valid email");
+      console.log("parou aqui");
+      return;
+    }else{
+      console.log("passou");
+      console.log(email);
+    }
     try {
       // Make POST request to login route
-      const response = await axios.post("http://localhost:5000/usuarios/auth/login", {
-        email,
+      const response = await axios.post("http://localhost:5000/auth/login", {
+        email: email,
         senha: password,
       });
 
@@ -55,12 +63,12 @@ const LoginPage = () => {
         }}
       ></div>
       <div></div>  
-      <nav className="bg-gradient-to-b flex to-[#7B9382] from-[#77EB99] w-1/3 h-screen">
+      <nav className="bg-gradient-to-b flex from-green-500 to-green-700/40 w-1/3 h-screen">
         <form
           onSubmit={handleSubmit}
           className="p-6 rounded mx-auto my-auto w-[80%]"
         >
-          <h2 className="text-2xl mb-8 text-start text-white font-montserrat-negrito">
+          <h2 className="text-2xl mb-8 text-start text-white font-bold">
             Seja bem vindo(a)!
           </h2>
 
@@ -94,11 +102,11 @@ const LoginPage = () => {
                   } transition-transform duration-300`}
                 ></div>
               </div>
-              <p className="ml-4 text-white font-montserrat-negrito">Lembrar</p>
+              <p className="ml-4 text-white font-semibold">Lembrar</p>
             </div>
 
             <div className="ml-auto mr-2">
-              <a href="/esquecer" className="text-blue-600 font-montserrat-negrito">
+              <a href="/esquecer" className="text-blue-600 font-semibold">
                 Esqueci minha senha
               </a>
             </div>
@@ -106,12 +114,12 @@ const LoginPage = () => {
 
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white text-2xl font-montserrat-negrito shadow-xl p-2 rounded-lg hover:bg-blue-600"
+            className="w-full bg-blue-500 text-white text-2xl font-bold shadow-xl p-2 rounded-lg hover:bg-blue-600"
           >
             Login
           </button>
             <hr class = "w-full h-[0.1px] bg-white mt-14"></hr>
-            <p class = "text-white text-xl mx-auto items-center justify-center flex mt-10 font-montserrat-negrito">Não possui uma conta?&nbsp; <a href = "/register" class = "text-blue-500"> Cadastro</a></p>
+            <p class = "text-white text-xl mx-auto items-center justify-center flex mt-10">Não possui uma conta?&nbsp; <a href = "/register" class = "text-blue-500"> Cadastro</a></p>
         </form>
     
       </nav>

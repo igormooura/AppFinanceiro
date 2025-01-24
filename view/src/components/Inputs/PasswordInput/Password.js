@@ -4,7 +4,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 const PasswordField = ({ password, setPassword, showPassword, setShowPassword, placeholder }) => {
     return (
         <div>
-            <label className="block text-lg font-montserrat-negrito text-white">Senha:</label>
+            <label className="block text-lg font-medium text-white">Senha:</label>
             <div className="relative">
                 <input
                     type={showPassword ? "text" : "password"} 
