@@ -3,7 +3,10 @@ const Grafico = require("../model/Grafico.js");
 // Criar um novo gráfico
 exports.createGrafico = async (req, res) => {
   try {
-    const { moeda, valor, variavel } = req.body;
+    const moeda = req.body.moeda1;
+    const valor = req.body.value;
+    const variavel = req.body.moeda2;
+
     if (!moeda || valor === undefined || variavel === undefined) {
       return res.status(400).json({ error: "Campos obrigatórios não preenchidos." });
     }
@@ -17,7 +20,7 @@ exports.createGrafico = async (req, res) => {
 
 // Obter todos os gráficos
 exports.getAllGraficos = async (req, res) => {
-  try {
+  try { 
     const graficos = await Grafico.find();
     res.status(200).json(graficos);
   } catch (error) {
@@ -30,6 +33,7 @@ exports.getGraficoById = async (req, res) => {
   try {
     const { id } = req.params;
     const grafico = await Grafico.findById(id);
+    console.log(grafico);
     if (!grafico) {
       return res.status(404).json({ error: "Gráfico não encontrado." });
     }
@@ -63,6 +67,7 @@ exports.deleteGrafico = async (req, res) => {
   try {
     const { id } = req.params;
     const graficoDeletado = await Grafico.findByIdAndDelete(id);
+    console.log(id);
     if (!graficoDeletado) {
       return res.status(404).json({ error: "Gráfico não encontrado." });
     }

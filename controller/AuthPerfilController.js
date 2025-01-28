@@ -49,6 +49,7 @@ exports.createUser = async (req, res) => {
 // Login de usuário - Tela Login
 exports.loginUser = async (req, res) => {
   try {
+    console.log(req.body);
     const { email, senha } = req.body;
     // Verificar se os campos foram preenchidos
     if (!email || !senha) {
@@ -57,6 +58,7 @@ exports.loginUser = async (req, res) => {
     // Procurar o usuário pelo e-mail
     const usuario = await AuthPerfil.findOne({ email });
     if (!usuario) {
+      console.log("parou aqui");
       return res.status(404).json({ error: "Usuário não encontrado." });
     }
     // Validar a senha
