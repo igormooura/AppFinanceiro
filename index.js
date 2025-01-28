@@ -43,7 +43,7 @@ app.use("/auth", authPerfilRoutes); // Rota para autenticação de perfil
 
 // Rota de boas-vindas
 app.get("/", (req, res) => {
-  res.send("Bem-vindo à API de Criptomoedas!");
+  res.send("Bem-vindo à API de Criptomoedas!!");
 });
 
 // Iniciando o servidor
