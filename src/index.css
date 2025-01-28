@@ -15,3 +15,17 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+@font-face {
+  font-family: "Montserrat-fino";
+  src: url(./fonts/Montserrat-Light.ttf) format("opentype");
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Montserrat-negrito";
+  src: url(./fonts/Montserrat-VariableFont_wght.ttf) format("opentype");
+  font-style: normal;
+  font-display: swap;
+}

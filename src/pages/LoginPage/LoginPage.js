@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import EmailInput from "../../components/Inputs/EmailInput/EmailInput";
+import PasswordField from "../../components/Inputs/PasswordInput/Password";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [rememberMe, setRememberMe] = useState(false); // State for Remember Me
+  const [rememberMe, setRememberMe] = useState(false); 
+  const [showPassword, setShowPassword] = useState(false); 
   const navigate = useNavigate();
+
 
   const handleRememberMe = () => {
     setRememberMe((prev) => !prev); // Toggle the remember state
@@ -15,11 +19,19 @@ const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (email.trim() === "") {
+      setError("Please enter a valid email");
+      console.log("parou aqui");
+      return;
+    }else{
+      console.log("passou");
+      console.log(email);
+    }
     try {
       // Make POST request to login route
       const response = await axios.post("http://localhost:5000/auth/login", {
-        email,
-        password,
+        email: email,
+        senha: password,
       });
 
       // If Remember Me is active, store the token
@@ -33,7 +45,7 @@ const LoginPage = () => {
       }
 
       // Navigate to another page after login
-      navigate("/dashboard");
+      navigate("/grafico");
     } catch (err) {
       console.error(err);
       setError("Invalid email or password");
@@ -63,31 +75,20 @@ const LoginPage = () => {
           {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
 
           <div className="mb-4">
-            <label className="block text-sm text-white mb-1">Login</label>
-            <input
-              type="email"
-              value={email}
-              placeholder="Insira o Email"
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full border-2 border-gray-300 shadow-2xl rounded-lg p-4"
-              required
-            />
+            <EmailInput email={email} setEmail={setEmail} placeholder={"Insira seu email"} />
           </div>
 
           <div className="mb-4">
-            <label className="block text-white text-sm mb-1">Senha</label>
-            <input
-              type="password"
-              value={password}
-              placeholder="Insira a senha"
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full border-2 border-gray-300 shadow-2xl rounded-lg p-4"
-              required
-            />
+          <PasswordField
+                        password={password}
+                        setPassword={setPassword}
+                        showPassword={showPassword}
+                        setShowPassword={setShowPassword}
+                        placeholder={"Insira sua senha"}
+                    />
           </div>
 
           <div className="flex mb-7">
-            {/* Remember Me Toggle */}
             <div className="flex mr-auto ml-2 items-center">
               <div
                 className={`rounded-3xl w-[60px] flex items-center h-[30px] cursor-pointer ${
@@ -105,7 +106,7 @@ const LoginPage = () => {
             </div>
 
             <div className="ml-auto mr-2">
-              <a href="#" className="text-blue-600 font-semibold">
+              <a href="/esquecer" className="text-blue-600 font-semibold">
                 Esqueci minha senha
               </a>
             </div>
@@ -118,7 +119,7 @@ const LoginPage = () => {
             Login
           </button>
             <hr class = "w-full h-[0.1px] bg-white mt-14"></hr>
-            <p class = "text-white text-xl mx-auto items-center justify-center flex mt-10">Não possui uma conta?&nbsp; <a href = "#" class = "text-blue-500"> Cadastro</a></p>
+            <p class = "text-white text-xl mx-auto items-center justify-center flex mt-10">Não possui uma conta?&nbsp; <a href = "/register" class = "text-blue-500"> Cadastro</a></p>
         </form>
     
       </nav>
