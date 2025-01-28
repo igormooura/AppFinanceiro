@@ -38,7 +38,7 @@ app.use("/calculadora", calculadoraRoutes);  // Rota para conversão de moedas
 app.use("/grafico", graficoRoutes);  // Rota para gráficos
 app.use("/noticias", noticiaRoutes);  // Rota para notícias
 app.use("/sobrenos", sobreNosRoutes);  // Rota para "Sobre Nós"
-app.use("/usuarios", usuarioRoutes);  // Rota para usuários
+app.use("/usuarios", usuarioRoutes);  // Rota para usuários 
 app.use("/auth", authPerfilRoutes); // Rota para autenticação de perfil
 
 // Rota de boas-vindas
@@ -46,7 +46,7 @@ app.get("/", (req, res) => {
   res.send("Bem-vindo à API de Criptomoedas!");
 });
 
-// Inicializando o backend
+// Iniciando o servidor
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);
