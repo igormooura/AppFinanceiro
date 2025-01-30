@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -26,14 +26,29 @@ ChartJS.register(
 
 function Calculadora() {
   const [valor, setValor] = useState(1000);
-  const [convertido, setConvertido] = useState(5148.2);
+  const [cotacao, setCotacao] = useState(5.15);
+  const [convertido, setConvertido] = useState(valor * cotacao);
+
+  useEffect(() => {
+    setConvertido(valor * cotacao);
+  }, [valor, cotacao]);
+
+  const handleChangeValor = (e) => {
+    const novoValor = e.target.value.replace(/[^0-9.]/g, "");
+    setValor(novoValor ? parseFloat(novoValor) : "");
+  };
+
+  const handleChangeCotacao = (e) => {
+    const novaCotacao = e.target.value.replace(/[^0-9.]/g, "");
+    setCotacao(novaCotacao ? parseFloat(novaCotacao) : "");
+  };
 
   const dadosGrafico = {
-    labels: ["1D", "5D", "1M", "1A", "5A", "Máx"],
+    labels: [],
     datasets: [
       {
         label: "Cotação (BRL)",
-        data: [5.1, 5.2, 5.16, 5.3, 5.25, 5.18],
+        data: [],
         borderColor: "#7C3AED",
         backgroundColor: "rgba(124, 58, 237, 0.2)",
         fill: true,
@@ -47,57 +62,64 @@ function Calculadora() {
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        position: 'top',
-      }
+        position: "top",
+      },
     },
     scales: {
       y: {
         grid: {
-          color: '#e5e7eb'
-        }
+          color: "#e5e7eb",
+        },
       },
       x: {
         grid: {
-          display: false
-        }
-      }
-    }
+          display: false,
+        },
+      },
+    },
   };
+
+ 
 
   return (
     <div className="flex h-screen w-full">
       <Sidebar />
 
-      <div className="flex-1 bg-gradient-to-b from-[#C0F0B1] to-white p-5 relative">
+      <div className="flex-1 bg-gradient-to-b from-[#C0F0B1] to-white p-5 relative flex flex-col">
         <TitleComponent />
         <PageName name="Calculadora" />
 
-        <div className="flex items-center gap-4 justify-center mt-6">
-          <div className="flex items-center gap-2">
-            <input
-              type="text"
-              value={`$ ${valor}`}
-              className="w-32 px-4 py-2 border-2 border-gray-200 rounded-lg text-right font-bold text-purple-900"
-              readOnly
-            />
-            <span className="font-semibold text-gray-700">USD</span>
+        <div className="flex flex-col items-center mt-[100px] space-y-12">
+          <div className="flex items-center gap-[200px]">
+            <div className="flex items-center border-2 border-purple-500 rounded-lg px-6 py-3 bg-white shadow-lg">
+              <span className="text-gray-700 mr-2">$</span>
+              <input
+                type="text"
+                value={valor}
+                onChange={handleChangeValor}
+                className="w-100 px-2 text-right font-bold text-purple-900 border-none outline-none text-lg"
+                placeholder="0"
+              />
+              <span className="ml-2 text-gray-600">USD</span>
+            </div>
+
+            <div className="text-3xl text-gray-400">→</div>
+
+            <div className="flex items-center border-2 border-gray-300 rounded-lg px-6 py-3 bg-white shadow-lg">
+              <span className="text-gray-700 mr-2">R$</span>
+              <input
+                type="text"
+                value={convertido.toFixed(2)}
+                className="w-100 px-2 text-right font-bold text-purple-900 border-none outline-none text-lg"
+                readOnly
+              />
+              <span className="ml-2 text-gray-600">BRL</span>
+            </div>
           </div>
 
-          <div className="text-3xl text-gray-500">↔</div>
-
-          <div className="flex items-center gap-2">
-            <input
-              type="text"
-              value={`R$ ${convertido.toFixed(2)}`}
-              className="w-40 px-4 py-2 border-2 border-gray-200 rounded-lg text-right font-bold text-purple-900"
-              readOnly
-            />
-            <span className="font-semibold text-gray-700">BRL</span>
+          <div className="bg-white p-4 rounded-xl shadow-lg w-full max-w-4xl h-96">
+            <Line data={dadosGrafico} options={opcoesGrafico} />
           </div>
-        </div>
-
-        <div className="mt-40 bg-white p-4 rounded-xl shadow-lg h-90 mx-8">
-          <Line data={dadosGrafico} options={opcoesGrafico} />
         </div>
       </div>
     </div>
