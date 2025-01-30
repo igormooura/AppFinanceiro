@@ -4,54 +4,103 @@ import { Link } from "react-router-dom";
 import Sidebar from "../../components/SideBar/Sidebar";
 import Title from "../../components/Title/Title";
 import PageName from "../../components/PageName/PageName";
+import { Line } from "react-chartjs-2";
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend } from "chart.js";
+
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend);
+
+
 
 const Grafico = () => {
   const [graficos, setGraficos] = useState([]);
   const [activeTab, setActiveTab] = useState(null); 
+  const [isFormOpen, setIsFormOpen] = useState(false);
   const [formData, setFormData] = useState({ moeda1: "", moeda2: "", value: "" });
+  const [chartData, setChartData] = useState(null);
 
   useEffect(() => {
-    
     fetch("http://localhost:5000/grafico")
       .then((res) => res.json())
       .then((data) => setGraficos(data))
       .catch(() => alert("Erro ao buscar gráficos."));
   }, []);
 
-  const handleTabClick = (tabId) => {
-    
-    if (!graficos[tabId]) {
-      setActiveTab(tabId);
+  const handleTabClick = async (tabId) => {
+  setActiveTab(tabId); // Set the activeTab state even if the tab doesn't have content
+
+  if (!graficos[tabId]) return;
+
+  const moeda = graficos[tabId].moeda;
+  const variavel = graficos[tabId].variavel;
+  console.log(moeda + " " + variavel)
+  try {
+    const response = await axios.get(
+      `https://api.coingecko.com/api/v3/coins/${moeda}/market_chart`,
+      {
+        params: {
+          vs_currency: variavel,
+          days: 14, // Get 2 weeks of data
+          interval: "daily",
+        },
+      }
+    );
+
+    const prices = response.data.prices.map(([timestamp, valor]) => ({
+      date: new Date(timestamp).toLocaleDateString(),
+      valor,
+    }));
+
+    setChartData({
+      labels: prices.map((p) => p.date),
+      datasets: [
+        {
+          label: `${moeda} to ${variavel}`,
+          data: prices.map((p) => p.valor),
+          borderColor: "rgb(75, 192, 192)",
+          backgroundColor: "rgba(75, 192, 192, 0.2)",
+        },
+      ],
+    });
+  } catch (error) {
+      console.error("Error fetching data:", error);
+      alert("Erro ao buscar dados de conversão.");
     }
   };
-  const handleDelete = async (tabId) => {
+  
+  
+  const handleDelete = async (tabId, graphId) => {
     try {
-      await axios.delete(`http://localhost:5000/grafico/${tabId}`);
+      await axios.delete(`http://localhost:5000/grafico/${graphId}`);
       setGraficos((prev) => {
         const updatedGraficos = [...prev];
         updatedGraficos[tabId] = null; // Remove the graph from state
         return updatedGraficos;
       });
     } catch (error) {
+      console.log(error);
       alert("Erro ao deletar gráfico.");
     }
   };
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+    console.log(formData);
     try {
-      
       const response = await axios.post("http://localhost:5000/grafico/", formData);
       const newGraph = response.data;
 
-      
-      setGraficos((prev) => ({ ...prev, [activeTab]: newGraph }));
+      setGraficos((prev) => {
+        const updatedGraficos = [...prev];
+        updatedGraficos[activeTab] = newGraph;
+        return updatedGraficos;
+      });
       setFormData({ moeda1: "", moeda2: "", value: "" });
-      setActiveTab(null); 
+      setIsFormOpen(false); 
     } catch (error) {
       alert("Erro ao adicionar gráfico.");
     }
   };
+
 
   return (
     <div className="flex h-screen w-full">
@@ -111,87 +160,101 @@ const Grafico = () => {
         <PageName name="Moedas Expostas" />
 
         <div className="h-[500px] w-[90%] flex space-x-3 items-center justify-center mx-auto mt-10">
-  <div id="screen" className="w-2/3 h-full bg-green-950 rounded-lg border-[6px] border-gray-400/40"></div>
-  <div className="w-1/3 h-full space-y-5">
-    {[1, 2, 3].map((tabId) => (
-      <div key={tabId} className="h-[30%] flex space-x-1">
-        <button
-          className={`h-full w-[100%]   duration-300 ${
-            graficos[tabId] ? "bg-transparent" : "rounded-lg shadow-inner hover:scale-105 shadow-zinc-500 bg-green-200"
-          }`}
-          onClick={() => handleTabClick(tabId)}
-        >
-          {graficos[tabId] ? (
-            <div className="w-full flex space-x-[1px] h-full">
-              {/* Delete Button */}
-              <button
-                className="w-[15%] rounded-xl shadow-inner shadow-zinc-800 hover:scale-[1.02] duration-500 hover:bg-red-400 bg-red-500"
-                // onClick={() => handleDelete(tabId)} // Delete logic
+        <div id="screen" className="w-2/3 h-full bg-green-950 rounded-lg border-[6px] border-gray-400/40 flex items-center justify-center">
+          {chartData ? <Line data={chartData} /> : <p className="text-white">Selecione uma moeda para visualizar o gráfico</p>}
+        </div>
+        <div className="w-1/3 h-full space-y-5">
+          {[1, 2, 3].map((tabId) => (
+            <div key={tabId} className="h-[30%] flex space-x-1">
+              <div
+                className={`h-full w-[100%]   duration-300 ${
+                  graficos[tabId] ? "bg-transparent" : "rounded-lg shadow-inner hover:scale-105 shadow-zinc-500 bg-green-200"
+                }`}
+                
               >
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M4 12L20 12"
-                    stroke="#ffffff"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  ></path>
-                </svg>
-              </button>
+                {graficos[tabId] ? (
+                  <div className="w-full flex space-x-[1px] h-full ">
+                    {/* Delete Button */}
+                    <button
+                      className="w-[15%] rounded-xl hover:scale-[1.02] duration-500 hover:bg-red-400 bg-gradient-to-b from-red-600/90 to-red-700/85"
+                      onClick={() => handleDelete(tabId, graficos[tabId]?._id)} // Delete logic
+                    >
+                      <hr class = "w-[45%] h-1 rounded-sm bg-white mx-auto"></hr>
+                    </button>
 
-              {/* Content Button */}
-              <div className="w-[85%] bg-zinc-900 shadow-inner shadow-black text-white">
-                {graficos[tabId].moeda} vs {graficos[tabId].variavel}s
+                    {/* Content Button */}
+                    <button onClick={() => handleTabClick(tabId)} className="w-[85%] bg-zinc-800 shadow-inner shadow-black text-white">
+                      <p>{graficos[tabId].moeda}</p> <p>{graficos[tabId].variavel}</p> 
+                    </button>
+                  </div>
+                ) : (
+                  
+                  <button
+                  className="relative my-10 h-16 w-16 flex items-center justify-center mx-auto  group"
+                  onClick={() => {
+                    setActiveTab(tabId);
+                    setIsFormOpen(true);
+                  }}
+                >
+                  {/* Add graph Button */}
+                  <hr
+                    id="plus1"
+                    className="group-hover:bg-green-700 h-2 w-10 absolute rounded-xl mx-auto my-auto shadow-2xl shadow-black bg-green-600"
+                  ></hr>
+                  <hr
+                    id="plus"
+                    className="group-hover:bg-green-700 h-10 w-2 absolute rounded-xl mx-auto my-auto shadow-2xl bg-green-600"
+                  ></hr>
+                </button>
+                )}
               </div>
             </div>
-          ) : (
-            <div className="relative h-16 w-16 flex items-center justify-center mx-auto my-auto group">
-              <hr
-                id="plus1"
-                className="group-hover:bg-green-700 h-2 w-10 absolute rounded-xl mx-auto my-auto shadow-2xl shadow-black bg-green-600"
-              ></hr>
-              <hr
-                id="plus"
-                className="group-hover:bg-green-700 h-10 w-2 absolute rounded-xl mx-auto my-auto shadow-2xl bg-green-600"
-              ></hr>
-            </div>
-          )}
-        </button>
+          ))}
+        </div>
       </div>
-    ))}
-  </div>
-</div>
 
 
 
         {/* Form for adding data */}
-        {activeTab && (
+        {isFormOpen && (
           <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
             <form
               className="bg-white p-6 rounded-lg shadow-lg space-y-4"
               onSubmit={handleFormSubmit}
             >
-              <h3 className="text-xl font-bold">Adicionar ao {activeTab}</h3>
-              <input
-                type="text"
-                placeholder="Moeda 1"
+              <h3 className="text-xl font-bold">Adicionar</h3>
+              
+              {/* Dropdown for Moeda 1 */}
+              <select
                 className="border rounded p-2 w-full"
                 value={formData.moeda1}
                 onChange={(e) => setFormData({ ...formData, moeda1: e.target.value })}
                 required
-              />
-              <input
-                type="text"
-                placeholder="Moeda 2"
+              >
+                <option value="" disabled>
+                  Selecione a Moeda 1
+                </option>
+                <option value="usd">Dólar(USD)</option>
+                <option value="brl">Real(BRL)</option>
+                <option value="bitcoin">Bitcoin(BTC)</option>
+              </select>
+              
+              {/* Dropdown for Moeda 2 */}
+              <select
                 className="border rounded p-2 w-full"
                 value={formData.moeda2}
                 onChange={(e) => setFormData({ ...formData, moeda2: e.target.value })}
                 required
-              />
+              >
+                <option value="" disabled>
+                  Selecione a Moeda 2
+                </option>
+                <option value="usd">Dólar(USD)</option>
+                <option value="brl">Real(BRL)</option>
+                <option value="bitcoin">Bitcoin(BTC)</option>
+              </select>
+              
+              {/* Input for Value */}
               <input
                 type="number"
                 placeholder="Value"
@@ -200,11 +263,13 @@ const Grafico = () => {
                 onChange={(e) => setFormData({ ...formData, value: e.target.value })}
                 required
               />
+              
+              {/* Buttons */}
               <div className="flex justify-end space-x-4">
                 <button
                   type="button"
                   className="px-4 py-2 bg-gray-300 rounded"
-                  onClick={() => setActiveTab(null)}
+                  onClick={() => setIsFormOpen(false)}
                 >
                   Cancel
                 </button>
@@ -216,6 +281,7 @@ const Grafico = () => {
                 </button>
               </div>
             </form>
+
           </div>
         )}
       </div>
