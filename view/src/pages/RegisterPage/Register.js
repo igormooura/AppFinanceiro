@@ -15,11 +15,11 @@ const Register = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post("http://localhost:5000/usuarios/auth/cadastrar", {
+            await axios.post("http://localhost:5000/cadastrar", {
                 nome: name,
+                sobrenome: lastName,
                 email,
                 senha: password,
-                moedasNaCarteira,
             });
             setError("");
         } catch (err) {
@@ -57,9 +57,9 @@ const Register = () => {
                         />
                     </div>
 
-                    <EmailInput email={email} setEmail={setEmail} placeholder={"Ex: example@email.com"}/>
+                    <EmailInput email={email} setEmail={setEmail} placeholder={"Ex: example@email.com"} />
 
-                    <PasswordField password={password} setPassword={setPassword} showPassword={showPassword} setShowPassword={setShowPassword} placeholder={"Senha"}/>
+                    <PasswordField password={password} setPassword={setPassword} showPassword={showPassword} setShowPassword={setShowPassword} placeholder={"Senha"} />
 
                     <button
                         type="submit"

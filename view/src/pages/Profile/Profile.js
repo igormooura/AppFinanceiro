@@ -1,8 +1,12 @@
 import { useState, useEffect } from "react";
 import Sidebar from "../../components/SideBar/Sidebar";
-import axios from "axios"; // Adicionado para importar axios
+import axios from "axios"; 
+import { useParams } from "react-router-dom";
+import mongoose from "mongoose";
 
 function Profile() {
+  const { id } = useParams();
+
   const [data, setData] = useState("");
   const [genero, setGenero] = useState("");
   const [nome, setNome] = useState("");
@@ -10,8 +14,9 @@ function Profile() {
   const [CPF, setCPF] = useState("");
   const [telefone, setTelefone] = useState("");
   const [pais, setPais] = useState("");
+  const [email, setEmail] = useState("");
   const [editMode, setEditMode] = useState(false);
-  const [id, setid] = useState(""); 
+
   useEffect(() => {
     const today = new Date();
     const options = { year: "numeric", month: "long", day: "numeric" };
@@ -30,6 +35,7 @@ function Profile() {
           setCPF(userData.CPF);
           setGenero(userData.genero);
           setPais(userData.pais);
+          setEmail(userData.email);
         } catch (error) {
           console.error("Erro ao carregar dados do perfil", error);
           alert("Erro ao carregar perfil. Tente novamente.");
@@ -37,7 +43,7 @@ function Profile() {
       };
       fetchUserData();
     }
-  }, [id]);  
+  }, [id]);
 
   const handleGeneroChange = (event) => {
     setGenero(event.target.value);
@@ -75,7 +81,7 @@ function Profile() {
       }
     } catch (error) {
       console.error("Erro ao atualizar perfil", error);
-      alert("Erro ao salvar perfil. Tente novamente.");
+      alert(error.response?.data?.message || "Erro ao salvar perfil. Tente novamente.");
     }
   };
 
@@ -86,6 +92,7 @@ function Profile() {
         <div className="ml-10 mt-5">
           <div className="text-left">
             <h2 className="text-3xl font-semibold text-gray-700">Bem-vindo, {nome}!</h2>
+            <p className="text-gray-600">email</p>
             <p className="text-lg text-gray-500">{data}</p>
           </div>
         </div>
@@ -102,7 +109,7 @@ function Profile() {
               </div>
               <div>
                 <h2 className="text-2xl font-bold">{nome} {sobrenome}</h2>
-                <p className="text-gray-600">example@email.com</p>
+                <p className="text-gray-600">{email}</p>
               </div>
             </div>
             <button
