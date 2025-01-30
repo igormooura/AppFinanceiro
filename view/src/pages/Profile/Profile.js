@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Sidebar from "../../components/SideBar/Sidebar";
+import axios from "axios"; // Adicionado para importar axios
 
 function Profile() {
   const usuario = "Nome do Usuário";
@@ -10,6 +11,8 @@ function Profile() {
   const [sobrenome, setSobrenome] = useState("");
   const [CPF, setCPF] = useState("");
   const [telefone, setTelefone] = useState("");
+  const [pais, setPais] = useState("");
+  const [editMode, setEditMode] = useState(false); 
 
   useEffect(() => {
     const today = new Date();
@@ -41,6 +44,22 @@ function Profile() {
     setCPF(value);
   };
 
+  const toggleEditMode = () => setEditMode(prevMode => !prevMode);
+
+  const saveProfile = async () => {
+    const updatedProfile = { nome, sobrenome, telefone, CPF, genero, pais };
+    try {
+      const response = await axios.put(`/api/perfil/${userId}`, updatedProfile);
+      if (response.status === 200) {
+        alert("Perfil atualizado com sucesso!");
+        setEditMode(false);
+      }
+    } catch (error) {
+      console.error("Erro ao atualizar perfil", error);
+      alert("Erro ao salvar perfil. Tente novamente.");
+    }
+  };
+
   return (
     <div className="flex h-screen w-full">
       <Sidebar />
@@ -49,7 +68,7 @@ function Profile() {
         <div className="ml-10 mt-5">
           <div className="text-left">
             <h2 className="text-3xl font-semibold text-gray-700">
-              Bem-vindo, {usuario}!
+              Bem-vindo, {nome}!
             </h2>
             <p className="text-lg text-gray-500">{data}</p>
           </div>
@@ -66,12 +85,15 @@ function Profile() {
                 />
               </div>
               <div>
-                <h2 className="text-2xl font-bold">Nome Completo</h2>
+                <h2 className="text-2xl font-bold">{nome} {sobrenome}</h2>
                 <p className="text-gray-600">example@email.com</p>
               </div>
             </div>
-            <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-              Edit
+            <button
+              onClick={toggleEditMode}
+              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+            >
+              {editMode ? "Salvar" : "Editar"}
             </button>
           </div>
 
@@ -90,6 +112,7 @@ function Profile() {
                 id="nome"
                 className="w-full px-4 py-3 rounded-lg bg-white text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white border-2 border-gray-300 shadow-2xl"
                 placeholder="Nome"
+                disabled={!editMode}
               />
             </div>
 
@@ -107,7 +130,8 @@ function Profile() {
                 id="sobrenome"
                 className="w-full px-4 py-3 rounded-lg bg-white text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white border-2 border-gray-300 shadow-2xl"
                 placeholder="Sobrenome"
-              />
+                disabled={!editMode}
+             />
             </div>
 
             <div>
@@ -124,6 +148,7 @@ function Profile() {
                 id="telefone"
                 className="w-full px-4 py-3 rounded-lg bg-white text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white border-2 border-gray-300 shadow-2xl"
                 placeholder="Ex (XX) XXXXX-XXXX"
+                disabled={!editMode}
               />
             </div>
 
@@ -141,6 +166,7 @@ function Profile() {
                 id="CPF"
                 className="w-full px-4 py-3 rounded-lg bg-white text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white border-2 border-gray-300 shadow-2xl"
                 placeholder="Ex: 000.000.000-00"
+                disabled={!editMode}
               />
             </div>
 
@@ -156,6 +182,7 @@ function Profile() {
                 value={genero}
                 onChange={handleGeneroChange}
                 className="mt-1 block w-full px-4 py-3 rounded-lg bg-white text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white border-2 border-gray-300 shadow-2xl"
+                disabled={!editMode}
               >
                 <option value="">Selecione...</option>
                 <option value="masculino">Masculino</option>
@@ -174,8 +201,11 @@ function Profile() {
               <input
                 type="text"
                 id="pais"
+                value={pais}
+                onChange={(e) => setPais(e.target.value)}
                 className="w-full px-4 py-3 rounded-lg bg-white text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white border-2 border-gray-300 shadow-2xl"
                 placeholder="País"
+                disabled={!editMode}
               />
             </div>
           </div>
@@ -197,7 +227,6 @@ function Profile() {
                   d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25H4.5a2.25 2.25 0 01-2.25-2.25V6.75M21.75 6.75L12 12.75M21.75 6.75L12 3m0 9.75l-9.75-6"
                 />
               </svg>
-              <span>example@email.com</span>
             </div>
           </div>
         </div>
