@@ -3,8 +3,6 @@ import Sidebar from "../../components/SideBar/Sidebar";
 import axios from "axios"; // Adicionado para importar axios
 
 function Profile() {
-  const usuario = "Nome do Usuário";
-
   const [data, setData] = useState("");
   const [genero, setGenero] = useState("");
   const [nome, setNome] = useState("");
@@ -12,13 +10,34 @@ function Profile() {
   const [CPF, setCPF] = useState("");
   const [telefone, setTelefone] = useState("");
   const [pais, setPais] = useState("");
-  const [editMode, setEditMode] = useState(false); 
-
+  const [editMode, setEditMode] = useState(false);
+  const [id, setid] = useState(""); 
   useEffect(() => {
     const today = new Date();
     const options = { year: "numeric", month: "long", day: "numeric" };
     setData(today.toLocaleDateString("pt-BR", options));
   }, []);
+
+  useEffect(() => {
+    if (id) {
+      const fetchUserData = async () => {
+        try {
+          const response = await axios.get(`/api/perfil/${id}`);
+          const userData = response.data;
+          setNome(userData.nome);
+          setSobrenome(userData.sobrenome);
+          setTelefone(userData.telefone);
+          setCPF(userData.CPF);
+          setGenero(userData.genero);
+          setPais(userData.pais);
+        } catch (error) {
+          console.error("Erro ao carregar dados do perfil", error);
+          alert("Erro ao carregar perfil. Tente novamente.");
+        }
+      };
+      fetchUserData();
+    }
+  }, [id]);  
 
   const handleGeneroChange = (event) => {
     setGenero(event.target.value);
@@ -44,12 +63,12 @@ function Profile() {
     setCPF(value);
   };
 
-  const toggleEditMode = () => setEditMode(prevMode => !prevMode);
+  const toggleEditMode = () => setEditMode((prevMode) => !prevMode);
 
   const saveProfile = async () => {
     const updatedProfile = { nome, sobrenome, telefone, CPF, genero, pais };
     try {
-      const response = await axios.put(`/api/perfil/${userId}`, updatedProfile);
+      const response = await axios.put(`/api/perfil/${id}`, updatedProfile);
       if (response.status === 200) {
         alert("Perfil atualizado com sucesso!");
         setEditMode(false);
@@ -63,13 +82,10 @@ function Profile() {
   return (
     <div className="flex h-screen w-full">
       <Sidebar />
-
       <div className="flex-1 bg-gradient-to-b from-[#C0F0B1] to-white p-5">
         <div className="ml-10 mt-5">
           <div className="text-left">
-            <h2 className="text-3xl font-semibold text-gray-700">
-              Bem-vindo, {nome}!
-            </h2>
+            <h2 className="text-3xl font-semibold text-gray-700">Bem-vindo, {nome}!</h2>
             <p className="text-lg text-gray-500">{data}</p>
           </div>
         </div>
@@ -99,10 +115,7 @@ function Profile() {
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label
-                htmlFor="nome"
-                className="block text-sm font-medium text-gray-700"
-              >
+              <label htmlFor="nome" className="block text-sm font-medium text-gray-700">
                 Primeiro Nome
               </label>
               <input
@@ -117,10 +130,7 @@ function Profile() {
             </div>
 
             <div>
-              <label
-                htmlFor="sobrenome"
-                className="block text-sm font-medium text-gray-700"
-              >
+              <label htmlFor="sobrenome" className="block text-sm font-medium text-gray-700">
                 Sobrenome
               </label>
               <input
@@ -131,14 +141,11 @@ function Profile() {
                 className="w-full px-4 py-3 rounded-lg bg-white text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white border-2 border-gray-300 shadow-2xl"
                 placeholder="Sobrenome"
                 disabled={!editMode}
-             />
+              />
             </div>
 
             <div>
-              <label
-                htmlFor="telefone"
-                className="block text-sm font-medium text-gray-700"
-              >
+              <label htmlFor="telefone" className="block text-sm font-medium text-gray-700">
                 Telefone
               </label>
               <input
@@ -153,10 +160,7 @@ function Profile() {
             </div>
 
             <div>
-              <label
-                htmlFor="CPF"
-                className="block text-sm font-medium text-gray-700"
-              >
+              <label htmlFor="CPF" className="block text-sm font-medium text-gray-700">
                 CPF
               </label>
               <input
@@ -171,10 +175,7 @@ function Profile() {
             </div>
 
             <div>
-              <label
-                htmlFor="genero"
-                className="block text-sm font-medium text-gray-700"
-              >
+              <label htmlFor="genero" className="block text-sm font-medium text-gray-700">
                 Gênero
               </label>
               <select
@@ -192,10 +193,7 @@ function Profile() {
             </div>
 
             <div>
-              <label
-                htmlFor="pais"
-                className="block text-sm font-medium text-gray-700"
-              >
+              <label htmlFor="pais" className="block text-sm font-medium text-gray-700">
                 País
               </label>
               <input
