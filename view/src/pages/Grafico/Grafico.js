@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+    import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Sidebar from "../../components/SideBar/Sidebar";
@@ -17,6 +17,7 @@ const Grafico = () => {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [formData, setFormData] = useState({ moeda1: "", moeda2: "", value: "" });
   const [chartData, setChartData] = useState(null);
+  const [perceCe, setPerceCe] = useState(null);
 
   useEffect(() => {
     fetch("http://localhost:5000/grafico")
@@ -32,7 +33,8 @@ const Grafico = () => {
 
   const moeda = graficos[tabId].moeda;
   const variavel = graficos[tabId].variavel;
-  console.log(moeda + " " + variavel)
+  const quantia = graficos[tabId].valor
+  console.log(moeda + " " + quantia)
   var condition = 0;
   try {
     const response = await axios.get(
@@ -40,7 +42,7 @@ const Grafico = () => {
       {
         params: {
           vs_currency: variavel,
-          days: 14, // Get 2 weeks of data
+          days: 14, 
           interval: "daily",
         },
       }
@@ -50,6 +52,23 @@ const Grafico = () => {
       date: new Date(timestamp).toLocaleDateString(),
       valor,
     }));
+
+    var min = prices[0].valor;
+    var size = prices.length;
+    var max = prices[size - 1].valor;
+    
+    var conv = quantia * max;
+    var p = 100.0 - (max*100.0)/min;
+    
+    setPerceCe({
+      perce: p,
+      conv: conv,
+
+
+
+    });
+    
+    
     
 
     setChartData({
@@ -84,6 +103,7 @@ const Grafico = () => {
         date: new Date(timestamp).toLocaleDateString(),
         valor: 1/valor,
       }));
+     
 
       setChartData({
         labels: prices.map((p) => p.date),
@@ -215,8 +235,12 @@ const Grafico = () => {
                     </button>
 
                     {/* Content Button */}
-                    <button onClick={() => handleTabClick(tabId)} className="w-[85%] bg-zinc-800 shadow-inner shadow-black text-white">
-                      <p>{graficos[tabId].moeda}</p> <p>{graficos[tabId].variavel}</p> 
+                  
+                    
+                    <button onClick={() => handleTabClick(tabId)} className="w-[85%] bg-zinc-800 shadow-inner space-y-5 shadow-black text-white">
+                      <p class = " font-montserrat-negrito flex mr-auto ml-10">{graficos[tabId].moeda.toUpperCase()}</p>
+                      {perceCe ?  <p>{perceCe.perce} {perceCe.conv}</p>  : <p className="text-white"></p>}
+                       <p class = "font-montserrat-negrito flex mr-auto ml-10">{graficos[tabId].variavel.toUpperCase()}</p> 
                     </button>
                   </div>
                 ) : (
