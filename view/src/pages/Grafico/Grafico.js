@@ -33,6 +33,7 @@ const Grafico = () => {
   const moeda = graficos[tabId].moeda;
   const variavel = graficos[tabId].variavel;
   console.log(moeda + " " + variavel)
+  var condition = 0;
   try {
     const response = await axios.get(
       `https://api.coingecko.com/api/v3/coins/${moeda}/market_chart`,
@@ -44,11 +45,12 @@ const Grafico = () => {
         },
       }
     );
-
+    console.log(response);
     const prices = response.data.prices.map(([timestamp, valor]) => ({
       date: new Date(timestamp).toLocaleDateString(),
       valor,
     }));
+    
 
     setChartData({
       labels: prices.map((p) => p.date),
@@ -63,7 +65,37 @@ const Grafico = () => {
     });
   } catch (error) {
       console.error("Error fetching data:", error);
-      alert("Erro ao buscar dados de conversão.");
+      condition = 1;
+      
+    }
+  if(condition == 1) {
+      const response = await axios.get(
+        `https://api.coingecko.com/api/v3/coins/${variavel}/market_chart`,
+        {
+          params: {
+            vs_currency: moeda,
+            days: 14, 
+            interval: "daily",
+          },
+        }
+      );
+      console.log(response);
+      const prices = response.data.prices.map(([timestamp, valor]) => ({
+        date: new Date(timestamp).toLocaleDateString(),
+        valor: 1/valor,
+      }));
+
+      setChartData({
+        labels: prices.map((p) => p.date),
+        datasets: [
+          {
+            label: `${moeda} to ${variavel}`,
+            data: prices.map((p) => p.valor),
+            borderColor: "rgb(75, 192, 192)",
+            backgroundColor: "rgba(75, 192, 192, 0.2)",
+          },
+        ],
+      });
     }
   };
   
