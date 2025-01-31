@@ -1,14 +1,14 @@
 const mongoose = require("mongoose");
 const AuthPerfil = require("../model/AuthPerfil.js");
-// Criar um novo Usuario - Tela Cadastro
 const Usuario = require("../model/Usuario.js");
 
+// Criar um novo Usuario - Tela Cadastro
 exports.createUser = async (req, res) => {
   const session = await mongoose.startSession(); // Inicia uma sessão para transação
   session.startTransaction();
 
   try {
-    const { nome, apelido, genero, country, email, senha } = req.body;
+    const { nome, sobrenome, genero, country, email, senha } = req.body;
 
     if (!email || !senha || !nome) {
       return res.status(400).json({ error: "Campos obrigatórios não preenchidos." });
@@ -21,7 +21,7 @@ exports.createUser = async (req, res) => {
     }
 
     // Criação do perfil de usuário
-    const novoUsuario = new Usuario({ nome, apelido, genero, country, email });
+    const novoUsuario = new Usuario({ nome, sobrenome, genero, country, email });
     const usuarioSalvo = await novoUsuario.save({ session });
 
     // Criação das credenciais de autenticação

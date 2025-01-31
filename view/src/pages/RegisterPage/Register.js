@@ -7,24 +7,35 @@ const Register = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState(""); 
     const [error, setError] = useState("");
+    const [success, setSuccess] = useState(""); // Estado para sucesso
     const [name, setName] = useState("");
     const [lastName, setlastName] = useState("");
-    const [moedasNaCarteira, setMoedasNaCarteira] = useState("");
+    const [genero, setGenero] = useState("");
+    const [country, setCountry] = useState("");
     const [showPassword, setShowPassword] = useState(false); 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setError(""); // Limpa os erros anteriores
+        setSuccess(""); // Limpa mensagens anteriores de sucesso
         try {
-            await axios.post("http://localhost:5000/cadastrar", {
+            await axios.post("http://localhost:5000/auth/cadastrar", {
                 nome: name,
                 sobrenome: lastName,
+                genero,
+                country,
                 email,
                 senha: password,
             });
-            setError("");
+            setSuccess("Conta cadastrada com sucesso! 🎉");
+            setError(""); // Limpa os erros, caso existam
         } catch (err) {
             console.error(err);
-            setError("Erro ao cadastrar. Verifique os dados informados.");
+            if (err.response && err.response.data && err.response.data.error) {
+                setError(err.response.data.error); // Mostra erro do backend
+            } else {
+                setError("Erro ao cadastrar. Verifique os dados informados.");
+            }
         }
     };
 
@@ -61,18 +72,49 @@ const Register = () => {
 
                     <PasswordField password={password} setPassword={setPassword} showPassword={showPassword} setShowPassword={setShowPassword} placeholder={"Senha"} />
 
+                    <div>
+                        <label className="block text-lg font-medium text-white">Gênero:</label>
+                        <select
+                            value={genero}
+                            onChange={(e) => setGenero(e.target.value)}
+                            className="w-full px-4 py-3 rounded-lg bg-white text-gray-800 border-2 border-gray-300 shadow-2xl"
+                        >
+                            <option value="">Selecione</option>
+                            <option value="Masculino">Masculino</option>
+                            <option value="Feminino">Feminino</option>
+                            <option value="Outro">Outro</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label className="block text-lg font-medium text-white">País:</label>
+                        <input
+                            type="text"
+                            value={country}
+                            onChange={(e) => setCountry(e.target.value)}
+                            className="w-full px-4 py-3 rounded-lg bg-white text-gray-800 border-2 border-gray-300 shadow-2xl"
+                            placeholder="Ex: Brasil"
+                        />
+                    </div>
+
                     <button
                         type="submit"
                         className="w-full bg-blue-500 text-white text-2xl font-bold shadow-xl p-2 rounded-lg hover:bg-blue-600 focus:outline-none"
                     >
                         Criar Conta
                     </button>
+
                     <p className="mt-4 text-center text-white text-base drop-shadow">
                         Já possui uma conta?{" "}
                         <a href="/" className="text-blue-500 hover:underline drop-shadow-lm">
                             Faça login
                         </a>
                     </p>
+
+                    {/* Mensagem de sucesso */}
+                    {success && <p className="mt-4 text-sm text-center text-green-500 drop-shadow">{success}</p>}
+
+                    {/* Mensagem de erro */}
                     {error && <p className="mt-4 text-sm text-center text-red-500 drop-shadow">{error}</p>}
                 </form>
             </div>
