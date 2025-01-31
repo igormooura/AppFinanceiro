@@ -32,7 +32,7 @@ function SobreNos() {
               Ciro Rocha Moraes - ciromoraes.r@gmail.com
             </p>
 
-            {/* Logo */}
+      
             <div className="flex justify-center">
               <img
                 src="/static/ifb_simbol.png"
