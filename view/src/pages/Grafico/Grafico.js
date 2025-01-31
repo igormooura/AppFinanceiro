@@ -33,8 +33,6 @@ const Grafico = () => {
 
   const moeda = graficos[tabId].moeda;
   const variavel = graficos[tabId].variavel;
-  const quantia = graficos[tabId].valor
-  console.log(moeda + " " + quantia)
   var condition = 0;
   try {
     const response = await axios.get(
@@ -57,13 +55,17 @@ const Grafico = () => {
     var size = prices.length;
     var max = prices[size - 1].valor;
     
-    var conv = quantia * max;
-    var p = 100.0 - (max*100.0)/min;
+    let condition = 1;
+    var p =  (max*100.0)/min - 100.0;
+    if(p >= 0){
+      condition = 1;
+    }else{
+      condition = 0;
+    }
     
     setPerceCe({
       perce: p,
-      conv: conv,
-
+      cond: condition
 
 
     });
@@ -103,7 +105,23 @@ const Grafico = () => {
         date: new Date(timestamp).toLocaleDateString(),
         valor: 1/valor,
       }));
-     
+      var min = prices[0].valor;
+      var size = prices.length;
+      var max = prices[size - 1].valor;
+      let condition = 1;
+      var p =  (max*100.0)/min - 100.0;
+      if(p >= 0){
+        condition = 1;
+      }else{
+        condition = 0;
+      }
+      
+      setPerceCe({
+        perce: p,
+        cond: condition
+  
+  
+      });
 
       setChartData({
         labels: prices.map((p) => p.date),
@@ -239,7 +257,9 @@ const Grafico = () => {
                     
                     <button onClick={() => handleTabClick(tabId)} className="w-[85%] bg-zinc-800 shadow-inner space-y-5 shadow-black text-white">
                       <p class = " font-montserrat-negrito flex mr-auto ml-10">{graficos[tabId].moeda.toUpperCase()}</p>
-                      {perceCe ?  <p>{perceCe.perce} {perceCe.conv}</p>  : <p className="text-white"></p>}
+                      {perceCe  && tabId === activeTab ?  <p className={perceCe.cond === 1 ? "text-green-500 flex mr-auto ml-14" : "text-red-500 flex mr-auto ml-14"}>
+                                    {perceCe.perce.toFixed(3)}%
+                                  </p>  : <p className="text-white"></p>}
                        <p class = "font-montserrat-negrito flex mr-auto ml-10">{graficos[tabId].variavel.toUpperCase()}</p> 
                     </button>
                   </div>
