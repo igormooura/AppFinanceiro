@@ -35,6 +35,7 @@ const Grafico = () => {
   });
   const [chartData, setChartData] = useState(null);
   const [perceCe, setPerceCe] = useState(null);
+  const [daysData, setDaysData] = useState(null);
 
   useEffect(() => {
     fetch("http://localhost:5000/grafico")
@@ -42,10 +43,20 @@ const Grafico = () => {
       .then((data) => setGraficos(data))
       .catch(() => alert("Erro ao buscar gráficos."));
   }, []);
-
+  useEffect(() => {
+    if (activeTab !== null && daysData !== null) {
+      handleTabClick(activeTab);
+    }
+  }, [daysData]);
+  
   const handleTabClick = async (tabId) => {
-    setActiveTab(tabId); // Set the activeTab state even if the tab doesn't have content
-
+    setActiveTab(tabId);
+    var numDay;
+    numDay = daysData; 
+    console.log(daysData);
+    if(numDay == null){
+      numDay = 30;
+    }
     if (!graficos[tabId]) return;
 
     const moeda = graficos[tabId].moeda;
@@ -57,7 +68,7 @@ const Grafico = () => {
         {
           params: {
             vs_currency: variavel,
-            days: 14,
+            days: numDay,
             interval: "daily",
           },
         }
@@ -106,7 +117,7 @@ const Grafico = () => {
         {
           params: {
             vs_currency: moeda,
-            days: 14,
+            days: numDay,
             interval: "daily",
           },
         }
@@ -244,13 +255,37 @@ const Grafico = () => {
         <div className="h-[500px] w-[90%] flex space-x-3 items-center justify-center mx-auto mt-10">
           <div
             id="screen"
-            className="w-2/3 h-full bg-green-950 rounded-lg border-[6px] border-gray-400/40 flex items-center justify-center"
+            className="w-2/3 h-full bg-green-950 rounded-lg border-[6px] border-gray-400/40  items-center justify-center"
           >
+            {chartData ? (
+              <div class = "flex w-[40%] ml-auto h-12 bg-transparent rounded-lg pt-2 pr-2">
+              <button onClick={(e) => {
+                    setDaysData(parseInt(e.target.value, 10));
+                  }} value="1" class = "hover:bg-gray-400/40 hover:rounded-lg  w-1/5  h-[90%] my-auto font-montserrat-fino text-white bg-green-950">1D</button>
+              <button onClick={(e) => {
+                    setDaysData(parseInt(e.target.value, 10));
+                  }}  value = '7' class = "hover:bg-gray-400/40 hover:rounded-lg w-1/5 border-x-2 border-x-gray-600/30 h-[90%] my-auto font-montserrat-fino text-white bg-green-950">7D</button>
+              <button onClick={(e) => {
+                    setDaysData(parseInt(e.target.value, 10));
+                  }}  value = '30' class = "hover:bg-gray-400/40 hover:rounded-lg w-1/5 border-x-1 border-x-gray-600/30 h-[90%] my-auto font-montserrat-fino text-white bg-green-950">30D</button>
+              <button onClick={(e) => {
+                    setDaysData(parseInt(e.target.value, 10));
+                  }}  value = '90' class = "hover:bg-gray-400/40 hover:rounded-lg w-1/5 border-x-2 border-x-gray-600/30 h-[90%] my-auto font-montserrat-fino text-white bg-green-950">90D</button>
+              <button onClick={(e) => {
+                    setDaysData(parseInt(e.target.value, 10));
+                  }}  value = '365' class = "hover:bg-gray-400/40 hover:rounded-lg w-1/5  h-[90%] my-auto font-montserrat-fino text-white bg-green-950">1A</button>
+            </div>
+
+            ) : (
+              <p></p>
+
+            )}
+            
             {chartData ? (
               <Line data={chartData} />
             ) : (
-              <p className="text-white">
-                Selecione uma moeda para visualizar o gráfico
+              <p className="text-white mx-auto flex my-auto justify-center items-center font-bold mt-[25%]">
+                Selecione uma das tabelas ao lado ou crie um gráfico
               </p>
             )}
           </div>
