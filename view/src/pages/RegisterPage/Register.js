@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom"; 
 import PasswordField from "../../components/Inputs/PasswordInput/Password"; 
 import EmailInput from "../../components/Inputs/EmailInput/EmailInput"; 
 
@@ -7,17 +8,20 @@ const Register = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState(""); 
     const [error, setError] = useState("");
-    const [success, setSuccess] = useState(""); // Estado para sucesso
+    const [success, setSuccess] = useState(""); 
     const [name, setName] = useState("");
     const [lastName, setlastName] = useState("");
     const [genero, setGenero] = useState("");
     const [country, setCountry] = useState("");
     const [showPassword, setShowPassword] = useState(false); 
+    const [isRedirecting, setIsRedirecting] = useState(false); 
+
+    const navigate = useNavigate(); 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setError(""); // Limpa os erros anteriores
-        setSuccess(""); // Limpa mensagens anteriores de sucesso
+        setError(""); 
+        setSuccess(""); 
         try {
             await axios.post("http://localhost:5000/auth/cadastrar", {
                 nome: name,
@@ -28,11 +32,15 @@ const Register = () => {
                 senha: password,
             });
             setSuccess("Conta cadastrada com sucesso! 🎉");
-            setError(""); // Limpa os erros, caso existam
+            setError(""); 
+            setIsRedirecting(true);
+            setTimeout(() => {
+                navigate("/"); 
+            }, 4000);
         } catch (err) {
             console.error(err);
             if (err.response && err.response.data && err.response.data.error) {
-                setError(err.response.data.error); // Mostra erro do backend
+                setError(err.response.data.error); 
             } else {
                 setError("Erro ao cadastrar. Verifique os dados informados.");
             }
@@ -111,11 +119,14 @@ const Register = () => {
                         </a>
                     </p>
 
-                    {/* Mensagem de sucesso */}
                     {success && <p className="mt-4 text-sm text-center text-green-500 drop-shadow">{success}</p>}
-
-                    {/* Mensagem de erro */}
                     {error && <p className="mt-4 text-sm text-center text-red-500 drop-shadow">{error}</p>}
+
+                    {isRedirecting && (
+                        <div className="mt-4 text-sm text-center text-yellow-500 drop-shadow">
+                            Redirecionando para o login...
+                        </div>
+                    )}
                 </form>
             </div>
         </div>
