@@ -5,5 +5,3 @@ const authMiddleware = require("../middleware/AuthMiddleware.js");
 const router = express.Router();
 router.get("/sobrenos", authMiddleware, getSobreNos);
 module.exports = router;
-
-// 1 rota

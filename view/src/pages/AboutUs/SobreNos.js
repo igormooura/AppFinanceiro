@@ -2,8 +2,12 @@ import React from "react";
 import Sidebar from "../../components/SideBar/Sidebar";
 import Title from "../../components/Title/Title";
 import PageName from "../../components/PageName/PageName";
+import useAuth from "../../hooks/useAuth";
 
 function SobreNos() {
+  useAuth();
+
+
   return (
     <div className="flex h-screen w-full">
       <Sidebar />

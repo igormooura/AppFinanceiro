@@ -1,17 +1,42 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 function useAuth() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  const location = useLocation(); 
 
-    useEffect(() => {
-        const token = localStorage.getItem("token");
+  useEffect(() => {
+    const token = localStorage.getItem("token");
 
-        if (!token) {
-            navigate("/"); 
-            alert("Logue para acessar."); 
+    if (!token) {
+      console.log(token)
+      navigate("/"); 
+      alert("Logue para acessar."); 
+    } else {
+      fetch("http://localhost:5000/verify-auth", { // Rota genérica no backend
+        headers: {
+          "Authorization": `Bearer ${token}`
         }
-    }, [navigate]);
+      })
+      .then(response => {
+        if (response.status === 401) {
+          localStorage.removeItem("token");
+          navigate("/"); // Redireciona para a página inicial
+          alert("Sessão expirada. Logue novamente.");
+        } else if (!response.ok) {
+          throw new Error("Erro ao verificar autenticação.");
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log("Autenticação válida:", data);
+      })
+      .catch(error => {
+        console.error("Erro:", error);
+      });
+    }
+  }, [navigate, location]);
+
 }
 
 export default useAuth;
