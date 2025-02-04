@@ -1,0 +1,4 @@
+MONGO_USERNAME=${USERNAME} // MUDAR
+MONGO_PASSWORD=${SENHA} // MUDAR
+
+crie um arquivo ".env" e coloque os dados acima, com seu username e senha
