@@ -8,47 +8,48 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [rememberMe, setRememberMe] = useState(false); 
-  const [showPassword, setShowPassword] = useState(false); 
+  const [rememberMe, setRememberMe] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-
   const handleRememberMe = () => {
-    setRememberMe((prev) => !prev); // Toggle the remember state
+    setRememberMe((prev) => !prev);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (email.trim() === "") {
-      setError("Please enter a valid email");
-      console.log("parou aqui");
+      setError("Por favor, insira um e-mail válido.");
       return;
-    }else{
-      console.log("passou");
-      console.log(email);
     }
+
+    setIsLoading(true);
+
     try {
-      // Make POST request to login route
       const response = await axios.post("http://localhost:5000/auth/login", {
         email: email,
         senha: password,
       });
 
-      // If Remember Me is active, store the token
-      if (rememberMe) {
+      if (response.data.token) {
         localStorage.setItem("token", response.data.token);
-        localStorage.setItem("rememberMe", true);
 
+        if (rememberMe) {
+          localStorage.setItem("rememberMe", true);
+        } else {
+          localStorage.removeItem("rememberMe");
+        }
+
+        navigate("/grafico");
       } else {
-        localStorage.removeItem("token");
-        localStorage.removeItem("rememberMe");
+        setError("Erro ao fazer login. Tente novamente.");
       }
-
-      // Navigate to another page after login
-      navigate("/grafico");
     } catch (err) {
       console.error(err);
-      setError("Invalid email or password");
+      setError("E-mail ou senha inválidos.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -62,7 +63,6 @@ const LoginPage = () => {
           backgroundPosition: "center",
         }}
       ></div>
-      <div></div>  
       <nav className="bg-gradient-to-b flex from-green-500 to-green-700/40 w-1/3 h-screen">
         <form
           onSubmit={handleSubmit}
@@ -79,20 +79,20 @@ const LoginPage = () => {
           </div>
 
           <div className="mb-4">
-          <PasswordField
-                        password={password}
-                        setPassword={setPassword}
-                        showPassword={showPassword}
-                        setShowPassword={setShowPassword}
-                        placeholder={"Insira sua senha"}
-                    />
+            <PasswordField
+              password={password}
+              setPassword={setPassword}
+              showPassword={showPassword}
+              setShowPassword={setShowPassword}
+              placeholder={"Insira sua senha"}
+            />
           </div>
 
           <div className="flex mb-7">
             <div className="flex mr-auto ml-2 items-center">
               <div
                 className={`rounded-3xl w-[60px] flex items-center h-[30px] cursor-pointer ${
-                    rememberMe ? "bg-green-400" : "bg-gray-200"
+                  rememberMe ? "bg-green-400" : "bg-gray-200"
                 } transition-colors duration-300`}
                 onClick={handleRememberMe}
               >
@@ -114,14 +114,21 @@ const LoginPage = () => {
 
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white text-2xl font-bold shadow-xl p-2 rounded-lg hover:bg-blue-600"
+            className="w-full bg-blue-500 text-white text-2xl font-bold shadow-xl p-2 rounded-lg hover:bg-blue-600 flex items-center justify-center"
+            disabled={isLoading}
           >
-            Login
+            {isLoading ? (
+              <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
+            ) : (
+              "Login"
+            )}
           </button>
-            <hr class = "w-full h-[0.1px] bg-white mt-14"></hr>
-            <p class = "text-white text-xl mx-auto items-center justify-center flex mt-10">Não possui uma conta?&nbsp; <a href = "/register" class = "text-blue-500"> Cadastro</a></p>
+          <hr className="w-full h-[0.1px] bg-white mt-14"></hr>
+          <p className="text-white text-xl mx-auto items-center justify-center flex mt-10">
+            Não possui uma conta?&nbsp;
+            <a href="/register" className="text-blue-500"> Cadastro</a>
+          </p>
         </form>
-    
       </nav>
     </div>
   );

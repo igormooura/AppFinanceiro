@@ -13,7 +13,7 @@ function useAuth() {
       navigate("/"); 
       alert("Logue para acessar."); 
     } else {
-      fetch("http://localhost:5000/verify-auth", { // Rota genérica no backend
+      fetch("http://localhost:5000/auth/verify-auth", { 
         headers: {
           "Authorization": `Bearer ${token}`
         }
@@ -21,7 +21,7 @@ function useAuth() {
       .then(response => {
         if (response.status === 401) {
           localStorage.removeItem("token");
-          navigate("/"); // Redireciona para a página inicial
+          navigate("/"); 
           alert("Sessão expirada. Logue novamente.");
         } else if (!response.ok) {
           throw new Error("Erro ao verificar autenticação.");

@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const AuthPerfil = require("../model/AuthPerfil.js");
 const Usuario = require("../model/Usuario.js");
+const jwt = require("jsonwebtoken")
 
 // Criar um novo Usuario - Tela Cadastro
 exports.createUser = async (req, res) => {
@@ -49,24 +50,31 @@ exports.createUser = async (req, res) => {
 // Login de usuário - Tela Login
 exports.loginUser = async (req, res) => {
   try {
-    console.log(req.body);
     const { email, senha } = req.body;
-    // Verificar se os campos foram preenchidos
+
     if (!email || !senha) {
       return res.status(400).json({ error: "Campos obrigatórios não preenchidos." });
     }
-    // Procurar o usuário pelo e-mail
+
     const usuario = await AuthPerfil.findOne({ email });
     if (!usuario) {
-      console.log("parou aqui");
       return res.status(404).json({ error: "Usuário não encontrado." });
     }
-    // Validar a senha
-    if (usuario.senha != senha) {
+
+    if (usuario.senha !== senha) {
       return res.status(401).json({ error: "Senha incorreta." });
     }
+
+    // token JWT
+    const token = jwt.sign(
+      { userId: usuario._id, email: usuario.email },
+      "seuSegredoSuperSecreto", // vamos ter q substituir no .env
+      { expiresIn: "3h" } 
+    );
+
     res.status(200).json({ 
       message: "Login realizado com sucesso.",
+      token, 
       usuario: {
         id: usuario._id,
         email: usuario.email,
