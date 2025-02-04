@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
-// Importando as rotas
 const calculadoraRoutes = require("./Routes/CalculadoraRoutes.js");
 const graficoRoutes = require("./Routes/GraficoRoutes.js");
 const noticiaRoutes = require("./Routes/NoticiaRoutes.js");
@@ -11,7 +10,6 @@ const sobreNosRoutes = require("./Routes/SobreNosRoutes.js");
 const usuarioRoutes = require("./Routes/UsuarioRoutes.js");
 const authPerfilRoutes = require("./Routes/AuthPerfilRoutes.js");
 
-// Inicializando o app Express
 const app = express();
 
 // Middleware para parsing JSON
@@ -19,7 +17,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 
-// Habilitando CORS para permitir acesso de diferentes origens
+// Habilitando CORS 
 app.use(cors());
 
 // Conexão com o MongoDB
@@ -34,14 +32,14 @@ mongoose
   });
 
 // Usando as rotas
-app.use("/calculadora", calculadoraRoutes);  // Rota para conversão de moedas
-app.use("/grafico", graficoRoutes);  // Rota para gráficos
-app.use("/noticias", noticiaRoutes);  // Rota para notícias
-app.use("/sobrenos", sobreNosRoutes);  // Rota para "Sobre Nós"
-app.use("/usuarios", usuarioRoutes);  // Rota para usuários 
-app.use("/auth", authPerfilRoutes); // Rota para autenticação de perfil
+app.use("/calculadora", calculadoraRoutes); 
+app.use("/grafico", graficoRoutes);  
+app.use("/noticias", noticiaRoutes);  
+app.use("/sobrenos", sobreNosRoutes); 
+app.use("/usuarios", usuarioRoutes);  
+app.use("/auth", authPerfilRoutes); 
 
-// Rota de boas-vindas
+
 app.get("/", (req, res) => {
   res.send("Bem-vindo à API de Criptomoedas!");
 });
