@@ -3,8 +3,8 @@ const { realizarConversao, getHistorico } = require("../controller/CalculadoraCo
 const router = express.Router();
 
 // Rota para realizar conversão
-router.post("/", realizarConversao);
-// Rota para buscar histórico de conversões
-router.get("/historico", getHistorico);
+router.post("/", authMiddleware , realizarConversao);
+
+router.get("/historico", authMiddleware , getHistorico);
 module.exports = router;
 // 2 rotas

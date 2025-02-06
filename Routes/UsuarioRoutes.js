@@ -1,13 +1,14 @@
-const express = require("express");
-const usuarioController = require("../controller/UsuarioController.js");
+    const express = require("express");
+    const usuarioController = require("../controller/UsuarioController.js");
+    const authMiddleware = require("../middleware/AuthMiddleware.js");
 
-const router = express.Router();
+    const router = express.Router();
 
-router.get("/", usuarioController.getAllPerfis); // Buscar todos os Perfis
-router.get("/perfil/:id", usuarioController.getPerfilById); // Buscar Perfil por ID
-router.put("/perfil/:id", usuarioController.updatePerfil); // Atualizar Perfil
-router.delete("/perfil/:id", usuarioController.deletePerfil); // Deletar Perfil
+    router.get("/", authMiddleware , usuarioController.getAllPerfis);
+    router.get("/perfil/:id", authMiddleware , usuarioController.getPerfilById);
+    router.put("/perfil/:id", authMiddleware , usuarioController.updatePerfil); 
+    router.delete("/perfil/:id", authMiddleware ,usuarioController.deletePerfil); 
 
-module.exports = router;
+    module.exports = router;
 
-// 2 rotas
+    // 2 rotas
