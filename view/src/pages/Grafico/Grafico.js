@@ -209,7 +209,7 @@ const Grafico = () => {
       <Sidebar />
 
       <div className="h-screen w-full bg-gradient-to-b from-[#C0F0B1] to-white">
-        <div className="flex -mt-3  items-center">
+        <div className="flex mt-3  items-center">
           <Title />
           
           <div>
