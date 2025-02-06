@@ -42,7 +42,7 @@ function App() {
             <Route path="/grafico" element = {<Grafico />} />
             <Route path="/sobrenos" element={<SobreNos />} />
             <Route path="/noticias" element={<Noticias/>}/>
-            <Route path="/perfil" element={<Profile />} />
+            <Route path="/perfil/:id" element={<Profile />} />
             <Route path="/calculadora" element={<Calculadora/>}/>
           </Routes>
         </BrowserRouter>
