@@ -1,8 +1,11 @@
 import PageName from "../../components/PageName/PageName";
 import Sidebar from "../../components/SideBar/Sidebar";
 import Title from "../../components/Title/Title";
+import useAuth from "../../hooks/useAuth";
 
 function Noticias(){
+  useAuth();
+
     return(
 
     <div className="flex h-screen w-full">

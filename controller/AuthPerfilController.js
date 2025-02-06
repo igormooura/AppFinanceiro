@@ -68,7 +68,7 @@ exports.loginUser = async (req, res) => {
     // token JWT
     const token = jwt.sign(
       { userId: usuario._id, email: usuario.email },
-      "seuSegredoSuperSecreto", // vamos ter q substituir no .env
+         process.env.JWT_SECRET, // vamos ter q substituir no .env
       { expiresIn: "3h" } 
     );
 

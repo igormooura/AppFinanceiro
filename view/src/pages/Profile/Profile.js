@@ -3,8 +3,11 @@ import Sidebar from "../../components/SideBar/Sidebar";
 import axios from "axios"; 
 import { useParams } from "react-router-dom";
 import mongoose from "mongoose";
+import useAuth from "../../hooks/useAuth";
 
 function Profile() {
+  useAuth();
+
   const { id } = useParams();
 
   const [data, setData] = useState("");

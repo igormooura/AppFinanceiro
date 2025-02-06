@@ -1,5 +1,6 @@
 const express = require("express");
 const { realizarConversao, getHistorico } = require("../controller/CalculadoraController");
+const authMiddleware = require("../middleware/AuthMiddleware");
 const router = express.Router();
 
 // Rota para realizar conversão

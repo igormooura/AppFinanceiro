@@ -15,6 +15,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import useAuth from "../../hooks/useAuth";
 
 ChartJS.register(
   CategoryScale,
@@ -203,6 +204,10 @@ const Grafico = () => {
       alert("Erro ao adicionar gráfico.");
     }
   };
+
+  
+
+  useAuth();
 
   return (
     <div className="flex h-screen w-full">

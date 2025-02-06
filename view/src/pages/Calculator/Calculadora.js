@@ -13,6 +13,7 @@ import {
 import PageName from "../../components/PageName/PageName";
 import Sidebar from "../../components/SideBar/Sidebar";
 import TitleComponent from "../../components/Title/Title";
+import useAuth from "../../hooks/useAuth";
 
 ChartJS.register(
   CategoryScale,
@@ -79,7 +80,7 @@ function Calculadora() {
     },
   };
 
- 
+  useAuth();
 
   return (
     <div className="flex h-screen w-full">
