@@ -25,6 +25,7 @@ function Profile() {
 
   useEffect(() => {
     if (id) {
+      console.log("aq");
       const fetchUserData = async () => {
         try {
           const response = await axios.get(`/api/perfil/${id}`);

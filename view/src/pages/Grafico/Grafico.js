@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Sidebar from "../../components/SideBar/Sidebar";
 import Title from "../../components/Title/Title";
 import PageName from "../../components/PageName/PageName";
+import ProfileCard from "../../components/ProfileCard/ProfileCard";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -48,7 +49,7 @@ const Grafico = () => {
       handleTabClick(activeTab);
     }
   }, [daysData]);
-  
+   
   const handleTabClick = async (tabId) => {
     setActiveTab(tabId);
     var numDay;
@@ -74,10 +75,14 @@ const Grafico = () => {
         }
       );
       console.log(response);
-      const prices = response.data.prices.map(([timestamp, valor]) => ({
-        date: new Date(timestamp).toLocaleDateString(),
-        valor,
-      }));
+      const prices = response.data.prices.map(([timestamp, valor]) => {
+        const date = new Date(timestamp);
+        const formattedDate = numDay < 90 
+          ? date.toLocaleDateString() 
+          : date.toLocaleDateString(undefined, { year: 'numeric', month: '2-digit' });
+      
+        return { date: formattedDate, valor };
+      });
 
       var min = prices[0].valor;
       var size = prices.length;
@@ -97,7 +102,13 @@ const Grafico = () => {
       });
 
       setChartData({
-        labels: prices.map((p) => p.date),
+        
+        labels: prices.map((p) => {
+          return p.date;
+        }
+        
+      
+      ),
         datasets: [
           {
             label: `${moeda} to ${variavel}`,
@@ -162,7 +173,7 @@ const Grafico = () => {
       await axios.delete(`http://localhost:5000/grafico/${graphId}`);
       setGraficos((prev) => {
         const updatedGraficos = [...prev];
-        updatedGraficos[tabId] = null; // Remove the graph from state
+        updatedGraficos[tabId] = null; 
         return updatedGraficos;
       });
     } catch (error) {
@@ -198,22 +209,11 @@ const Grafico = () => {
       <Sidebar />
 
       <div className="h-screen w-full bg-gradient-to-b from-[#C0F0B1] to-white">
-        <div className="flex mt-2 items-center">
+        <div className="flex -mt-3  items-center">
           <Title />
           
           <div>
-            <Link
-              to="/perfil"
-              className="hover:scale-105 duration-500 flex items-center ml-auto mr-10 rounded-2xl w-60 h-16 border-[1px] border-gray-400 shadow-xl"
-            >
-              <div className="h-10 w-10 bg-blue-400 rounded-full my-auto ml-3"></div>
-              <div className="ml-3 -space-y-1">
-                <p className="text-xl font-semibold text-black">
-                  Nome Completo
-                </p>
-                <p className="text-gray-400">example@email.com</p>
-              </div>
-            </Link>
+            <ProfileCard/>
 
             <form>
               <div className="w-[350px] mt-2 mr-10 rounded-full bg-green-100 h-9 flex shadow-lg shadow-gray-500 items-center">
@@ -252,7 +252,7 @@ const Grafico = () => {
 
         <PageName name="Moedas Expostas" />
 
-        <div className="h-[500px] w-[90%] flex space-x-3 items-center justify-center mx-auto mt-10">
+        <div className="h-[510px]  w-[90%] flex space-x-3 items-center justify-center mx-auto mt-10">
           <div
             id="screen"
             className="w-2/3 h-full bg-green-950 rounded-lg border-[6px] border-gray-400/40  items-center justify-center"
@@ -384,9 +384,21 @@ const Grafico = () => {
                 <option value="" disabled>
                   Selecione a Moeda 1
                 </option>
-                <option value="usd">Dólar(USD)</option>
-                <option value="brl">Real(BRL)</option>
-                <option value="bitcoin">Bitcoin(BTC)</option>
+                <option value="usd">Dólar (USD)</option>
+                <option value="eur">Euro (EUR)</option>
+                <option value="brl">Real (BRL)</option>
+                <option value="bitcoin">Bitcoin (BTC)</option>
+                <option value="ethereum">Ethereum (ETH)</option>
+                <option value="bnb">Binance Coin (BNB)</option>
+                <option value="solana">Solana (SOL)</option>
+                <option value="ripple">XRP (XRP)</option>
+                <option value="cardano">Cardano (ADA)</option>
+                <option value="dogecoin">Dogecoin (DOGE)</option>
+                <option value="polkadot">Polkadot (DOT)</option>
+                <option value="matic-network">Polygon (MATIC)</option>
+                <option value="tron">Tron (TRX)</option>
+                <option value="litecoin">Litecoin (LTC)</option>
+                <option value="avalanche-2">Avalanche (AVAX)</option>
               </select>
 
               {/* Dropdown for Moeda 2 */}
@@ -401,9 +413,21 @@ const Grafico = () => {
                 <option value="" disabled>
                   Selecione a Moeda 2
                 </option>
-                <option value="usd">Dólar(USD)</option>
-                <option value="brl">Real(BRL)</option>
-                <option value="bitcoin">Bitcoin(BTC)</option>
+                <option value="usd">Dólar (USD)</option>
+                <option value="eur">Euro (EUR)</option>
+                <option value="brl">Real (BRL)</option>
+                <option value="bitcoin">Bitcoin (BTC)</option>
+                <option value="ethereum">Ethereum (ETH)</option>
+                <option value="bnb">Binance Coin (BNB)</option>
+                <option value="solana">Solana (SOL)</option>
+                <option value="ripple">XRP (XRP)</option>
+                <option value="cardano">Cardano (ADA)</option>
+                <option value="dogecoin">Dogecoin (DOGE)</option>
+                <option value="polkadot">Polkadot (DOT)</option>
+                <option value="matic-network">Polygon (MATIC)</option>
+                <option value="tron">Tron (TRX)</option>
+                <option value="litecoin">Litecoin (LTC)</option>
+                <option value="avalanche-2">Avalanche (AVAX)</option>
               </select>
 
               {/* Input for Value */}
