@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import useAuth from "../../hooks/useAuth.js";
 import Sidebar from "../../components/SideBar/Sidebar";
 import Title from "../../components/Title/Title";
 import PageName from "../../components/PageName/PageName";
@@ -26,6 +27,10 @@ ChartJS.register(
 );
 
 const Grafico = () => {
+  const { isAuthenticated, userInfo, token } = useAuth();  
+  
+  const user = userInfo ? userInfo.userId : null;
+  console.log(userInfo);
   const [graficos, setGraficos] = useState([]);
   const [activeTab, setActiveTab] = useState(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -37,14 +42,18 @@ const Grafico = () => {
   const [chartData, setChartData] = useState(null);
   const [perceCe, setPerceCe] = useState(null);
   const [daysData, setDaysData] = useState(null);
-
+  
+  const userId = user;
+  console.log("aqui __"+user);
   useEffect(() => {
-    fetch("http://localhost:5000/grafico")
+    if (!userId) return; 
+  
+    fetch(`http://localhost:5000/grafico/${userId}`)
       .then((res) => res.json())
       .then((data) => setGraficos(data))
       .catch(() => alert("Erro ao buscar gráficos."));
-  }, []);
-  useEffect(() => {
+  }, [userId]);
+    useEffect(() => {
     if (activeTab !== null && daysData !== null) {
       handleTabClick(activeTab);
     }
@@ -170,14 +179,9 @@ const Grafico = () => {
 
   const handleDelete = async (tabId, graphId) => {
     try {
-      await axios.delete(`http://localhost:5000/grafico/${graphId}`);
-      setGraficos((prev) => {
-        const updatedGraficos = [...prev];
-        updatedGraficos[tabId] = null; 
-        return updatedGraficos;
-      });
+      await axios.delete(`http://localhost:5000/grafico/?userId=${userId}`);
+      setGraficos((prev) => prev.filter((_, index) => index !== tabId));
     } catch (error) {
-      console.log(error);
       alert("Erro ao deletar gráfico.");
     }
   };
@@ -185,10 +189,14 @@ const Grafico = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     console.log(formData);
+    if (!userId) {
+      alert("Usuário não autenticado.");
+      return;
+    }
     try {
       const response = await axios.post(
-        "http://localhost:5000/grafico/",
-        formData
+        `http://localhost:5000/grafico/${userId}`,
+        formData 
       );
       const newGraph = response.data;
 
@@ -201,6 +209,7 @@ const Grafico = () => {
       setIsFormOpen(false);
     } catch (error) {
       alert("Erro ao adicionar gráfico.");
+      console.error(error);
     }
   };
 

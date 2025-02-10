@@ -1,48 +1,78 @@
 const Grafico = require("../model/Grafico.js");
-
-// Criar um novo gráfico
+const Usuario = require("../model/Usuario.js");
+const mongoose = require("mongoose");
+// Criar um novo gráfico e associá-lo a um usuário
 exports.createGrafico = async (req, res) => {
   try {
-    const moeda = req.body.moeda1;
-    const valor = req.body.value;
-    const variavel = req.body.moeda2;
-
-    if (!moeda || valor === undefined || variavel === undefined) {
+    const { moeda1, value, moeda2 } = req.body;
+    
+    const userId = req.params.userId; // Get userId from URL parameter
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(400).json({ error: "ID de usuário inválido." });
+    }
+    if (!moeda1 || value === undefined || !moeda2 || !userId) {
       return res.status(400).json({ error: "Campos obrigatórios não preenchidos." });
     }
-    const novoGrafico = new Grafico({ moeda, valor, variavel });
-    const graficoSalvo = await novoGrafico.save();
+    console.log(userId);
+    const usuario = await Usuario.findById(userId);
+    console.log(usuario);
+    if (!usuario) {
+      return res.status(404).json({ error: "Usuário não encontrado." });
+    }
+
+    if (usuario.graficos.length >= 3) {
+      return res.status(400).json({ error: "Usuário já possui o máximo de 3 gráficos." });
+    }
+
+    const graficoSalvo = new Grafico({
+      moeda1,
+      valor: value,
+      moeda2,
+      user_id: userId,
+    });
+
+    await graficoSalvo.save();
+    usuario.graficos.push(graficoSalvo._id);
+    await usuario.save();
+
     res.status(201).json(graficoSalvo);
   } catch (error) {
     res.status(500).json({ error: "Erro ao criar gráfico." });
   }
 };
 
-// Obter todos os gráficos
-exports.getAllGraficos = async (req, res) => {
-  try { 
-    const graficos = await Grafico.find();
-    res.status(200).json(graficos);
-  } catch (error) {
-    res.status(500).json({ error: "Erro ao buscar gráficos." });
-  }
-};
+// Obter todos os gráficos de um usuário
+exports.getGraficoByUser = async (req, res) => {
+  const user_id = req.params.userId; 
 
-// Obter um gráfico por ID
-exports.getGraficoById = async (req, res) => {
   try {
-    const { id } = req.params;
-    const grafico = await Grafico.findById(id);
-    console.log(grafico);
-    if (!grafico) {
+    const graficoList = await Grafico.find({ user_id }); 
+    res.status(200).json(graficoList);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching grafico', error });
+  }
+}
+
+// Deletar um gráfico e removê-lo do usuário
+exports.deleteGrafico = async (req, res) => {
+  try {
+    const { id, userId } = req.params;
+
+    const graficoDeletado = await Grafico.findByIdAndDelete(id);
+    if (!graficoDeletado) {
       return res.status(404).json({ error: "Gráfico não encontrado." });
     }
-    res.status(200).json(grafico);
+
+    // Remove o gráfico do usuário
+    await Usuario.findByIdAndUpdate(userId, {
+      $pull: { graficos: id },
+    });
+
+    res.status(200).json({ message: "Gráfico deletado com sucesso." });
   } catch (error) {
-    res.status(500).json({ error: "Erro ao buscar gráfico." });
+    res.status(500).json({ error: "Erro ao deletar gráfico." });
   }
 };
-
 // Atualizar um gráfico
 exports.updateGrafico = async (req, res) => {
   try {
@@ -62,20 +92,7 @@ exports.updateGrafico = async (req, res) => {
   }
 };
 
-// Deletar um gráfico
-exports.deleteGrafico = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const graficoDeletado = await Grafico.findByIdAndDelete(id);
-    console.log(id);
-    if (!graficoDeletado) {
-      return res.status(404).json({ error: "Gráfico não encontrado." });
-    }
-    res.status(200).json({ message: "Gráfico deletado com sucesso." });
-  } catch (error) {
-    res.status(500).json({ error: "Erro ao deletar gráfico." });
-  }
-};
+
 exports.getGraficoByMoeda = async (req, res) => {
   try {
     const { moeda } = req.params;

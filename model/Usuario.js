@@ -5,6 +5,17 @@ const UserSchema = new mongoose.Schema({
   sobrenome: String,
   email: String,
   genero: String,
-  country: String
+  country: String,
+  graficos: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Grafico',
+    validate: {
+      validator: function (v) {
+        return v.length <= 3;
+      },
+      message: 'Nao mais que 3 graficos'
+    }
+  }]
 });
+
 module.exports = mongoose.model("Usuario", UserSchema);

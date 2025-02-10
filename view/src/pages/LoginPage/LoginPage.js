@@ -34,14 +34,14 @@ const LoginPage = () => {
 
       if (response.data.token) {
         localStorage.setItem("token", response.data.token);
-
+        console.log(response.data.usuario.id);
         if (rememberMe) {
           localStorage.setItem("rememberMe", true);
         } else {
           localStorage.removeItem("rememberMe");
         }
-
-        navigate("/grafico");
+        navigate(`/grafico`);
+        
       } else {
         setError("Erro ao fazer login. Tente novamente.");
       }

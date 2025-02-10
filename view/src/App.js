@@ -39,7 +39,7 @@ function App() {
             />}/>
             <Route path="/register" element={<Register />} />
             <Route path="/esquecer" element={<Forgot />} />
-            <Route path="/grafico" element = {<Grafico />} />
+            <Route path="/grafico" element={<Grafico />} />
             <Route path="/sobrenos" element={<SobreNos />} />
             <Route path="/noticias" element={<Noticias/>}/>
             <Route path="/perfil/:id" element={<Profile />} />
