@@ -12,7 +12,8 @@ const ProfileCard = ({ id }) => {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const data = await response.json();
-      console.log(data)
+      console.log(data);
+      setUserData(data);
     } catch (error) {
       setError("Failed to fetch user data.");
       
@@ -31,7 +32,7 @@ const ProfileCard = ({ id }) => {
       <div className="h-10 w-10 bg-blue-400 rounded-full my-auto ml-3"></div>
       <div className="ml-3 -space-y-1">
         <p className="text-xl font-semibold text-black">
-          {userData?.nome || "Nome Completo"}
+          {userData?.nome}
         </p>
         <p className="text-gray-400">
           {userData?.email || "example@email.com"}

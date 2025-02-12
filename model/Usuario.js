@@ -11,7 +11,7 @@ const UserSchema = new mongoose.Schema({
     ref: 'Grafico',
     validate: {
       validator: function (v) {
-        return v.length <= 3;
+        return this.graficos.length <= 3;
       },
       message: 'Nao mais que 3 graficos'
     }

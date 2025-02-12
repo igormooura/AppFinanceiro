@@ -1,21 +1,22 @@
 const Grafico = require("../model/Grafico.js");
 const Usuario = require("../model/Usuario.js");
+const Auth = require("../model/AuthPerfil.js");
 const mongoose = require("mongoose");
 // Criar um novo gráfico e associá-lo a um usuário
 exports.createGrafico = async (req, res) => {
   try {
     const { moeda1, value, moeda2 } = req.body;
-    
-    const userId = req.params.userId; // Get userId from URL parameter
+    console.log("Received userId:", req.params.userId);
+    const userId = req.params.userId.trim();// Get userId from URL parameter
     if (!mongoose.Types.ObjectId.isValid(userId)) {
       return res.status(400).json({ error: "ID de usuário inválido." });
     }
     if (!moeda1 || value === undefined || !moeda2 || !userId) {
       return res.status(400).json({ error: "Campos obrigatórios não preenchidos." });
     }
-    console.log(userId);
-    const usuario = await Usuario.findById(userId);
-    console.log(usuario);
+    const usuarioAuth = await Auth.findById(userId);
+    console.log(usuarioAuth.usuarioId);
+    const usuario = await Usuario.findById(usuarioAuth.usuarioId);
     if (!usuario) {
       return res.status(404).json({ error: "Usuário não encontrado." });
     }
@@ -25,51 +26,67 @@ exports.createGrafico = async (req, res) => {
     }
 
     const graficoSalvo = new Grafico({
-      moeda1,
+      moeda: moeda1,
       valor: value,
-      moeda2,
-      user_id: userId,
+      variavel: moeda2,
+      user_id: usuarioAuth.usuarioId,
     });
-
+    console.log(graficoSalvo);
     await graficoSalvo.save();
     usuario.graficos.push(graficoSalvo._id);
     await usuario.save();
 
     res.status(201).json(graficoSalvo);
   } catch (error) {
+    console.error("Error:", error); // Add this line
     res.status(500).json({ error: "Erro ao criar gráfico." });
   }
 };
 
 // Obter todos os gráficos de um usuário
 exports.getGraficoByUser = async (req, res) => {
-  const user_id = req.params.userId; 
-
+  const user_id_old = req.params.userId; 
+  const usuarioAuth = await Auth.findById(user_id_old);
+  const user_id = usuarioAuth.usuarioId;
   try {
     const graficoList = await Grafico.find({ user_id }); 
-    res.status(200).json(graficoList);
+    res.status(200).json({ user_id, graficoList });  // Send user_id along with the grafico list
   } catch (error) {
     res.status(500).json({ message: 'Error fetching grafico', error });
   }
-}
+};
 
 // Deletar um gráfico e removê-lo do usuário
 exports.deleteGrafico = async (req, res) => {
   try {
-    const { id, userId } = req.params;
+    const { id, user_id_old } = req.params;
+    console.log(req.params);
 
-    const graficoDeletado = await Grafico.findByIdAndDelete(id);
-    if (!graficoDeletado) {
-      return res.status(404).json({ error: "Gráfico não encontrado." });
+    // Check if the user exists
+    const usuarioAuth = await Auth.findById(req.params.userId);
+    if (!usuarioAuth) {
+      return res.status(404).json({ error: "Usuário não encontrado." });
     }
 
-    // Remove o gráfico do usuário
+    const userId = usuarioAuth.usuarioId;
+    console.log(userId);
+    // Check if the graph exists and belongs to the user
+    const graficoDeletado = await Grafico.findOne({ _id: id, user_id: userId });
+    if (!graficoDeletado) {
+      return res.status(404).json({ error: "Gráfico não encontrado ou não pertence ao usuário." });
+    }
+
+    // Delete the graph
+    await Grafico.findByIdAndDelete(id);
+
+    // Remove the graph from the user's graficos array
     await Usuario.findByIdAndUpdate(userId, {
       $pull: { graficos: id },
     });
 
     res.status(200).json({ message: "Gráfico deletado com sucesso." });
   } catch (error) {
+    console.error("Error:", error);
     res.status(500).json({ error: "Erro ao deletar gráfico." });
   }
 };

@@ -28,7 +28,8 @@ ChartJS.register(
 
 const Grafico = () => {
   const { isAuthenticated, userInfo, token } = useAuth();  
-  
+  console.log(userInfo);
+  console.log("estou aqui");
   const user = userInfo ? userInfo.userId : null;
   console.log(userInfo);
   const [graficos, setGraficos] = useState([]);
@@ -42,15 +43,23 @@ const Grafico = () => {
   const [chartData, setChartData] = useState(null);
   const [perceCe, setPerceCe] = useState(null);
   const [daysData, setDaysData] = useState(null);
+  const [usuarioId, setUsuarioId] = useState(null); // Add state for usuarioId
+  const [loading, setLoading] = useState(true); // Add loading state
+  const [error, setError] = useState(""); 
   
   const userId = user;
   console.log("aqui __"+user);
+
+  
+
   useEffect(() => {
     if (!userId) return; 
   
     fetch(`http://localhost:5000/grafico/${userId}`)
       .then((res) => res.json())
-      .then((data) => setGraficos(data))
+      .then((data) => {
+        setGraficos(data.graficoList);  // Set grafico data
+        setUsuarioId(data.user_id);}) 
       .catch(() => alert("Erro ao buscar gráficos."));
   }, [userId]);
     useEffect(() => {
@@ -179,7 +188,7 @@ const Grafico = () => {
 
   const handleDelete = async (tabId, graphId) => {
     try {
-      await axios.delete(`http://localhost:5000/grafico/?userId=${userId}`);
+      await axios.delete(`http://localhost:5000/grafico/${graphId}/usuario/${userId}`);
       setGraficos((prev) => prev.filter((_, index) => index !== tabId));
     } catch (error) {
       alert("Erro ao deletar gráfico.");
@@ -222,7 +231,7 @@ const Grafico = () => {
           <Title />
           
           <div>
-            <ProfileCard/>
+            <ProfileCard id = {usuarioId} />
 
             <form>
               <div className="w-[350px] mt-2 mr-10 rounded-full bg-green-100 h-9 flex shadow-lg shadow-gray-500 items-center">
