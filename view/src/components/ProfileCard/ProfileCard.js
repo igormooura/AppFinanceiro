@@ -26,7 +26,7 @@ const ProfileCard = ({ id }) => {
 
   return (
     <Link
-      to={`/perfil/${id}`}
+      to={`/perfil`}
       className="hover:scale-105 duration-500 flex items-center ml-auto mr-10 rounded-2xl w-60 h-16 border-[1px] border-gray-400 shadow-xl"
     >
       <div className="h-10 w-10 bg-blue-400 rounded-full my-auto ml-3"></div>

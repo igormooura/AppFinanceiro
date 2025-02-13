@@ -1,11 +1,22 @@
 import { useState, useEffect } from "react";
 import Sidebar from "../../components/SideBar/Sidebar";
 import axios from "axios"; 
+import useAuth from "../../hooks/useAuth.js";
 import { useParams } from "react-router-dom";
 import mongoose from "mongoose";
 
 function Profile() {
+  const { isAuthenticated, userInfo, token } = useAuth();  
+  const user = userInfo ? userInfo.userId : null;
+  const [usuarioId, setUsuarioId] = useState(null);
+  const [graficos, setGraficos] = useState([]);
+  const userId = user;
+  console.log("QA");
+  console.log(userId);
+  
   const { id } = useParams();
+  
+  
 
   const [data, setData] = useState("");
   const [genero, setGenero] = useState("");
@@ -24,12 +35,19 @@ function Profile() {
   }, []);
 
   useEffect(() => {
-    if (id) {
-      console.log("aq");
+    console.log("userId:", userId); // Debugging: Check if userId is defined
+    console.log("userInfo:", userInfo); // Debugging: Check if userInfo is defined
+  
+    if (userId) {
+      console.log("aq"); // This should now print
       const fetchUserData = async () => {
         try {
-          const response = await axios.get(`/api/perfil/${id}`);
+          const userIdToFetch = id || userId;
+          if (!userIdToFetch) return;
+  
+          const response = await axios.get(`http://localhost:5000/usuarios/perfil/usuarios/${userIdToFetch}`);
           const userData = response.data;
+          console.log("RESPONSE AQUI PORRA ", response);
           setNome(userData.nome);
           setSobrenome(userData.sobrenome);
           setTelefone(userData.telefone);
@@ -44,7 +62,7 @@ function Profile() {
       };
       fetchUserData();
     }
-  }, [id]);
+  }, [id, userId]);
 
   const handleGeneroChange = (event) => {
     setGenero(event.target.value);

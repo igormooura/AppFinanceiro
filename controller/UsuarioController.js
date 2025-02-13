@@ -1,5 +1,5 @@
 const Usuario = require("../model/Usuario.js");
-
+const Auth = require("../model/AuthPerfil.js");
 // Buscar todos os usuários
 exports.getAllPerfis = async (req, res) => {
   try {
@@ -15,6 +15,23 @@ exports.getPerfilById = async (req, res) => {
   try {
     const { id } = req.params;
     const usuario = await Usuario.findById(id);
+
+    if (!usuario) {
+      return res.status(404).json({ error: "Usuário não encontrado." });
+    }
+    res.status(200).json(usuario);
+  } catch (error) {
+    res.status(500).json({ error: "Erro ao buscar usuário." });
+  }
+};
+
+// Buscar usuário por ID - Tela Perfil Usuario (MAIN)
+exports.getPerfilByIdMain = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const auth = await Auth.findById(id);
+    new_id = auth.usuarioId;
+    const usuario = await Usuario.findById(new_id);
 
     if (!usuario) {
       return res.status(404).json({ error: "Usuário não encontrado." });
