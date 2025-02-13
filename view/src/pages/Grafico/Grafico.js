@@ -17,6 +17,7 @@ import {
   Legend,
 } from "chart.js";
 
+
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -27,6 +28,9 @@ ChartJS.register(
 );
 
 const Grafico = () => {
+
+  useAuth();
+
   const { isAuthenticated, userInfo, token } = useAuth();  
   console.log(userInfo);
   console.log("estou aqui");

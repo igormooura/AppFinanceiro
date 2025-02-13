@@ -13,6 +13,7 @@ import {
 import PageName from "../../components/PageName/PageName";
 import Sidebar from "../../components/SideBar/Sidebar";
 import TitleComponent from "../../components/Title/Title";
+import useAuth from "../../hooks/useAuth";
 
 ChartJS.register(
   CategoryScale,
@@ -25,6 +26,9 @@ ChartJS.register(
 );
 
 function Calculadora() {
+
+  useAuth();
+
   const [valor, setValor] = useState(1000);
   const [cotacao, setCotacao] = useState(5.15);
   const [convertido, setConvertido] = useState(valor * cotacao);

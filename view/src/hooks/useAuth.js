@@ -7,6 +7,8 @@ function useAuth() {
   const [userInfo, setUserInfo] = useState(null);
   const [token, setToken] = useState(localStorage.getItem("token") || "");
 
+  console.log("aquiiiiiiiii: " + token);
+
   useEffect(() => {
     if (!token) {
       navigate("/");

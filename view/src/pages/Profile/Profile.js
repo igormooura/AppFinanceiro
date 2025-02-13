@@ -6,6 +6,9 @@ import { useParams } from "react-router-dom";
 import mongoose from "mongoose";
 
 function Profile() {
+
+  useAuth();
+
   const { isAuthenticated, userInfo, token } = useAuth();  
   const user = userInfo ? userInfo.userId : null;
   const [usuarioId, setUsuarioId] = useState(null);
