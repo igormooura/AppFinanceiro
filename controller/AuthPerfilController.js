@@ -10,7 +10,7 @@ exports.createUser = async (req, res) => {
   session.startTransaction();
 
   try {
-    const { nome, sobrenome, genero, country, email, senha } = req.body;
+    const { nome, sobrenome, genero, country, email, senha, telefone, cpf } = req.body;
 
     
     if (!email || !senha || !nome) {
@@ -35,6 +35,8 @@ exports.createUser = async (req, res) => {
       genero,
       country,
       email,
+      cpf,
+      telefone
     });
     const usuarioSalvo = await novoUsuario.save({ session });
 

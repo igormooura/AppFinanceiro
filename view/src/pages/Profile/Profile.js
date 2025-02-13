@@ -22,9 +22,9 @@ function Profile() {
   const [genero, setGenero] = useState("");
   const [nome, setNome] = useState("");
   const [sobrenome, setSobrenome] = useState("");
-  const [CPF, setCPF] = useState("");
+  const [cpf, setCPF] = useState("");
   const [telefone, setTelefone] = useState("");
-  const [pais, setPais] = useState("");
+  const [country, setPais] = useState("");
   const [email, setEmail] = useState("");
   const [editMode, setEditMode] = useState(false);
 
@@ -44,16 +44,16 @@ function Profile() {
         try {
           const userIdToFetch = id || userId;
           if (!userIdToFetch) return;
-  
+          setUsuarioId(userIdToFetch);
           const response = await axios.get(`http://localhost:5000/usuarios/perfil/usuarios/${userIdToFetch}`);
           const userData = response.data;
           console.log("RESPONSE AQUI PORRA ", response);
           setNome(userData.nome);
           setSobrenome(userData.sobrenome);
           setTelefone(userData.telefone);
-          setCPF(userData.CPF);
+          setCPF(userData.cpf);
           setGenero(userData.genero);
-          setPais(userData.pais);
+          setPais(userData.country);
           setEmail(userData.email);
         } catch (error) {
           console.error("Erro ao carregar dados do perfil", error);
@@ -90,20 +90,33 @@ function Profile() {
 
   const toggleEditMode = () => setEditMode((prevMode) => !prevMode);
 
-  const saveProfile = async () => {
-    const updatedProfile = { nome, sobrenome, telefone, CPF, genero, pais };
-    try {
-      const response = await axios.put(`/api/perfil/${id}`, updatedProfile);
-      if (response.status === 200) {
-        alert("Perfil atualizado com sucesso!");
-        setEditMode(false);
-      }
-    } catch (error) {
-      console.error("Erro ao atualizar perfil", error);
-      alert(error.response?.data?.message || "Erro ao salvar perfil. Tente novamente.");
-    }
-  };
+const saveProfile = async () => {
+  const updatedProfile = { nome, sobrenome, telefone, genero, country, cpf, telefone };
 
+  try {
+    console.log("usuarioId:", usuarioId); // Debugging: Check if usuarioId is defined
+    if (!usuarioId) {
+      alert("ID do usuário não encontrado.");
+      return;
+    }
+
+    const response = await axios.put(
+      `http://localhost:5000/usuarios/perfil/${usuarioId}`,
+      updatedProfile
+    );
+    if (response.status === 200) {
+      alert("Perfil atualizado com sucesso!");
+      setEditMode(false);
+    }
+  } catch (error) {
+    console.error("Erro ao atualizar perfil", error);
+    alert(
+      error.response?.data?.message ||
+      error.message ||
+      "Erro ao salvar perfil. Tente novamente."
+    );
+  }
+};
   return (
     <div className="flex h-screen w-full">
       <Sidebar />
@@ -111,11 +124,11 @@ function Profile() {
         <div className="ml-10 mt-5">
           <div className="text-left">
             <h2 className="text-3xl font-semibold text-gray-700">Bem-vindo, {nome}!</h2>
-            <p className="text-gray-600">email</p>
+            <p className="text-gray-600">email: {email}</p>
             <p className="text-lg text-gray-500">{data}</p>
           </div>
         </div>
-
+  
         <div className="h-[600px] w-[90%] bg-white rounded-lg shadow-md p-7 mx-auto mt-20">
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-4">
@@ -132,8 +145,12 @@ function Profile() {
               </div>
             </div>
             <button
-              onClick={toggleEditMode}
-              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+              onClick={editMode ? saveProfile : toggleEditMode} 
+              className={`px-4 py-2 rounded transition ${
+                editMode
+                  ? "bg-green-500 font-bold hover:scale-105 duration-300 hover:bg-green-600 text-white" 
+                  : "bg-blue-500 font-bold hover:bg-blue-600 text-white hover:scale-105 duration-300"   
+              }`}
             >
               {editMode ? "Salvar" : "Editar"}
             </button>
@@ -191,7 +208,7 @@ function Profile() {
               </label>
               <input
                 type="text"
-                value={CPF}
+                value={cpf}
                 onChange={handleCPFChange}
                 id="CPF"
                 className="w-full px-4 py-3 rounded-lg bg-white text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white border-2 border-gray-300 shadow-2xl"
@@ -225,7 +242,7 @@ function Profile() {
               <input
                 type="text"
                 id="pais"
-                value={pais}
+                value={country}
                 onChange={(e) => setPais(e.target.value)}
                 className="w-full px-4 py-3 rounded-lg bg-white text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white border-2 border-gray-300 shadow-2xl"
                 placeholder="País"
@@ -236,7 +253,9 @@ function Profile() {
 
           <div className="mt-6">
             <h3 className="text-lg font-medium mb-2">Meu email</h3>
-            <div className="flex items-center gap-2 text-gray-600">
+            <div>
+             
+              <div class = "flex"><div className="flex items-center gap-2nh text-gray-600 bg-white">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -252,6 +271,18 @@ function Profile() {
                 />
               </svg>
             </div>
+                <input
+                type="text"
+                id="pais"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-[46%] px-4 py-3 rounded-lg   text-gray-800 placeholder-gray-400 focus:outline-none focus:bg-white focus:text-blue-500 font-bold  "
+                placeholder="País"
+                disabled={!editMode}
+              /></div>
+              
+            </div>
+            
           </div>
         </div>
       </div>

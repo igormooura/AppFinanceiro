@@ -6,6 +6,9 @@ const UserSchema = new mongoose.Schema({
   email: String,
   genero: String,
   country: String,
+  cpf: String,
+  telefone: String,
+  
   graficos: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Grafico',

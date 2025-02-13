@@ -46,11 +46,14 @@ exports.getPerfilByIdMain = async (req, res) => {
 exports.updatePerfil = async (req, res) => {
   try {
     const { id } = req.params;
-    const { nome, apelido, email, genero, country } = req.body;
+    console.log(id);
+    const auth = await Auth.findById(id);
+    new_id = auth.usuarioId;
+    const { nome, apelido, email, genero, country, cpf, telefone } = req.body;
     const usuarioAtualizado = await Usuario.findByIdAndUpdate(
-      id,
-      { nome, apelido, email, genero, country },
-      { new: true } // Retorna o documento atualizado
+      new_id,
+      { nome, apelido, email, genero, country, cpf, telefone },
+      { new: true, runValidators: true } // Retorna o documento atualizado
     );
     if (!usuarioAtualizado) {
       return res.status(404).json({ error: "Usuário não encontrado." });

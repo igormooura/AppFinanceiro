@@ -27,14 +27,14 @@ const ProfileCard = ({ id }) => {
   return (
     <Link
       to={`/perfil`}
-      className="hover:scale-105 duration-500 flex items-center ml-auto mr-10 rounded-2xl w-60 h-16 border-[1px] border-gray-400 shadow-xl"
+      className="hover:scale-105 duration-500 flex items-center ml-auto mr-10 rounded-2xl w-[280px] h-16 border-[1px] border-gray-400 shadow-xl"
     >
       <div className="h-10 w-10 bg-blue-400 rounded-full my-auto ml-3"></div>
       <div className="ml-3 -space-y-1">
         <p className="text-xl font-semibold text-black">
           {userData?.nome}
         </p>
-        <p className="text-gray-400">
+        <p className="text-gray-400 px-2">
           {userData?.email || "example@email.com"}
         </p>
       </div>
