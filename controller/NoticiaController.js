@@ -1,14 +1,20 @@
 const Noticia = require("../model/Noticia.js");
+const news = require("./news.json");
+const fs = require('fs');
+console.log("Total notícias:", news[1]);
 
 // Criar uma nova notícia
 exports.createNoticia = async (req, res) => {
   try {
-    const { titulo, data } = req.body;
-    if (!titulo || !data) {
-      return res.status(400).json({ error: "Campos obrigatórios não preenchidos." });
-    }
-    const novaNoticia = new Noticia({ titulo, data });
-    const noticiaSalva = await novaNoticia.save();
+    const noticiasPromises = req.body.map(async (item) => {
+      const { titulo, descr, data } = item;
+      const novaNoticia = new Noticia({ titulo, descr, data });
+      return await novaNoticia.save();
+    });
+
+    const noticiasSalvas = await Promise.all(noticiasPromises);
+    
+    
     res.status(201).json(noticiaSalva);
   } catch (error) {
     res.status(500).json({ error: "Erro ao criar notícia." });
@@ -18,8 +24,24 @@ exports.createNoticia = async (req, res) => {
 // Buscar todas as notícias
 exports.getAllNoticias = async (req, res) => {
   try {
-    const noticias = await Noticia.find();
-    res.status(200).json(noticias);
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 8;
+    const skip = (page - 1) * limit;
+    
+    const noticias = await Noticia.find()
+      .skip(skip)
+      .limit(limit)
+      .exec();
+
+    const totalNoticias = await Noticia.countDocuments();
+    const totalPages = Math.ceil(totalNoticias / limit);
+
+    res.status(200).json({
+      noticias,
+      currentPage: page,
+      totalPages,
+      totalNoticias,
+    });
   } catch (error) {
     res.status(500).json({ error: "Erro ao buscar notícias." });
   }
@@ -43,7 +65,7 @@ exports.getNoticiaById = async (req, res) => {
 exports.updateNoticia = async (req, res) => {
   try {
     const { id } = req.params;
-    const { titulo, data } = req.body;
+    const { titulo,descr, data } = req.body;
     const noticiaAtualizada = await Noticia.findByIdAndUpdate(
       id,
       { titulo, data },

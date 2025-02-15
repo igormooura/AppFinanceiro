@@ -70,7 +70,7 @@ const Sidebar = () => {
           <li>
             <Link to="/noticias">
               <div className={`rounded-full mx-auto w-20 ${selected === "noticias" ? "bg-gray-200 border-2 border-gray-400 shadow-inner" : ""}`}>
-                <img src="static/group.png" className="w-10 h-10 mx-auto" alt="Grupo" />
+                <img src="static/news.png" className="w-10 h-10 mx-auto" alt="Grupo" />
               </div>
               <p className="font-bold flex justify-center">Notícias</p>
             </Link>
@@ -78,7 +78,7 @@ const Sidebar = () => {
           <li>
             <Link to="/sobrenos">
               <div className={`rounded-full mx-auto w-20 ${selected === "sobrenos" ? "bg-gray-200 border-2 border-gray-400 shadow-inner" : ""}`}>
-                <img src="static/news.png" className="w-10 h-10 mx-auto" alt="Notícias" />
+                <img  src="static/group.png" className="w-10 h-10 mx-auto" alt="Notícias" />
               </div>
               <p className="font-bold flex justify-center">Sobre Nós</p>
             </Link>
