@@ -14,6 +14,22 @@ function Calculadora() {
   const [convertido, setConvertido] = useState(valor * cotacao);
 
   useEffect(() => {
+    // Função para buscar a cotação
+    async function buscarCotacao() {
+      try {
+        const response = await fetch(`https://api.exchangerate-api.com/v4/latest/${moedaOrigem}`);
+        const data = await response.json();
+        if (data.rates[moedaDestino]) {
+          setCotacao(data.rates[moedaDestino]);
+        }
+      } catch (error) {
+        console.error("Erro ao buscar a cotação:", error);
+      }
+    }
+    buscarCotacao();
+  }, [moedaOrigem, moedaDestino]);
+
+  useEffect(() => {
     setConvertido(valor * cotacao);
   }, [valor, cotacao]);
 
