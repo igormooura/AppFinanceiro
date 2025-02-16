@@ -7,8 +7,12 @@ console.log("Total notícias:", news[1]);
 exports.createNoticia = async (req, res) => {
   try {
     const noticiasPromises = req.body.map(async (item) => {
-      const { titulo, descr, data } = item;
-      const novaNoticia = new Noticia({ titulo, descr, data });
+      const { titulo, descr, data, tag } = item;
+      const noticiaExistente = await Noticia.findOne({ titulo });
+      if (noticiaExistente) {
+        return null; // Skip adding duplicate noticia
+      }
+      const novaNoticia = new Noticia({ titulo, descr, data, tag });
       return await novaNoticia.save();
     });
 
@@ -25,15 +29,30 @@ exports.createNoticia = async (req, res) => {
 exports.getAllNoticias = async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 8;
-    const skip = (page - 1) * limit;
     
-    const noticias = await Noticia.find()
+    const limit = parseInt(req.query.limit) || 4;
+    const skip = (page - 1) * limit;
+
+    const tag = req.query.tag; 
+    const search = req.query.search; 
+
+    const query = {};
+    console.log(query.titulo);
+    console.log(tag);
+    if (tag) {
+      query.tag = tag; 
+    }
+
+    if (search) {
+      query.titulo = { $regex: search, $options: 'i' }; 
+    }
+    console.log(query);
+    const noticias = await Noticia.find(query)
       .skip(skip)
       .limit(limit)
       .exec();
-
-    const totalNoticias = await Noticia.countDocuments();
+    console.log(noticias);
+    const totalNoticias = await Noticia.countDocuments(query);
     const totalPages = Math.ceil(totalNoticias / limit);
 
     res.status(200).json({
