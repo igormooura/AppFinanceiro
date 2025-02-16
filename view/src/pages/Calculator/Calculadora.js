@@ -12,9 +12,10 @@ function Calculadora() {
   const [moedaDestino, setMoedaDestino] = useState("BRL");
   const [cotacao, setCotacao] = useState(5.15);
   const [convertido, setConvertido] = useState(valor * cotacao);
+  const [historico, setHistorico] = useState([]);
 
   useEffect(() => {
-    // Função para buscar a cotação
+
     async function buscarCotacao() {
       try {
         const response = await fetch(`https://api.exchangerate-api.com/v4/latest/${moedaOrigem}`);
@@ -44,6 +45,18 @@ function Calculadora() {
 
   const handleChangeMoedaDestino = (e) => {
     setMoedaDestino(e.target.value);
+  };
+
+  const adicionarHistorico = () => {
+    const novaCotacao = {
+      valor,
+      moedaOrigem,
+      moedaDestino,
+      cotacao,
+      convertido: convertido.toFixed(2),
+      data: new Date().toLocaleString(),
+    };
+    setHistorico([novaCotacao, ...historico]);
   };
 
   return (
@@ -96,6 +109,41 @@ function Calculadora() {
                 readOnly
               />
             </div>
+          </div>
+
+          <button
+            onClick={adicionarHistorico}
+            className="bg-blue-500 text-white px-4 py-2 rounded-lg mt-4"
+          >
+            Adicionar ao Histórico
+          </button>
+
+          <div className="bg-white p-4 rounded-xl shadow-lg w-full max-w-4xl mt-6">
+            <h2 className="text-xl font-bold text-gray-700 mb-4">Histórico de Cotações</h2>
+            <table className="w-full text-left border-collapse">
+              <thead>
+                <tr>
+                  <th className="border-b p-2">Data</th>
+                  <th className="border-b p-2">Valor Original</th>
+                  <th className="border-b p-2">Moeda de Origem</th>
+                  <th className="border-b p-2">Moeda de Destino</th>
+                  <th className="border-b p-2">Cotação</th>
+                  <th className="border-b p-2">Valor Convertido</th>
+                </tr>
+              </thead>
+              <tbody>
+                {historico.map((item, index) => (
+                  <tr key={index}>
+                    <td className="border-b p-2">{item.data}</td>
+                    <td className="border-b p-2">{item.valor}</td>
+                    <td className="border-b p-2">{item.moedaOrigem}</td>
+                    <td className="border-b p-2">{item.moedaDestino}</td>
+                    <td className="border-b p-2">{item.cotacao}</td>
+                    <td className="border-b p-2">{item.convertido}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
