@@ -3,7 +3,6 @@ import Sidebar from "../../components/SideBar/Sidebar";
 import axios from "axios"; 
 import useAuth from "../../hooks/useAuth.js";
 import { useParams } from "react-router-dom";
-import mongoose from "mongoose";
 
 function Profile() {
 
