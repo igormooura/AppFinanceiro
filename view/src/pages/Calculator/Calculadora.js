@@ -5,7 +5,7 @@ import TitleComponent from "../../components/Title/Title";
 import useAuth from "../../hooks/useAuth";
 
 function Calculadora() {
-  const { userInfo } = useAuth();  
+  const { userInfo } = useAuth();
   const user = userInfo ? userInfo.userId : null;
 
   const [valor, setValor] = useState(1000);
@@ -14,6 +14,39 @@ function Calculadora() {
   const [cotacao, setCotacao] = useState(5.15);
   const [convertido, setConvertido] = useState(valor * cotacao);
   const [historico, setHistorico] = useState([]);
+
+  useEffect(() => {
+    async function carregarHistorico() {
+      if (!user) return;
+
+      try {
+        const response = await fetch(`http://localhost:5000/calculadora/historico/${user}`);
+        const data = await response.json();
+
+        if (response.ok) {
+          const historicoFormatado = data
+            .sort((a, b) => new Date(b.data) - new Date(a.data)) 
+            .slice(0, 5) 
+            .map(item => ({
+              data: new Date(item.data).toLocaleString(),
+              valor: item.valor || "N/A",
+              moedaOrigem: item.moedaOrigem || "N/A",
+              moedaDestino: item.moedaDestino || "N/A",
+              cotacao: item.resultado ? (item.resultado / item.valor).toFixed(4) : "N/A", 
+              convertido: item.resultado !== undefined ? item.resultado.toFixed(2) : "N/A"
+            }));
+
+          setHistorico(historicoFormatado);
+        } else {
+          console.error("Erro ao carregar histórico:", data.error);
+        }
+      } catch (error) {
+        console.error("Erro ao buscar histórico:", error);
+      }
+    }
+
+    carregarHistorico();
+  }, [user]);
 
   useEffect(() => {
     async function buscarCotacao() {
@@ -51,6 +84,21 @@ function Calculadora() {
 
   const adicionarHistorico = async () => {
     try {
+      const dataAtual = new Date();
+      const novoItem = {
+        data: dataAtual.toLocaleString(),
+        valor: valor,
+        moedaOrigem: moedaOrigem,
+        moedaDestino: moedaDestino,
+        cotacao: cotacao.toFixed(4), 
+        convertido: convertido.toFixed(2),
+      };
+  
+      setHistorico(prevHistorico => {
+        const novoHistorico = [novoItem, ...prevHistorico];
+        return novoHistorico.slice(0, 5); // Mantém apenas os 5 mais recentes
+      });
+  
       const response = await fetch(`http://localhost:5000/calculadora/historico/${user}`, {
         method: "POST",
         headers: {
@@ -65,28 +113,38 @@ function Calculadora() {
           convertido,
         }),
       });
-      const data = await response.json();
-      console.log("Resposta da API ao adicionar histórico:", data);
   
-      if (response.ok) {
-        const dataAtual = new Date();
+      const data = await response.json();
       
-        setHistorico(prevHistorico => [
-          {
-            ...data,
-            data: dataAtual.toLocaleString(), 
-            cotacao: cotacao,
-            convertido: convertido.toFixed(2), 
-          },
-          ...prevHistorico
-        ]);
-      } else {
-        console.error("Erro ao salvar conversão:", data.error);
+      if (!response.ok) {
+        throw new Error(data.error || "Erro ao salvar conversão");
+      }
+  
+      // Recarrega o histórico do servidor após sucesso
+      const historicoResponse = await fetch(`http://localhost:5000/calculadora/historico/${user}`);
+      const historicoData = await historicoResponse.json();
+      
+      if (historicoResponse.ok) {
+        const historicoFormatado = historicoData
+          .sort((a, b) => new Date(b.data) - new Date(a.data))
+          .slice(0, 5)
+          .map(item => ({
+            data: new Date(item.data).toLocaleString(),
+            valor: item.valor || "N/A",
+            moedaOrigem: item.moedaOrigem || "N/A",
+            moedaDestino: item.moedaDestino || "N/A",
+            cotacao: item.resultado ? (item.resultado / item.valor).toFixed(4) : "N/A", 
+            convertido: item.resultado?.toFixed(2) || "N/A"
+          }));
+        
+        setHistorico(historicoFormatado);
       }
     } catch (error) {
       console.error("Erro ao salvar conversão:", error);
     }
   };
+
+  
   
 
   return (
@@ -158,7 +216,7 @@ function Calculadora() {
 
           <div className="bg-white p-4 rounded-xl shadow-lg w-full max-w-4xl mt-6">
             <h2 className="text-xl font-bold text-gray-700 mb-4">
-              Histórico de Cotações
+              Adicionar ao histórico
             </h2>
             <table className="w-full text-left border-collapse">
               <thead>

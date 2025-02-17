@@ -36,10 +36,7 @@ exports.realizarConversao = async (req, res) => {
       user_id: userId,
     });
     await novaConversao.save();
-
-    res.json({
-      resultado: `${valor} ${moedaOrigem} = ${resultado} ${moedaDestino}`,
-    });
+    
   } catch (error) {
     console.error("Erro ao realizar conversão:", error);
     res.status(500).json({ error: "Erro ao realizar conversão." });
