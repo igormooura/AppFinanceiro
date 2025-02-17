@@ -1,0 +1,20 @@
+[
+{
+"titulo": "Noticia 1",
+"descr": "Descrição 1",
+"data": "15/01/2025"
+},
+{
+    "titulo": "Noticia 2",
+    "descr": "Descrição 2",
+    "data": "16/01/2025"
+
+},
+{
+    "titulo": "Noticia 3",
+    "descr": "Descrição 3",
+    "data": "13/01/2025"
+
+}
+
+]
