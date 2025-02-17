@@ -5,7 +5,8 @@ import TitleComponent from "../../components/Title/Title";
 import useAuth from "../../hooks/useAuth";
 
 function Calculadora() {
-  useAuth();
+  const { userInfo } = useAuth();  
+  const user = userInfo ? userInfo.userId : null;
 
   const [valor, setValor] = useState(1000);
   const [moedaOrigem, setMoedaOrigem] = useState("USD");
@@ -15,10 +16,11 @@ function Calculadora() {
   const [historico, setHistorico] = useState([]);
 
   useEffect(() => {
-
     async function buscarCotacao() {
       try {
-        const response = await fetch(`https://api.exchangerate-api.com/v4/latest/${moedaOrigem}`);
+        const response = await fetch(
+          `https://api.exchangerate-api.com/v4/latest/${moedaOrigem}`
+        );
         const data = await response.json();
         if (data.rates[moedaDestino]) {
           setCotacao(data.rates[moedaDestino]);
@@ -47,17 +49,45 @@ function Calculadora() {
     setMoedaDestino(e.target.value);
   };
 
-  const adicionarHistorico = () => {
-    const novaCotacao = {
-      valor,
-      moedaOrigem,
-      moedaDestino,
-      cotacao,
-      convertido: convertido.toFixed(2),
-      data: new Date().toLocaleString(),
-    };
-    setHistorico([novaCotacao, ...historico]);
+  const adicionarHistorico = async () => {
+    try {
+      const response = await fetch(`http://localhost:5000/calculadora/historico/${user}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          valor,
+          moedaOrigem,
+          moedaDestino,
+          userId: user,
+          cotacao,
+          convertido,
+        }),
+      });
+      const data = await response.json();
+      console.log("Resposta da API ao adicionar histórico:", data);
+  
+      if (response.ok) {
+        const dataAtual = new Date();
+      
+        setHistorico(prevHistorico => [
+          {
+            ...data,
+            data: dataAtual.toLocaleString(), 
+            cotacao: cotacao,
+            convertido: convertido.toFixed(2), 
+          },
+          ...prevHistorico
+        ]);
+      } else {
+        console.error("Erro ao salvar conversão:", data.error);
+      }
+    } catch (error) {
+      console.error("Erro ao salvar conversão:", error);
+    }
   };
+  
 
   return (
     <div className="flex h-screen w-full">
@@ -70,7 +100,11 @@ function Calculadora() {
         <div className="flex flex-col items-center mt-[100px] space-y-12">
           <div className="flex items-center gap-[50px]">
             <div className="flex items-center border-2 border-purple-500 rounded-lg px-6 py-3 bg-white shadow-lg">
-              <select value={moedaOrigem} onChange={handleChangeMoedaOrigem} className="mr-2 border-none outline-none text-gray-700">
+              <select
+                value={moedaOrigem}
+                onChange={handleChangeMoedaOrigem}
+                className="mr-2 border-none outline-none text-gray-700"
+              >
                 <option value="USD">USD</option>
                 <option value="BRL">BRL</option>
                 <option value="EUR">EUR</option>
@@ -92,7 +126,11 @@ function Calculadora() {
             <div className="text-3xl text-gray-400">→</div>
 
             <div className="flex items-center border-2 border-gray-300 rounded-lg px-6 py-3 bg-white shadow-lg">
-              <select value={moedaDestino} onChange={handleChangeMoedaDestino} className="mr-2 border-none outline-none text-gray-700">
+              <select
+                value={moedaDestino}
+                onChange={handleChangeMoedaDestino}
+                className="mr-2 border-none outline-none text-gray-700"
+              >
                 <option value="USD">USD</option>
                 <option value="BRL">BRL</option>
                 <option value="EUR">EUR</option>
@@ -119,7 +157,9 @@ function Calculadora() {
           </button>
 
           <div className="bg-white p-4 rounded-xl shadow-lg w-full max-w-4xl mt-6">
-            <h2 className="text-xl font-bold text-gray-700 mb-4">Histórico de Cotações</h2>
+            <h2 className="text-xl font-bold text-gray-700 mb-4">
+              Histórico de Cotações
+            </h2>
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr>
