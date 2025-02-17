@@ -31,11 +31,8 @@ const Grafico = () => {
 
   useAuth();
 
-  const { isAuthenticated, userInfo, token } = useAuth();  
-  console.log(userInfo);
-  console.log("estou aqui");
+  const {userInfo} = useAuth();  
   const user = userInfo ? userInfo.userId : null;
-  console.log(userInfo);
   const [graficos, setGraficos] = useState([]);
   const [activeTab, setActiveTab] = useState(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
