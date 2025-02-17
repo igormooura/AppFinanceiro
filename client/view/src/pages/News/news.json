@@ -1,0 +1,62 @@
+[
+    {
+      "titulo": "Novo plano econômico é anunciado pelo governo",
+      "descr": "O governo federal apresentou um novo plano econômico com medidas para estimular o crescimento e reduzir a inflação.",
+      "data": "15/01/2025",
+      "tag": "econ"
+    },
+    {
+      "titulo": "Conflito no Oriente Médio se intensifica",
+      "descr": "Tensões aumentam na região após novos ataques aéreos, com repercussões internacionais.",
+      "data": "16/01/2025",
+      "tag": "mund"
+    },
+    {
+      "titulo": "Reforma tributária é aprovada no Congresso",
+      "descr": "Depois de meses de debates, a reforma tributária foi aprovada com ampla maioria no Congresso Nacional.",
+      "data": "13/01/2025",
+      "tag": "pol"
+    },
+    {
+      "titulo": "Mercado de ações atinge recorde histórico",
+      "descr": "O índice principal da bolsa de valores subiu 3% nesta semana, atingindo um novo recorde.",
+      "data": "14/01/2025",
+      "tag": "econ"
+    },
+    {
+      "titulo": "Cúpula global discute mudanças climáticas",
+      "descr": "Líderes mundiais se reúnem em Genebra para discutir ações urgentes contra o aquecimento global.",
+      "data": "17/01/2025",
+      "tag": "mund"
+    },
+    {
+      "titulo": "Senador é acusado de corrupção",
+      "descr": "Um senador foi denunciado por suposto envolvimento em um esquema de desvio de verbas públicas.",
+      "data": "18/01/2025",
+      "tag": "pol"
+    },
+    {
+      "titulo": "Inflação cai pelo terceiro mês consecutivo",
+      "descr": "Dados oficiais mostram que a inflação acumulada nos últimos 12 meses foi de 4,5%, a menor em dois anos.",
+      "data": "19/01/2025",
+      "tag": "econ"
+    },
+    {
+      "titulo": "Crise migratória na Europa se agrava",
+      "descr": "O fluxo de refugiados para a Europa aumentou 20% este ano, gerando debates sobre políticas de imigração.",
+      "data": "20/01/2025",
+      "tag": "mund"
+    },
+    {
+      "titulo": "Presidente anuncia novo pacote de benefícios sociais",
+      "descr": "O governo lançou um novo programa de auxílio financeiro para famílias de baixa renda.",
+      "data": "21/01/2025",
+      "tag": "pol"
+    },
+    {
+      "titulo": "Taxa de desemprego atinge menor nível em uma década",
+      "descr": "O desemprego no país caiu para 6,8%, o menor índice desde 2015, segundo dados do IBGE.",
+      "data": "22/01/2025",
+      "tag": "econ"
+    }
+  ]
