@@ -3,7 +3,6 @@ const Usuario = require("../model/Usuario.js");
 const Auth = require("../model/AuthPerfil.js");
 const mongoose = require("mongoose");
 // Criar um novo gráfico e associá-lo a um usuário
-
 exports.createGrafico = async (req, res) => {
   try {
     const { moeda1, value, moeda2 } = req.body;
@@ -15,8 +14,6 @@ exports.createGrafico = async (req, res) => {
     if (!moeda1 || value === undefined || !moeda2 || !userId) {
       return res.status(400).json({ error: "Campos obrigatórios não preenchidos." });
     }
-
-
     const usuarioAuth = await Auth.findById(userId);
     console.log(usuarioAuth.usuarioId);
     const usuario = await Usuario.findById(usuarioAuth.usuarioId);

@@ -1,9 +1,10 @@
 const express = require("express");
-const { realizarConversao, getHistoricoByUser, adicionarHistorico } = require("../controller/CalculadoraController");
+const { realizarConversao, getHistorico } = require("../controller/CalculadoraController");
 const router = express.Router();
 
+// Rota para realizar conversão
 router.post("/", realizarConversao);
-router.get("/historico/:userId", getHistoricoByUser);
-router.post("/historico/:userId", adicionarHistorico);
-
+// Rota para buscar histórico de conversões
+router.get("/historico", getHistorico);
 module.exports = router;
+// 2 rotas

@@ -7,6 +7,8 @@ function useAuth() {
   const [userInfo, setUserInfo] = useState(null);
   const [token, setToken] = useState(localStorage.getItem("token") || "");
 
+  console.log("aquiiiiiiiii: " + token);
+
   useEffect(() => {
     if (!token) {
       navigate("/");
@@ -22,7 +24,7 @@ function useAuth() {
       .then((response) => {
         if (response.status === 401) {
           localStorage.removeItem("token");
-          setToken("");  
+          setToken("");  // Clear the token
           navigate("/");
           alert("Sessão expirada. Logue novamente.");
           return;
@@ -34,7 +36,8 @@ function useAuth() {
       .then((data) => {
         setIsAuthenticated(true);
         setUserInfo(data.user);
-        setToken(token); 
+        setToken(token);  // Store the token
+        console.log("Autenticação válida:", data);
       })
       .catch((error) => {
         console.error("Erro:", error);
