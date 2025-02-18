@@ -27,7 +27,7 @@ const LoginPage = () => {
     setIsLoading(true);
 
     try {
-      const response = await axios.post(`${process.env.API_LINK}/auth/login`, {
+      const response = await axios.post(`${process.env.REACT_APP_API_LINK}/auth/login`, {
         email: email,
         senha: password,
       });

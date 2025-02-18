@@ -15,7 +15,7 @@ function App() {
 
     useEffect(() => {
         // Using Axios
-        axios.get(`${process.env.API_LINK}/`)
+        axios.get(`${process.env.REACT_APP_API_LINK}/`)
             .then(response => {
                 setData(response.data);
             })

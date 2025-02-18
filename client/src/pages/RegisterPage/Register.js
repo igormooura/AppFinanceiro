@@ -23,7 +23,7 @@ const Register = () => {
         setError(""); 
         setSuccess(""); 
         try {
-            await axios.post(`${process.env.API_LINK}/auth/cadastrar`, {
+            await axios.post(`${process.env.REACT_APP_API_LINK}/auth/cadastrar`, {
                 nome: name,
                 sobrenome: lastName,
                 genero,

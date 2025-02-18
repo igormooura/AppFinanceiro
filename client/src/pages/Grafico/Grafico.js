@@ -56,7 +56,7 @@ const Grafico = () => {
   useEffect(() => {
     if (!userId) return; 
   
-    fetch(`http://${process.env.API_LINK}/grafico/${userId}`)
+    fetch(`${process.env.REACT_APP_API_LINK}/grafico/${userId}`)
       .then((res) => res.json())
       .then((data) => {
         setGraficos(data.graficoList);  // Set grafico data
@@ -189,7 +189,7 @@ const Grafico = () => {
 
   const handleDelete = async (tabId, graphId) => {
     try {
-      await axios.delete(`http://${process.env.API_LINK}/grafico/${graphId}/usuario/${userId}`);
+      await axios.delete(`${process.env.REACT_APP_API_LINK}/grafico/${graphId}/usuario/${userId}`);
       setGraficos((prev) => prev.filter((_, index) => index !== tabId));
     } catch (error) {
       alert("Erro ao deletar gráfico.");
@@ -205,7 +205,7 @@ const Grafico = () => {
     }
     try {
       const response = await axios.post(
-        `http://${process.env.API_LINK}/grafico/${userId}`,
+        `${process.env.REACT_APP_API_LINK}/grafico/${userId}`,
         formData 
       );
       const newGraph = response.data;

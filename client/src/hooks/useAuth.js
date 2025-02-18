@@ -14,7 +14,7 @@ function useAuth() {
       return;
     }
 
-    fetch(`${process.env.API_LINK}/auth/verify-auth`, {
+    fetch(`${process.env.REACT_APP_API_LINK}/auth/verify-auth`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

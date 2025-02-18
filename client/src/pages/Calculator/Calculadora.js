@@ -20,7 +20,7 @@ function Calculadora() {
       if (!user) return;
 
       try {
-        const response = await fetch(`http://${process.env.API_LINK}/calculadora/historico/${user}`);
+        const response = await fetch(`${process.env.REACT_APP_API_LINK}/calculadora/historico/${user}`);
         const data = await response.json();
 
         if (response.ok) {
@@ -99,7 +99,7 @@ function Calculadora() {
         return novoHistorico.slice(0, 5); // Mantém apenas os 5 mais recentes
       });
   
-      const response = await fetch(`http://${process.env.API_LINK}/calculadora/historico/${user}`, {
+      const response = await fetch(`${process.env.REACT_APP_API_LINK}/calculadora/historico/${user}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -121,7 +121,7 @@ function Calculadora() {
       }
   
       // Recarrega o histórico do servidor após sucesso
-      const historicoResponse = await fetch(`http://${process.env.API_LINK}/calculadora/historico/${user}`);
+      const historicoResponse = await fetch(`${process.env.REACT_APP_API_LINK}/calculadora/historico/${user}`);
       const historicoData = await historicoResponse.json();
       
       if (historicoResponse.ok) {
