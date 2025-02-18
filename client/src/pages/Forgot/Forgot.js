@@ -10,7 +10,7 @@ const Forgot = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:5000/usuarios/auth/esquecersenha",
+        `${process.env.API_LINK}/usuarios/auth/esquecersenha`,
         {
           email,
         }

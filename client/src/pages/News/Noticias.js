@@ -22,7 +22,7 @@ function Noticias(){
       const sendNews = async() => {
         try {
         
-          const response  = await axios.post(`http://localhost:5000/noticias/`,  newsData );
+          const response  = await axios.post(`http://${process.env.API_LINK}/noticias/`,  newsData );
           console.log("Noticias Enviadas");
         }
         catch(error){
@@ -36,7 +36,7 @@ function Noticias(){
       const fetchNoticias = async () => {
         console.log(tag);
         try {
-          const response = await axios.get(`http://localhost:5000/noticias`, {
+          const response = await axios.get(`http://${process.env.API_LINK}/noticias`, {
             params: {
               page: currentPage,
               limit: 4,

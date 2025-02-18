@@ -15,19 +15,13 @@ function App() {
 
     useEffect(() => {
         // Using Axios
-        axios.get('http://localhost:5000/')
+        axios.get(`${process.env.API_LINK}/`)
             .then(response => {
                 setData(response.data);
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
             });
-
-        // Alternatively, use Fetch API
-        // fetch('http://localhost:5000/api/data')
-        //     .then(response => response.json())
-        //     .then(data => setData(data))
-        //     .catch(error => console.error('Error fetching data:', error));
     }, []);
 
     return (

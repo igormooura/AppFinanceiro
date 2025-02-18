@@ -7,7 +7,7 @@ const ProfileCard = ({ id }) => {
 
   const fetchUserData = async (id) => {
     try {
-      const response = await fetch(`http://localhost:5000/usuarios/perfil/${id}`);
+      const response = await fetch(`http://${process.env.API_LINK}/usuarios/perfil/${id}`);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }

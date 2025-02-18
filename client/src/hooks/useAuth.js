@@ -14,7 +14,7 @@ function useAuth() {
       return;
     }
 
-    fetch("http://localhost:5000/auth/verify-auth", {
+    fetch(`${process.env.API_LINK}/auth/verify-auth`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

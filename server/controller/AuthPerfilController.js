@@ -10,13 +10,13 @@ exports.createUser = async (req, res) => {
   session.startTransaction();
 
   try {
-    const { nome, sobrenome, genero, country, email, senha, telefone, cpf } = req.body;
+    const { nome, sobrenome, genero, country, email, senha, telefone, cpf } =
+      req.body;
 
-    
     if (!email || !senha || !nome) {
       return res
-      .status(400)
-      .json({ error: "Campos obrigatórios não preenchidos." });
+        .status(400)
+        .json({ error: "Campos obrigatórios não preenchidos." });
     }
 
     //criptografar a senha
@@ -36,7 +36,7 @@ exports.createUser = async (req, res) => {
       country,
       email,
       cpf,
-      telefone
+      telefone,
     });
     const usuarioSalvo = await novoUsuario.save({ session });
 
@@ -54,7 +54,7 @@ exports.createUser = async (req, res) => {
 
     res.status(201).json({ usuario: usuarioSalvo, auth: authSalvo });
   } catch (error) {
-    await session.abortTransaction(); 
+    await session.abortTransaction();
     session.endSession();
 
     console.error("Erro ao criar usuário:", error);
@@ -86,7 +86,7 @@ exports.loginUser = async (req, res) => {
     // token JWT
     const token = jwt.sign(
       { userId: usuario._id, email: usuario.email },
-      "seuSegredoSuperSecreto", // vamos ter q substituir no .env
+      process.env.JWT_TOKEN, // vamos ter q substituir no .env
       { expiresIn: "3h" }
     );
 
@@ -114,13 +114,11 @@ exports.forgotPassword = async (req, res) => {
       return res.status(400).json({ error: "E-mail não fornecido." });
     }
 
-
     // Buscar o usuário pelo e-mail
     const usuario = await AuthPerfil.findOne({ email });
     if (!usuario) {
       return res.status(404).json({ error: "Usuário não encontrado." });
     }
-
 
     // Gerar uma nova senha temporária simples
     const novaSenha = Math.random().toString(36).slice(-8); // Gera uma string aleatória de 8 caracteres
@@ -129,7 +127,6 @@ exports.forgotPassword = async (req, res) => {
     usuario.senha = hashedNovaSenha;
     await usuario.save();
 
-    
     res.status(200).json({
       message: "Senha redefinida com sucesso. Confira sua nova senha.",
       novaSenha,
