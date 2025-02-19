@@ -144,9 +144,6 @@ function Calculadora() {
     }
   };
 
-  
-  
-
   return (
     <div className="lg:flex h-screen w-full">
       <Sidebar />
@@ -155,9 +152,9 @@ function Calculadora() {
         <TitleComponent />
         <PageName name="Calculadora" />
 
-        <div className="flex  flex-col items-center mt-[100px] space-y-12">
-          <div className="flex items-center gap-[50px]">
-            <div className="flex items-center border-2 border-purple-500 rounded-lg px-6 py-3 bg-white shadow-lg">
+        <div className="flex flex-col items-center mt-[100px] space-y-12">
+          <div className="flex flex-col md:flex-row items-center gap-[50px]">
+            <div className="flex items-center border-2 border-purple-500 rounded-lg px-6 py-3 bg-white shadow-lg w-full md:w-auto">
               <select
                 value={moedaOrigem}
                 onChange={handleChangeMoedaOrigem}
@@ -176,14 +173,14 @@ function Calculadora() {
                 type="text"
                 value={valor}
                 onChange={handleChangeValor}
-                className="w-100 px-2 text-right font-bold text-purple-900 border-none outline-none text-lg"
+                className="w-full md:w-100 px-2 text-right font-bold text-purple-900 border-none outline-none text-lg"
                 placeholder="0"
               />
             </div>
 
             <div className="text-3xl text-gray-400">→</div>
 
-            <div className="flex items-center border-2 border-gray-300 rounded-lg px-6 py-3 bg-white shadow-lg">
+            <div className="flex items-center border-2 border-gray-300 rounded-lg px-6 py-3 bg-white shadow-lg w-full md:w-auto">
               <select
                 value={moedaDestino}
                 onChange={handleChangeMoedaDestino}
@@ -201,7 +198,7 @@ function Calculadora() {
               <input
                 type="text"
                 value={convertido.toFixed(2)}
-                className="w-100 px-2 text-right font-bold text-purple-900 border-none outline-none text-lg"
+                className="w-full md:w-100 px-2 text-right font-bold text-purple-900 border-none outline-none text-lg"
                 readOnly
               />
             </div>
@@ -214,9 +211,9 @@ function Calculadora() {
             Adicionar ao Histórico
           </button>
 
-          <div className="bg-white p-4 rounded-xl shadow-lg w-full max-w-4xl mt-6">
+          <div className="bg-white p-4 rounded-xl shadow-lg w-full max-w-4xl mt-6 overflow-x-auto">
             <h2 className="text-xl font-bold text-gray-700 mb-4">
-              Adicionar ao histórico
+              Histórico
             </h2>
             <table className="w-full text-left border-collapse">
               <thead>
