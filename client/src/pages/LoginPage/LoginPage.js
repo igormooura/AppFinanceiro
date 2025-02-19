@@ -56,7 +56,7 @@ const LoginPage = () => {
   return (
     <div className="flex ">
       <div
-        className="border-green-500  justify-center items-center hidden  lg:flex lg:w-2/3 h-screen"
+        className="hidden lg:flex lg:w-2/3 h-screen items-center justify-center bg-green-500"
         style={{
           backgroundImage: "url('/static/bitcoin.jpg')",
           backgroundSize: "cover",
