@@ -9,31 +9,31 @@ function SobreNos() {
 
 
   return (
-    <div className="flex h-screen w-full">
+    <div className="lg:flex h-screen w-full">
       <Sidebar />
 
-      <div className="flex-1 bg-gradient-to-b from-[#C0F0B1] to-white p-5 relative">
+      <div className="flex-1 bg-gradient-to-b from-[#C0F0B1] h-full to-white p-5 relative">
 
         <Title/>
 
         <PageName name="Sobre Nós"/>
 
         <div
-          className="absolute left-1/2 transform -translate-x-1/2"
+          className="absolute left-1/2 transform -translate-x-1/2 lg:w-[600px] w-[90%]"
           style={{
             top: "40%",
-            width: "600px",
+            
           }}
         >
           <div className="bg-transparent rounded-lg shadow-lg p-5 border-2 border-gray-300 flex flex-col justify-center items-center">
             <p className="text-[#6A7D64] font-montserrat-negrito text-[20px] mb-2">
-              Erick Sousa Saraiva - Ericksousasaraiva@gmail.com
+              <strong>Erick Sousa Saraiva</strong> - Ericksousasaraiva@gmail.com
             </p>
             <p className="text-[#6A7D64] font-montserrat-negrito text-[20px] mb-2">
-              Igor Oliveira Moura - igor.oliveira.moura@gmail.com
+              <strong>Igor Oliveira Moura</strong> - igor.oliveira.moura@gmail.com
             </p>
             <p className="text-[#6A7D64] font-montserrat-negrito text-[20px] mb-5">
-              Ciro Rocha Moraes - ciromoraes.r@gmail.com
+              <strong>Ciro Rocha Moraes</strong> - ciromoraes.r@gmail.com
             </p>
 
       

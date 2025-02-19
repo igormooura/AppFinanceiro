@@ -44,8 +44,8 @@ const Grafico = () => {
   const [chartData, setChartData] = useState(null);
   const [perceCe, setPerceCe] = useState(null);
   const [daysData, setDaysData] = useState(null);
-  const [usuarioId, setUsuarioId] = useState(null); // Add state for usuarioId
-  const [loading, setLoading] = useState(true); // Add loading state
+  const [usuarioId, setUsuarioId] = useState(null); 
+  const [loading, setLoading] = useState(true); 
   const [error, setError] = useState(""); 
   
   const userId = user;
@@ -59,7 +59,7 @@ const Grafico = () => {
     fetch(`${process.env.REACT_APP_API_LINK}/grafico/${userId}`)
       .then((res) => res.json())
       .then((data) => {
-        setGraficos(data.graficoList);  // Set grafico data
+        setGraficos(data.graficoList);  
         setUsuarioId(data.user_id);}) 
       .catch(() => alert("Erro ao buscar gráficos."));
   }, [userId]);
@@ -228,14 +228,14 @@ const Grafico = () => {
       <Sidebar />
 
       <div className="h-full w-full bg-gradient-to-b  from-[#C0F0B1] to-white">
-        <div className="flex  items-center">
+        <div className="lg:flex  lg:items-center">
           <Title />
           
           <div>
             <ProfileCard id = {usuarioId} />
 
             <form>
-              <div className="w-[350px] mt-2 mr-10 rounded-full bg-green-100 h-9 flex shadow-lg shadow-gray-500 items-center">
+              <div className="lg:w-[350px] w-[200px] mt-2 ml-3 lg:ml-0 lg:mr-10 hidden  rounded-full bg-green-100 h-9 lg:flex shadow-lg shadow-gray-500 items-center">
                 <a className="flex justify-center ml-3 " href="#">
                   <button className="shadow-2xl">
                     <svg
@@ -271,13 +271,86 @@ const Grafico = () => {
 
         <PageName name="Moedas Expostas" />
 
-        <div className="h-[510px]  w-[90%] flex space-x-3 items-center justify-center mx-auto mt-10">
+        <div className="h-[510px] w-[95%] lg:w-[90%] lg:flex space-x-3 items-center justify-center mx-auto mt-10">
+
+        {/* COLOCANDO AQUI A PARTE QUE APARECE NO CELULAR */}
+        <div className=" flex lg:hidden py-4 lg:py-0  space-x-2 mx-auto justify-center lg:h-full lg:space-y-5">
+            {[1, 2, 3].map((tabId) => (
+              <div key={tabId} className="h-33 w-1/3 flex space-x-1">
+                <div
+                  className={`h-full w-[100%]   duration-300 ${
+                    graficos[tabId]
+                      ? "bg-transparent"
+                      : "rounded-lg shadow-inner hover:scale-105 shadow-zinc-500 bg-green-200"
+                  }`}
+                >
+                  {graficos[tabId] ? (
+                    <div className="w-full flex h-full space-x-[1px] ">
+                      
+                      <button
+                        className="w-[25%] rounded-lg hover:scale-[1.02] duration-500 hover:bg-red-400 bg-gradient-to-b from-red-600/90 to-red-700/85"
+                        onClick={() =>
+                          handleDelete(tabId, graficos[tabId]?._id)
+                        } 
+                      >
+                        <hr class="w-[40%] h-1 rounded-sm bg-white mx-auto"></hr>
+                      </button>
+
+                      
+
+                      <button
+                        onClick={() => handleTabClick(tabId)}
+                        className="w-[75%] bg-zinc-800 shadow-inner space-y-5 shadow-black text-white"
+                      >
+                        <p class=" font-montserrat-negrito flex ml-3">
+                          {graficos[tabId].moeda.toUpperCase()}
+                        </p>
+                        {perceCe && tabId === activeTab ? (
+                          <p
+                            className={
+                              perceCe.cond === 1
+                                ? "text-green-500 flex ml-3 "
+                                : "text-red-500 flex ml-3"
+                            }
+                          >
+                            {perceCe.perce.toFixed(3)}%
+                          </p>
+                        ) : (
+                          <p className="text-white"></p>
+                        )}
+                        <p class="font-montserrat-negrito flex ml-3">
+                          {graficos[tabId].variavel.toUpperCase()}
+                        </p>
+                      </button>
+                    </div>
+                  ) : (
+                    <button
+                      className="relative my-10 h-16 w-16 flex items-center justify-center mx-auto  group"
+                      onClick={() => {
+                        setActiveTab(tabId);
+                        setIsFormOpen(true);
+                      }}
+                    >
+                      <hr
+                        id="plus1"
+                        className="group-hover:bg-green-700 h-2 w-10 absolute rounded-xl mx-auto my-auto shadow-2xl shadow-black bg-green-600"
+                      ></hr>
+                      <hr
+                        id="plus"
+                        className="group-hover:bg-green-700 h-10 w-2 absolute rounded-xl mx-auto my-auto shadow-2xl bg-green-600"
+                      ></hr>
+                    </button>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
           <div
             id="screen"
-            className="w-2/3 h-full bg-green-950 rounded-lg border-[6px] border-gray-400/40  items-center justify-center"
+            className="lg:w-2/3 lg:h-full h-[90%]  bg-green-950 rounded-lg border-[6px] border-gray-400/40  items-center justify-center"
           >
             {chartData ? (
-              <div class = "flex w-[40%] ml-auto h-12 bg-transparent rounded-lg pt-2 pr-2">
+              <div class = "flex w-[90%] lg:w-[40%] mx-auto lg:ml-auto h-12 bg-transparent rounded-lg pt-2 lg:pr-2">
               <button onClick={(e) => {
                     setDaysData(parseInt(e.target.value, 10));
                   }} value="1" class = "hover:bg-gray-400/40 hover:rounded-lg  w-1/5  h-[90%] my-auto font-montserrat-fino text-white bg-green-950">1D</button>
@@ -300,15 +373,36 @@ const Grafico = () => {
 
             )}
             
+            
             {chartData ? (
-              <Line data={chartData} />
+              <div className="flex-1 w-full h-[90%] flex items-center justify-center">
+              <Line 
+                data={chartData}
+                options={{
+                  responsive: true,
+                  maintainAspectRatio: false, // Important for custom sizing
+                  plugins: {
+                    legend: {
+                      position: 'top',
+                    }
+                  }
+                }}
+              className="w-full h-[95%]" />
+              </div>
             ) : (
-              <p className="text-white mx-auto flex my-auto justify-center items-center font-bold mt-[25%]">
-                Selecione uma das tabelas ao lado ou crie um gráfico
+              <div><p className="text-white mx-auto hidden lg:flex my-auto justify-center items-center font-bold mt-[25%]"> 
+                Clique nos botões ao lado, selecione duas moedas para criar um gráfico
               </p>
+              <p className="text-white mx-auto lg:hidden flex my-auto justify-center items-center text-center font-bold mt-[25%]"> 
+              Clique nos botões em cima, selecione duas moedas para criar um gráfico
+              </p>
+              </div>
+              
+              
+              
             )}
           </div>
-          <div className="w-1/3 h-full space-y-5">
+          <div className="w-1/3 hidden lg:block h-full space-y-5">
             {[1, 2, 3].map((tabId) => (
               <div key={tabId} className="h-[30%] flex space-x-1">
                 <div
@@ -380,6 +474,7 @@ const Grafico = () => {
               </div>
             ))}
           </div>
+          <div class = "bg-transparent h-10 w-full lg:hidden"></div>
         </div>
 
         {/* Form for adding data */}

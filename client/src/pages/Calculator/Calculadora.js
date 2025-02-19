@@ -148,14 +148,14 @@ function Calculadora() {
   
 
   return (
-    <div className="flex h-screen w-full">
+    <div className="lg:flex h-screen w-full">
       <Sidebar />
 
       <div className="flex-1 bg-gradient-to-b from-[#C0F0B1] to-white p-5 relative flex flex-col">
         <TitleComponent />
         <PageName name="Calculadora" />
 
-        <div className="flex flex-col items-center mt-[100px] space-y-12">
+        <div className="flex  flex-col items-center mt-[100px] space-y-12">
           <div className="flex items-center gap-[50px]">
             <div className="flex items-center border-2 border-purple-500 rounded-lg px-6 py-3 bg-white shadow-lg">
               <select

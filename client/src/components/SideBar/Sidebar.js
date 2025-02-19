@@ -44,7 +44,7 @@ const Sidebar = () => {
         </button>
       )}
       {isOpen && (
-        <button className="lg:mt-6 mt-5 scale-110 lg:ml-0 ml-5 self-start " onClick={() => setIsOpen(false)}>
+        <button className="lg:mt-6 mt-5 scale-110 lg:ml-16 ml-5 self-start " onClick={() => setIsOpen(false)}>
           <svg
             viewBox="0 0 24 24"
             className="h-8 w-8"
@@ -56,60 +56,66 @@ const Sidebar = () => {
         </button>
       )}
       {isOpen && (
-        <ul className="lg:mt-16 hidden mt-4 lg:ml-0 ml-2 lg:space-x-0 flex-col w-full lg:block space-y-2 lg:space-y-6">
+        <ul className="mt-16 hidden lg:block w-full space-y-6">
+        <li>
+          <Link to="/grafico">
+            <div className={`rounded-full mx-auto w-20 ${selected === "grafico" ? "bg-gray-200 border-2 border-gray-400 shadow-inner" : ""}`}>
+              <svg viewBox="0 0 24 24" className="w-10 h-10 mx-auto" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 19V11M7 19v-4m10 4V6" stroke="#000" strokeWidth="4" strokeLinecap="round" />
+              </svg>
+            </div>
+            <p className="font-bold flex justify-center">Gráfico</p>
+          </Link>
+        </li>
+        <li>
+          <Link to="/noticias">
+            <div className={`rounded-full mx-auto w-20 ${selected === "noticias" ? "bg-gray-200 border-2 border-gray-400 shadow-inner" : ""}`}>
+              <img src="static/news.png" className="w-10 h-10 mx-auto" alt="Grupo" />
+            </div>
+            <p className="font-bold flex justify-center">Notícias</p>
+          </Link>
+        </li>
+        <li>
+          <Link to="/sobrenos">
+            <div className={`rounded-full mx-auto w-20 ${selected === "sobrenos" ? "bg-gray-200 border-2 border-gray-400 shadow-inner" : ""}`}>
+              <img  src="static/group.png" className="w-10 h-10 mx-auto" alt="Notícias" />
+            </div>
+            <p className="font-bold flex justify-center">Sobre Nós</p>
+          </Link>
+        </li>
+        <li>
+          <Link to="/calculadora">
+            <div className={`rounded-full mx-auto w-20 ${selected === "calculadora" ? "bg-gray-200 border-2 border-gray-400 shadow-inner" : ""}`}>
+              <img src="static/calc.png" className="w-10 h-10 mx-auto" alt="Calculadora" />
+            </div>
+            <p className="font-bold flex justify-center">Calculadora</p>
+          </Link>
+        </li>
+      </ul>
+    )}
+      
+      
+      <div className="  hidden lg:block lg:mb-6    mb-1">
+        <ul class = "flex mt-auto mx-auto justify-center pt-10">
           <li>
-            <Link to="/grafico">
-              <div className={`rounded-full mx-auto  w-20 ${selected === "grafico" ? "bg-gray-200 border-2 border-gray-400 shadow-inner" : ""}`}>
-                <svg viewBox="0 0 24 24" className="w-10 h-10 mx-auto" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 19V11M7 19v-4m10 4V6" stroke="#000" strokeWidth="4" strokeLinecap="round" />
-                </svg>
-              </div>
-              <p className="font-bold flex justify-center lg:text-lg text-sm">Gráfico</p>
-            </Link>
-          </li>
-          <li>
-            <Link to="/noticias">
-              <div className={`rounded-full mx-auto w-20 ${selected === "noticias" ? "bg-gray-200 border-2 border-gray-400 shadow-inner" : ""}`}>
-                <img src="static/news.png" className="w-10 h-10 mx-auto" alt="Grupo" />
-              </div>
-              <p className="font-bold flex justify-center lg:text-lg text-sm">Notícias</p>
-            </Link>
-          </li>
-          <li>
-            <Link to="/sobrenos">
-              <div className={`rounded-full mx-auto w-20 ${selected === "sobrenos" ? "bg-gray-200 border-2 border-gray-400 shadow-inner" : ""}`}>
-                <img src="static/group.png" className="w-10 h-10 mx-auto" alt="Notícias" />
-              </div>
-              <p className="font-bold flex justify-center lg:text-lg text-sm">Sobre Nós</p>
-            </Link>
-          </li>
-          <li>
-            <Link to="/calculadora">
-              <div className={`rounded-full mx-auto w-20 ${selected === "calculadora" ? "bg-gray-200 border-2 border-gray-400 shadow-inner" : ""}`}>
-                <img src="static/calc.png" className="w-10 h-10 mx-auto" alt="Calculadora" />
-              </div>
-              <p className="font-bold flex justify-center lg:text-lg text-sm">Calculadora</p>
-            </Link>
-          </li>
-          <li className="lg:hidden">
             <Link to="/">
               <img src="static/sair.png" className="w-10 h-10 mx-auto" alt="Sair" />
               {isOpen && <p className="font-bold flex justify-center lg:text-lg text-sm"> Sair </p>}
             </Link>
           </li>
         </ul>
-      )}
+      </div>
       
       <div class = "w-[20%] lg:hidden block">{isOpen && (
         <ul className="lg:mt-16 mt-4 lg:ml-0 ml-2 lg:space-x-0 flex-col w-full lg:block space-y-2 lg:space-y-6">
           <li>
-            <Link to="/grafico">
-              <div className={`rounded-full mx-auto  w-20 ${selected === "grafico" ? "bg-gray-200 border-2 border-gray-400 shadow-inner" : ""}`}>
+            <Link to="/grafico"><div className={`rounded-full mx-auto  w-20 ${selected === "grafico" ? "bg-gray-200 border-2 border-gray-400 shadow-inner" : ""}`}>
                 <svg viewBox="0 0 24 24" className="w-10 h-10 mx-auto" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M12 19V11M7 19v-4m10 4V6" stroke="#000" strokeWidth="4" strokeLinecap="round" />
                 </svg>
               </div>
               <p className="font-bold flex justify-center lg:text-lg text-sm">Gráfico</p>
+              
             </Link>
           </li>
           <li>
@@ -144,16 +150,7 @@ const Sidebar = () => {
           </li>
         </ul>
       )}</div>
-      <div className="  hidden lg:block lg:mb-6 mb-1">
-        <ul>
-          <li>
-            <Link to="/">
-              <img src="static/sair.png" className="w-10 h-10 mx-auto" alt="Sair" />
-              {isOpen && <p className="font-bold flex justify-center lg:text-lg text-sm"> Sair </p>}
-            </Link>
-          </li>
-        </ul>
-      </div>
+      
     </div>
   );
 };
