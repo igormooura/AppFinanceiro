@@ -224,7 +224,7 @@ const Grafico = () => {
   };
 
   return (
-    <div className="lg:flex h-screen w-full ">
+    <div className="lg:flex lg:flex-1 h-[800px] w-full ">
       <Sidebar />
 
       <div className="h-full w-full bg-gradient-to-b  from-[#C0F0B1] to-white">

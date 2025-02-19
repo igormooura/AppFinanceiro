@@ -25,7 +25,7 @@ const Sidebar = () => {
   return (
     <div
       className={`lg:min-h-screen   lg:flex-col border-r-[4px] border-gray-500/60  bg-gradient-to-t from-green-600/90 to-green-200/40 transition-all duration-300 ${
-        isOpen ? "lg:w-[10%] h-[50%]" : "lg:w-0 h-0 overflow-hidden"
+        isOpen ? "lg:w-[10%]" : "lg:w-0  overflow-hidden"
       }`}
     >
       {!isOpen && (
@@ -56,7 +56,7 @@ const Sidebar = () => {
         </button>
       )}
       {isOpen && (
-        <ul className="mt-16 hidden lg:block w-full space-y-6">
+        <ul className="mt-16 hidden lg:block w-full space-y-6 ">
         <li>
           <Link to="/grafico">
             <div className={`rounded-full mx-auto w-20 ${selected === "grafico" ? "bg-gray-200 border-2 border-gray-400 shadow-inner" : ""}`}>
@@ -106,8 +106,8 @@ const Sidebar = () => {
         </ul>
       </div>
       
-      <div class = "w-[20%] lg:hidden block">{isOpen && (
-        <ul className="lg:mt-16 mt-4 lg:ml-0 ml-2 lg:space-x-0 flex-col w-full lg:block space-y-2 lg:space-y-6">
+      <div class = "w-[20%] lg:hidden block ">{isOpen && (
+        <ul className="lg:mt-16 mt-4 lg:ml-0 ml-2 lg:space-x-0 flex-col w-full lg:block space-y-2 lg:space-y-6 p-2">
           <li>
             <Link to="/grafico"><div className={`rounded-full mx-auto  w-20 ${selected === "grafico" ? "bg-gray-200 border-2 border-gray-400 shadow-inner" : ""}`}>
                 <svg viewBox="0 0 24 24" className="w-10 h-10 mx-auto" fill="none" xmlns="http://www.w3.org/2000/svg">
