@@ -10,7 +10,7 @@ const Register = () => {
     const [error, setError] = useState("");
     const [success, setSuccess] = useState(""); 
     const [name, setName] = useState("");
-    const [lastName, setlastName] = useState("");
+    const [lastName, setLastName] = useState("");
     const [genero, setGenero] = useState("");
     const [country, setCountry] = useState("");
     const [showPassword, setShowPassword] = useState(false); 
@@ -48,7 +48,7 @@ const Register = () => {
     };
 
     return (
-        <div className="flex items-center justify-center w-full h-screen bg-gradient-to-b from-green-500 to-green-700/40">
+        <div className="flex items-center justify-center w-full min-h-screen bg-gradient-to-b from-green-500 to-green-700/40 p-4">
             <div className="w-[90%] max-w-lg">
                 <h1 className="text-4xl font-bold text-center text-white mb-10">
                     Crie sua Conta
@@ -72,7 +72,7 @@ const Register = () => {
                             value={lastName}
                             className="w-full px-4 py-3 rounded-lg bg-white text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white border-2 border-gray-300 shadow-2xl"
                             placeholder="Ex: Moraes"
-                            onChange={(e) => setlastName(e.target.value)}
+                            onChange={(e) => setLastName(e.target.value)}
                         />
                     </div>
 
@@ -119,14 +119,15 @@ const Register = () => {
                         </a>
                     </p>
 
-                    {success && <p className="mt-4 text-sm text-center text-green-500 drop-shadow">{success}</p>}
-                    {error && <p className="mt-4 text-sm text-center text-red-500 drop-shadow">{error}</p>}
-
-                    {isRedirecting && (
-                        <div className="mt-4 text-sm text-center text-yellow-500 drop-shadow">
-                            Redirecionando para o login...
-                        </div>
-                    )}
+                    <div className="min-h-[24px] flex items-center justify-center">
+                        {success && <p className="text-sm text-center text-green-500 drop-shadow">{success}</p>}
+                        {error && <p className="text-sm text-center text-red-500 drop-shadow">{error}</p>}
+                        {isRedirecting && (
+                            <div className="text-sm text-center text-yellow-500 drop-shadow">
+                                Redirecionando para o login...
+                            </div>
+                        )}
+                    </div>
                 </form>
             </div>
         </div>
