@@ -224,11 +224,11 @@ const Grafico = () => {
   };
 
   return (
-    <div className="flex h-screen w-full">
+    <div className="lg:flex h-screen w-full ">
       <Sidebar />
 
-      <div className="h-screen w-full bg-gradient-to-b from-[#C0F0B1] to-white">
-        <div className="flex mt-3  items-center">
+      <div className="h-full w-full bg-gradient-to-b  from-[#C0F0B1] to-white">
+        <div className="flex  items-center">
           <Title />
           
           <div>

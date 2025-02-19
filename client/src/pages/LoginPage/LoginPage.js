@@ -54,16 +54,24 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex">
+    <div className="flex ">
       <div
-        className="border-green-500 w-2/3 h-screen"
+        className="border-green-500  justify-center items-center hidden  lg:flex lg:w-2/3 h-screen"
         style={{
           backgroundImage: "url('/static/bitcoin.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
-      ></div>
-      <nav className="bg-gradient-to-b flex from-green-500 to-green-700/40 w-1/3 h-screen">
+      >
+        <div class = "w-full h-full  bg-green-400/95 mx-auto my-auto flex items-center  ">
+         <img class = "h-[90%] flex justify-center mx-auto" src = "static/nome_logo.png"></img>
+          
+          
+        </div>
+        
+      </div>
+      <nav className="bg-gradient-to-b lg:flex  flex-col from-green-500 to-green-700/40 w-full lg:w-1/3 h-screen ">
+        <img src = "static/nome_logo.png " class = "lg:hidden w-[250px] pt-10 -mt-20 mx-auto h-[35%]"></img>
         <form
           onSubmit={handleSubmit}
           className="p-6 rounded mx-auto my-auto w-[80%]"
@@ -89,7 +97,7 @@ const LoginPage = () => {
           </div>
 
           <div className="flex mb-7">
-            <div className="flex mr-auto ml-2 items-center">
+            <div className="flex mr-auto justify-start items-center">
               <div
                 className={`rounded-3xl w-[60px] flex items-center h-[30px] cursor-pointer ${
                   rememberMe ? "bg-green-400" : "bg-gray-200"
@@ -105,7 +113,7 @@ const LoginPage = () => {
               <p className="ml-4 text-white font-semibold">Lembrar</p>
             </div>
 
-            <div className="ml-auto mr-2">
+            <div className="ml-auto  justify-end text-end text-sm flex mr-1">
               <a href="/esquecer" className="text-blue-600 font-semibold">
                 Esqueci minha senha
               </a>
