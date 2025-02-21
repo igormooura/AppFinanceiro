@@ -13,12 +13,11 @@ function Noticias(){
     const [tag, setTag] = useState('');
     const [search, setSearch] = useState('');
     const [temp, setTemp] = useState('');
-    const [searchInput, setSearchInput] = useState(''); // State for the input field
+    const [searchInput, setSearchInput] = useState(''); 
     const [appliedSearch, setAppliedSearch] = useState(''); 
     useAuth();
 
     useEffect(() =>{
-      console.log(newsData);
       const sendNews = async() => {
         try {
         
@@ -34,7 +33,6 @@ function Noticias(){
     }, []);
     useEffect(() => {
       const fetchNoticias = async () => {
-        console.log(tag);
         try {
           const response = await axios.get(`${process.env.REACT_APP_API_LINK}/noticias`, {
             params: {
@@ -77,7 +75,7 @@ function Noticias(){
     };
   
     const tags = [
-      { value: '', label: 'Todas' }, // Default option
+      { value: '', label: 'Todas' }, 
       { value: 'pol', label: 'Política' },
       { value: 'mund', label: 'Mundo' },
       { value: 'econ', label: 'Economia' },

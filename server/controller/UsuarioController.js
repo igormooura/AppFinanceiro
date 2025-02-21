@@ -1,6 +1,7 @@
 const Usuario = require("../model/Usuario.js");
 const Auth = require("../model/AuthPerfil.js");
-// Buscar todos os usuários
+
+
 exports.getAllPerfis = async (req, res) => {
   try {
     const usuarios = await Usuario.find();
@@ -10,7 +11,6 @@ exports.getAllPerfis = async (req, res) => {
   }
 };
 
-// Buscar usuário por ID - Tela Perfil Usuario
 exports.getPerfilById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -25,7 +25,6 @@ exports.getPerfilById = async (req, res) => {
   }
 };
 
-// Buscar usuário por ID - Tela Perfil Usuario (MAIN)
 exports.getPerfilByIdMain = async (req, res) => {
   try {
     const { id } = req.params;
@@ -42,18 +41,16 @@ exports.getPerfilByIdMain = async (req, res) => {
   }
 };
 
-// Atualizar informações de um usuário - Tela Perfil Usuario
 exports.updatePerfil = async (req, res) => {
   try {
     const { id } = req.params;
-    console.log(id);
     const auth = await Auth.findById(id);
     new_id = auth.usuarioId;
     const { nome, apelido, email, genero, country, cpf, telefone } = req.body;
     const usuarioAtualizado = await Usuario.findByIdAndUpdate(
       new_id,
       { nome, apelido, email, genero, country, cpf, telefone },
-      { new: true, runValidators: true } // Retorna o documento atualizado
+      { new: true, runValidators: true }
     );
     if (!usuarioAtualizado) {
       return res.status(404).json({ error: "Usuário não encontrado." });
@@ -64,7 +61,6 @@ exports.updatePerfil = async (req, res) => {
   }
 };
 
-// Deletar um usuário
 exports.deletePerfil = async (req, res) => {
   try {
     const { id } = req.params;

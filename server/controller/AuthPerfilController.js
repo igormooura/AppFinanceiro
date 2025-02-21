@@ -4,9 +4,8 @@ const Usuario = require("../model/Usuario.js");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
-// Criar um novo Usuario - Tela Cadastro
 exports.createUser = async (req, res) => {
-  const session = await mongoose.startSession(); // Inicia uma sessão para transação
+  const session = await mongoose.startSession(); 
   session.startTransaction();
 
   try {
@@ -22,13 +21,11 @@ exports.createUser = async (req, res) => {
     //criptografar a senha
     const hashedPwd = await bcrypt.hash(senha, 10);
 
-    // Verifica se o e-mail já existe
     const usuarioExistente = await AuthPerfil.findOne({ email });
     if (usuarioExistente) {
       return res.status(400).json({ error: "E-mail já cadastrado." });
     }
 
-    // Criação do perfil de usuário
     const novoUsuario = new Usuario({
       nome,
       sobrenome,
@@ -40,7 +37,7 @@ exports.createUser = async (req, res) => {
     });
     const usuarioSalvo = await novoUsuario.save({ session });
 
-    // Criação das credenciais de autenticação
+
     const novoAuthPerfil = new AuthPerfil({
       email,
       senha: hashedPwd,
@@ -62,7 +59,6 @@ exports.createUser = async (req, res) => {
   }
 };
 
-// Login de usuário - Tela Login
 exports.loginUser = async (req, res) => {
   try {
     const { email, senha } = req.body;
@@ -86,7 +82,7 @@ exports.loginUser = async (req, res) => {
     // token JWT
     const token = jwt.sign(
       { userId: usuario._id, email: usuario.email },
-      process.env.JWT_TOKEN, // vamos ter q substituir no .env
+      process.env.JWT_TOKEN, 
       { expiresIn: "3h" }
     );
 
@@ -104,24 +100,20 @@ exports.loginUser = async (req, res) => {
   }
 };
 
-// Redefinir senha do usuário - Tela esqueci a senha
 exports.forgotPassword = async (req, res) => {
   try {
     const { email } = req.body;
 
-    // Verificar se o e-mail foi fornecido
     if (!email) {
       return res.status(400).json({ error: "E-mail não fornecido." });
     }
 
-    // Buscar o usuário pelo e-mail
     const usuario = await AuthPerfil.findOne({ email });
     if (!usuario) {
       return res.status(404).json({ error: "Usuário não encontrado." });
     }
 
-    // Gerar uma nova senha temporária simples
-    const novaSenha = Math.random().toString(36).slice(-8); // Gera uma string aleatória de 8 caracteres
+    const novaSenha = Math.random().toString(36).slice(-8); 
     const hashedNovaSenha = await bcrypt.hash(novaSenha, 10);
 
     usuario.senha = hashedNovaSenha;

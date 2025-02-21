@@ -41,7 +41,7 @@ function useAuth() {
       });
   }, [navigate, token]);
 
-  return { isAuthenticated, userInfo, token };  // Return both isAuthenticated and token
+  return { isAuthenticated, userInfo, token };  
 }
 
 export default useAuth;

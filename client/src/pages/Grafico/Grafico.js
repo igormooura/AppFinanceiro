@@ -49,7 +49,6 @@ const Grafico = () => {
   const [error, setError] = useState(""); 
   
   const userId = user;
-  console.log("aqui __"+user);
 
   
 
@@ -73,7 +72,6 @@ const Grafico = () => {
     setActiveTab(tabId);
     var numDay;
     numDay = daysData; 
-    console.log(daysData);
     if(numDay == null){
       numDay = 30;
     }
@@ -93,7 +91,6 @@ const Grafico = () => {
           },
         }
       );
-      console.log(response);
       const prices = response.data.prices.map(([timestamp, valor]) => {
         const date = new Date(timestamp);
         const formattedDate = numDay < 90 
@@ -152,7 +149,6 @@ const Grafico = () => {
           },
         }
       );
-      console.log(response);
       const prices = response.data.prices.map(([timestamp, valor]) => ({
         date: new Date(timestamp).toLocaleDateString(),
         valor: 1 / valor,
@@ -198,7 +194,6 @@ const Grafico = () => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
     if (!userId) {
       alert("Usuário não autenticado.");
       return;
@@ -273,7 +268,7 @@ const Grafico = () => {
 
         <div className="h-[510px] w-[95%] lg:w-[90%] lg:flex space-x-3 items-center justify-center mx-auto mt-10">
 
-        {/* COLOCANDO AQUI A PARTE QUE APARECE NO CELULAR */}
+        
         <div className=" flex lg:hidden py-4 lg:py-0  space-x-2 mx-auto justify-center lg:h-full lg:space-y-5">
             {[1, 2, 3].map((tabId) => (
               <div key={tabId} className="h-33 w-1/3 flex space-x-1">
@@ -380,7 +375,7 @@ const Grafico = () => {
                 data={chartData}
                 options={{
                   responsive: true,
-                  maintainAspectRatio: false, // Important for custom sizing
+                  maintainAspectRatio: false, 
                   plugins: {
                     legend: {
                       position: 'top',
@@ -414,17 +409,17 @@ const Grafico = () => {
                 >
                   {graficos[tabId] ? (
                     <div className="w-full flex space-x-[1px] h-full ">
-                      {/* Delete Button */}
+                     
                       <button
                         className="w-[15%] rounded-xl hover:scale-[1.02] duration-500 hover:bg-red-400 bg-gradient-to-b from-red-600/90 to-red-700/85"
                         onClick={() =>
                           handleDelete(tabId, graficos[tabId]?._id)
-                        } // Delete logic
+                        } 
                       >
                         <hr class="w-[45%] h-1 rounded-sm bg-white mx-auto"></hr>
                       </button>
 
-                      {/* Content Button */}
+                      
 
                       <button
                         onClick={() => handleTabClick(tabId)}
@@ -459,7 +454,7 @@ const Grafico = () => {
                         setIsFormOpen(true);
                       }}
                     >
-                      {/* Add graph Button */}
+                
                       <hr
                         id="plus1"
                         className="group-hover:bg-green-700 h-2 w-10 absolute rounded-xl mx-auto my-auto shadow-2xl shadow-black bg-green-600"
@@ -477,7 +472,6 @@ const Grafico = () => {
           <div class = "bg-transparent h-10 w-full lg:hidden"></div>
         </div>
 
-        {/* Form for adding data */}
         {isFormOpen && (
           <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
             <form
@@ -486,7 +480,7 @@ const Grafico = () => {
             >
               <h3 className="text-xl font-bold">Adicionar</h3>
 
-              {/* Dropdown for Moeda 1 */}
+              {/* Moeda 1 */}
               <select
                 className="border rounded p-2 w-full"
                 value={formData.moeda1}
@@ -515,7 +509,7 @@ const Grafico = () => {
                 <option value="avalanche-2">Avalanche (AVAX)</option>
               </select>
 
-              {/* Dropdown for Moeda 2 */}
+              {/* Moeda 2 */}
               <select
                 className="border rounded p-2 w-full"
                 value={formData.moeda2}
@@ -556,7 +550,6 @@ const Grafico = () => {
                 required
               />
 
-              {/* Buttons */}
               <div className="flex justify-end space-x-4">
                 <button
                   type="button"
