@@ -12,7 +12,7 @@ const ProfileCard = ({ id }) => {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const data = await response.json();
-      console.log(data);
+      (data);
       setUserData(data);
     } catch (error) {
       setError("Failed to fetch user data.");

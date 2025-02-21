@@ -14,7 +14,7 @@ function App() {
     const [data, setData] = useState(null);
 
     useEffect(() => {
-        // Using Axios
+       
         axios.get(`${process.env.REACT_APP_API_LINK}/`)
             .then(response => {
                 setData(response.data);

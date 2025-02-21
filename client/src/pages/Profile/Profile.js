@@ -13,8 +13,6 @@ function Profile() {
   const [usuarioId, setUsuarioId] = useState(null);
   const [graficos, setGraficos] = useState([]);
   const userId = user;
-  console.log("QA");
-  console.log(userId);
   
   const { id } = useParams();
   
@@ -37,11 +35,9 @@ function Profile() {
   }, []);
 
   useEffect(() => {
-    console.log("userId:", userId); // Debugging: Check if userId is defined
-    console.log("userInfo:", userInfo); // Debugging: Check if userInfo is defined
+
   
     if (userId) {
-      console.log("aq"); // This should now print
       const fetchUserData = async () => {
         try {
           const userIdToFetch = id || userId;
@@ -49,7 +45,6 @@ function Profile() {
           setUsuarioId(userIdToFetch);
           const response = await axios.get(`${process.env.REACT_APP_API_LINK}/usuarios/perfil/usuarios/${userIdToFetch}`);
           const userData = response.data;
-          console.log("RESPONSE AQUI PORRA ", response);
           setNome(userData.nome);
           setSobrenome(userData.sobrenome);
           setTelefone(userData.telefone);
@@ -96,7 +91,6 @@ const saveProfile = async () => {
   const updatedProfile = { nome, sobrenome, telefone, genero, country, cpf, telefone };
 
   try {
-    console.log("usuarioId:", usuarioId); // Debugging: Check if usuarioId is defined
     if (!usuarioId) {
       alert("ID do usuário não encontrado.");
       return;

@@ -1,16 +1,15 @@
 const Noticia = require("../model/Noticia.js");
 const news = require("./news.json");
 const fs = require('fs');
-console.log("Total notícias:", news[1]);
 
-// Criar uma nova notícia
+
 exports.createNoticia = async (req, res) => {
   try {
     const noticiasPromises = req.body.map(async (item) => {
       const { titulo, descr, data, tag } = item;
       const noticiaExistente = await Noticia.findOne({ titulo });
       if (noticiaExistente) {
-        return null; // Skip adding duplicate noticia
+        return null; 
       }
       const novaNoticia = new Noticia({ titulo, descr, data, tag });
       return await novaNoticia.save();
@@ -25,7 +24,7 @@ exports.createNoticia = async (req, res) => {
   }
 };
 
-// Buscar todas as notícias
+
 exports.getAllNoticias = async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
@@ -37,8 +36,6 @@ exports.getAllNoticias = async (req, res) => {
     const search = req.query.search; 
 
     const query = {};
-    console.log(query.titulo);
-    console.log(tag);
     if (tag) {
       query.tag = tag; 
     }
@@ -46,12 +43,12 @@ exports.getAllNoticias = async (req, res) => {
     if (search) {
       query.titulo = { $regex: search, $options: 'i' }; 
     }
-    console.log(query);
+  
     const noticias = await Noticia.find(query)
       .skip(skip)
       .limit(limit)
       .exec();
-    console.log(noticias);
+ 
     const totalNoticias = await Noticia.countDocuments(query);
     const totalPages = Math.ceil(totalNoticias / limit);
 
@@ -66,7 +63,6 @@ exports.getAllNoticias = async (req, res) => {
   }
 };
 
-// Buscar uma notícia por ID
 exports.getNoticiaById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -80,7 +76,6 @@ exports.getNoticiaById = async (req, res) => {
   }
 };
 
-// Atualizar uma notícia
 exports.updateNoticia = async (req, res) => {
   try {
     const { id } = req.params;
@@ -88,7 +83,7 @@ exports.updateNoticia = async (req, res) => {
     const noticiaAtualizada = await Noticia.findByIdAndUpdate(
       id,
       { titulo, data },
-      { new: true } // Retorna o documento atualizado
+      { new: true } 
     );
     if (!noticiaAtualizada) {
       return res.status(404).json({ error: "Notícia não encontrada." });
@@ -99,7 +94,6 @@ exports.updateNoticia = async (req, res) => {
   }
 };
 
-// Deletar uma notícia
 exports.deleteNoticia = async (req, res) => {
   try {
     const { id } = req.params;

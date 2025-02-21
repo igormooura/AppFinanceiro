@@ -13,14 +13,12 @@ const authPerfilRoutes = require("./Routes/AuthPerfilRoutes.js");
 
 const app = express();
 
-// Middleware para parsing JSON
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 
-// Habilitando CORS 
 app.use(cors());
-// Conexão com o MongoDB
+
 mongoose.connect('mongodb+srv://' + process.env.MONGO_USERNAME + ':' + process.env.MONGO_PASSWORD + '@cluster0.nhz6e.mongodb.net/?retryWrites=true&w=majority', {
   })
   .then(() => {
@@ -30,7 +28,7 @@ mongoose.connect('mongodb+srv://' + process.env.MONGO_USERNAME + ':' + process.e
     console.error("Erro ao conectar ao MongoDB:", error);
   });
 
-// Usando as rotas
+
 app.use("/calculadora", calculadoraRoutes); 
 app.use("/grafico", graficoRoutes);  
 app.use("/noticias", noticiaRoutes);  
@@ -43,7 +41,6 @@ app.get("/", (req, res) => {
   res.send("Bem-vindo à API de Criptomoedas!");
 });
 
-// Iniciando o servidor
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);

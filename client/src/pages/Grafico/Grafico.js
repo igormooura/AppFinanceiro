@@ -44,12 +44,12 @@ const Grafico = () => {
   const [chartData, setChartData] = useState(null);
   const [perceCe, setPerceCe] = useState(null);
   const [daysData, setDaysData] = useState(null);
-  const [usuarioId, setUsuarioId] = useState(null); // Add state for usuarioId
-  const [loading, setLoading] = useState(true); // Add loading state
+  const [usuarioId, setUsuarioId] = useState(null); 
+  const [loading, setLoading] = useState(true); 
   const [error, setError] = useState(""); 
   
   const userId = user;
-  console.log("aqui __"+user);
+
 
   
 
@@ -59,7 +59,7 @@ const Grafico = () => {
     fetch(`${process.env.REACT_APP_API_LINK}/grafico/${userId}`)
       .then((res) => res.json())
       .then((data) => {
-        setGraficos(data.graficoList);  // Set grafico data
+        setGraficos(data.graficoList);  
         setUsuarioId(data.user_id);}) 
       .catch(() => alert("Erro ao buscar gráficos."));
   }, [userId]);
@@ -73,7 +73,6 @@ const Grafico = () => {
     setActiveTab(tabId);
     var numDay;
     numDay = daysData; 
-    console.log(daysData);
     if(numDay == null){
       numDay = 30;
     }
@@ -93,7 +92,6 @@ const Grafico = () => {
           },
         }
       );
-      console.log(response);
       const prices = response.data.prices.map(([timestamp, valor]) => {
         const date = new Date(timestamp);
         const formattedDate = numDay < 90 
@@ -152,7 +150,6 @@ const Grafico = () => {
           },
         }
       );
-      console.log(response);
       const prices = response.data.prices.map(([timestamp, valor]) => ({
         date: new Date(timestamp).toLocaleDateString(),
         valor: 1 / valor,
@@ -198,7 +195,6 @@ const Grafico = () => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
     if (!userId) {
       alert("Usuário não autenticado.");
       return;
@@ -320,17 +316,17 @@ const Grafico = () => {
                 >
                   {graficos[tabId] ? (
                     <div className="w-full flex space-x-[1px] h-full ">
-                      {/* Delete Button */}
+                    
                       <button
                         className="w-[15%] rounded-xl hover:scale-[1.02] duration-500 hover:bg-red-400 bg-gradient-to-b from-red-600/90 to-red-700/85"
                         onClick={() =>
                           handleDelete(tabId, graficos[tabId]?._id)
-                        } // Delete logic
+                        } 
                       >
                         <hr class="w-[45%] h-1 rounded-sm bg-white mx-auto"></hr>
                       </button>
 
-                      {/* Content Button */}
+                    
 
                       <button
                         onClick={() => handleTabClick(tabId)}
@@ -365,7 +361,7 @@ const Grafico = () => {
                         setIsFormOpen(true);
                       }}
                     >
-                      {/* Add graph Button */}
+                    
                       <hr
                         id="plus1"
                         className="group-hover:bg-green-700 h-2 w-10 absolute rounded-xl mx-auto my-auto shadow-2xl shadow-black bg-green-600"
@@ -382,7 +378,7 @@ const Grafico = () => {
           </div>
         </div>
 
-        {/* Form for adding data */}
+      
         {isFormOpen && (
           <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
             <form
@@ -391,7 +387,7 @@ const Grafico = () => {
             >
               <h3 className="text-xl font-bold">Adicionar</h3>
 
-              {/* Dropdown for Moeda 1 */}
+            
               <select
                 className="border rounded p-2 w-full"
                 value={formData.moeda1}
@@ -420,7 +416,6 @@ const Grafico = () => {
                 <option value="avalanche-2">Avalanche (AVAX)</option>
               </select>
 
-              {/* Dropdown for Moeda 2 */}
               <select
                 className="border rounded p-2 w-full"
                 value={formData.moeda2}
@@ -449,7 +444,6 @@ const Grafico = () => {
                 <option value="avalanche-2">Avalanche (AVAX)</option>
               </select>
 
-              {/* Input for Value */}
               <input
                 type="number"
                 placeholder="Value"
@@ -461,7 +455,6 @@ const Grafico = () => {
                 required
               />
 
-              {/* Buttons */}
               <div className="flex justify-end space-x-4">
                 <button
                   type="button"

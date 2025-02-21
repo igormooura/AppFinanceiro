@@ -96,7 +96,7 @@ function Calculadora() {
   
       setHistorico(prevHistorico => {
         const novoHistorico = [novoItem, ...prevHistorico];
-        return novoHistorico.slice(0, 5); // Mantém apenas os 5 mais recentes
+        return novoHistorico.slice(0, 5); //5 mais recentes
       });
   
       const response = await fetch(`${process.env.REACT_APP_API_LINK}/calculadora/historico/${user}`, {
@@ -120,7 +120,7 @@ function Calculadora() {
         throw new Error(data.error || "Erro ao salvar conversão");
       }
   
-      // Recarrega o histórico do servidor após sucesso
+      // Recarrega o histórico
       const historicoResponse = await fetch(`${process.env.REACT_APP_API_LINK}/calculadora/historico/${user}`);
       const historicoData = await historicoResponse.json();
       
