@@ -1,70 +1,63 @@
-# Getting Started with Create React App
+# My currency - frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Um dashboard financeiro completo com autenticação de usuário, notícias, gráficos de câmbio e calculadora de conversão de moedas.
 
-## Available Scripts
+## Funcionalidades Principais
 
-In the project directory, you can run:
+- **Registro/Autenticação de Usuário**
+  - Formulário de registro com validação
+  - Login com redirecionamento seguro
+  - Armazenamento de token JWT
 
-### `npm start`
+- **Perfil do Usuário**
+  - Edição de informações pessoais
+  - Formatação automática de CPF e telefone
+  - Upload de foto de perfil
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **Feed de Notícias**
+  - Listagem de notícias financeiras
+  - Filtragem por categoria (Política, Economia, etc.)
+  - Paginação de resultados
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- **Gráficos de Câmbio**
+  - Comparação de criptomoedas e moedas tradicionais
+  - Seleção de período (1D, 7D, 30D, etc.)
+  - Visualização de variação percentual
 
-### `npm test`
+- **Calculadora Financeira**
+  - Conversão de moedas em tempo real
+  - Histórico de conversões
+  - Suporte para múltiplas moedas (USD, EUR, BRL, etc.)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Tecnologias Utilizadas
 
-### `npm run build`
+- **Frontend**
+  - React.js
+  - Tailwind CSS
+  - Chart.js (Gráficos)
+  - Axios (Requisições HTTP)
+  - React Router (Navegação)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- **APIs Integradas**
+  - CoinGecko API (Dados de criptomoedas)
+  - ExchangeRate-API (Conversão de moedas)
+  - Backend Customizado (Autenticação/Perfil)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Instalação e Execução
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+1. Clone o repositório:
+```bash
+git clone https://github.com/seu-usuario/financial-dashboard.git
+```
+2. Instale as dependências:
+```bash
+npm install
+```
+3. Configure as variáveis de ambiente (.env):
+```bash
+REACT_APP_API_LINK=http://localhost:5000
+```
+4. Inicie o projeto
+```bash
+npm start
+```
