@@ -16,7 +16,7 @@ function SobreNos() {
 
         <Title/>
 
-        <PageName name="Sobre Nós"/>
+        <PageName name="About us"/>
 
         <div
           className="absolute left-1/2 transform -translate-x-1/2 lg:w-[600px] w-[90%]"

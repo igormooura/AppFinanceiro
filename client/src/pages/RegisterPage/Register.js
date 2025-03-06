@@ -51,37 +51,37 @@ const Register = () => {
         <div className="flex items-center justify-center w-full min-h-screen bg-gradient-to-b from-green-500 to-green-700/40 p-4">
             <div className="w-[90%] max-w-lg">
                 <h1 className="text-4xl font-bold text-center text-white mb-10">
-                    Crie sua Conta
+                    Create your account
                 </h1>
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
-                        <label className="block text-lg font-medium text-white">Nome:</label>
+                        <label className="block text-lg font-medium text-white">Name:</label>
                         <input
                             type="text"
                             value={name}
                             className="w-full px-4 py-3 rounded-lg bg-white text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white border-2 border-gray-300 shadow-2xl"
-                            placeholder="Ex: Ciro"
+                            placeholder="Ex: Paulo"
                             onChange={(e) => setName(e.target.value)}
                         />
                     </div>
 
                     <div>
-                        <label className="block text-lg font-medium text-white">Sobrenome:</label>
+                        <label className="block text-lg font-medium text-white">Surname:</label>
                         <input
                             type="text"
                             value={lastName}
                             className="w-full px-4 py-3 rounded-lg bg-white text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white border-2 border-gray-300 shadow-2xl"
-                            placeholder="Ex: Moraes"
+                            placeholder="Ex: Ribeiro"
                             onChange={(e) => setLastName(e.target.value)}
                         />
                     </div>
 
                     <EmailInput email={email} setEmail={setEmail} placeholder={"Ex: example@email.com"} />
 
-                    <PasswordField password={password} setPassword={setPassword} showPassword={showPassword} setShowPassword={setShowPassword} placeholder={"Senha"} />
+                    <PasswordField password={password} setPassword={setPassword} showPassword={showPassword} setShowPassword={setShowPassword} placeholder={"Password"} />
 
                     <div>
-                        <label className="block text-lg font-medium text-white">Gênero:</label>
+                        <label className="block text-lg font-medium text-white">Gender:</label>
                         <select
                             value={genero}
                             onChange={(e) => setGenero(e.target.value)}
@@ -95,7 +95,7 @@ const Register = () => {
                     </div>
 
                     <div>
-                        <label className="block text-lg font-medium text-white">País:</label>
+                        <label className="block text-lg font-medium text-white">Country:</label>
                         <input
                             type="text"
                             value={country}
@@ -109,13 +109,13 @@ const Register = () => {
                         type="submit"
                         className="w-full bg-blue-500 text-white text-2xl font-bold shadow-xl p-2 rounded-lg hover:bg-blue-600 focus:outline-none"
                     >
-                        Criar Conta
+                        Register
                     </button>
 
                     <p className="mt-4 text-center text-white text-base drop-shadow">
-                        Já possui uma conta?{" "}
+                        Already have an account?{" "}
                         <a href="/" className="text-blue-500 hover:underline drop-shadow-lm">
-                            Faça login
+                            Login here
                         </a>
                     </p>
 

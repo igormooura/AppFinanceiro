@@ -74,7 +74,7 @@ const Sidebar = () => {
                       <path d="M12 19V11M7 19v-4m10 4V6" stroke="#000" strokeWidth="4" strokeLinecap="round" />
                     </svg>
                   </div>
-                  <p className="font-bold mt-2 text-center">Gráfico</p>
+                  <p className="font-bold mt-2 text-center">Graph</p>
                 </Link>
               </li>
 
@@ -83,9 +83,9 @@ const Sidebar = () => {
                   <div className={`rounded-full w-20 h-20 flex items-center justify-center ${
                     selected === "noticias" ? "bg-gray-200 border-2 border-gray-400 shadow-inner" : ""
                   }`}>
-                    <img src="static/news.png" className="w-10 h-10" alt="Notícias" />
+                    <img src="static/news.png" className="w-10 h-10" alt="News" />
                   </div>
-                  <p className="font-bold mt-2 text-center">Notícias</p>
+                  <p className="font-bold mt-2 text-center">News</p>
                 </Link>
               </li>
 
@@ -96,7 +96,7 @@ const Sidebar = () => {
                   }`}>
                     <img src="static/group.png" className="w-10 h-10" alt="Sobre Nós" />
                   </div>
-                  <p className="font-bold mt-2 text-center">Sobre Nós</p>
+                  <p className="font-bold mt-2 text-center">About us</p>
                 </Link>
               </li>
 
@@ -107,7 +107,7 @@ const Sidebar = () => {
                   }`}>
                     <img src="static/calc.png" className="w-10 h-10" alt="Calculadora" />
                   </div>
-                  <p className="font-bold mt-2 text-center">Calculadora</p>
+                  <p className="font-bold mt-2 text-center">Calculator</p>
                 </Link>
               </li>
             </ul>
@@ -116,7 +116,7 @@ const Sidebar = () => {
           <div className="pb-8 flex justify-center">
             <Link to="/" className="flex flex-col items-center">
               <img src="static/sair.png" className="w-10 h-10" alt="Sair" />
-              <p className="font-bold mt-2 text-center">Sair</p>
+              <p className="font-bold mt-2 text-center">Exit</p>
             </Link>
           </div>
         </div>

@@ -53,7 +53,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex ">
+    <div className="flex">
       <div
         className="hidden lg:flex lg:w-2/3 h-screen items-center justify-center bg-green-500"
         style={{
@@ -62,39 +62,33 @@ const LoginPage = () => {
           backgroundPosition: "center",
         }}
       >
-        <div class = "w-full h-full  bg-green-400/95 mx-auto my-auto flex items-center  ">
-         <img class = "h-[90%] flex justify-center mx-auto" src = "static/nome_logo.png"></img>
-          
-          
+        <div className="w-full h-full bg-green-400/95 mx-auto my-auto flex items-center">
+          <img className="h-[90%] flex justify-center mx-auto" src="static/nome_logo.png"></img>
         </div>
-        
       </div>
-      <nav className="bg-gradient-to-b lg:flex  flex-col from-green-500 to-green-700/40 w-full lg:w-1/3 h-screen ">
-        <img src = "static/nome_logo.png " class = "lg:hidden w-[250px] pt-10 -mt-20 mx-auto h-[35%]"></img>
-        <form
-          onSubmit={handleSubmit}
-          className="p-6 rounded mx-auto my-auto w-[80%]"
-        >
+      <nav className="bg-gradient-to-b lg:flex flex-col from-green-500 to-green-700/40 w-full lg:w-1/3 h-screen">
+        <img src="static/nome_logo.png" className="lg:hidden w-[250px] pt-10 -mt-20 mx-auto h-[35%]"></img>
+        <form onSubmit={handleSubmit} className="p-6 rounded mx-auto my-auto w-[80%]">
           <h2 className="text-2xl mb-8 text-start text-white font-bold">
-            Seja bem vindo(a)!
+            Welcome!
           </h2>
-
+  
           {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
-
+  
           <div className="mb-4">
-            <EmailInput email={email} setEmail={setEmail} placeholder={"Insira seu email"} />
+            <EmailInput email={email} setEmail={setEmail} placeholder={"Enter your email"} />
           </div>
-
+  
           <div className="mb-4">
             <PasswordField
               password={password}
               setPassword={setPassword}
               showPassword={showPassword}
               setShowPassword={setShowPassword}
-              placeholder={"Insira sua senha"}
+              placeholder={"Enter your password"}
             />
           </div>
-
+  
           <div className="flex mb-7">
             <div className="flex mr-auto justify-start items-center">
               <div
@@ -109,16 +103,16 @@ const LoginPage = () => {
                   } transition-transform duration-300`}
                 ></div>
               </div>
-              <p className="ml-4 text-white font-semibold">Lembrar</p>
+              <p className="ml-4 text-white font-semibold">Remember me</p>
             </div>
-
-            <div className="ml-auto  justify-end text-end text-sm flex mr-1">
+  
+            <div className="ml-auto justify-end text-end text-sm flex mr-1">
               <a href="/esquecer" className="text-blue-600 font-semibold">
-                Esqueci minha senha
+                Forgot password?
               </a>
             </div>
           </div>
-
+  
           <button
             type="submit"
             className="w-full bg-blue-500 text-white text-2xl font-bold shadow-xl p-2 rounded-lg hover:bg-blue-600 flex items-center justify-center"
@@ -132,8 +126,8 @@ const LoginPage = () => {
           </button>
           <hr className="w-full h-[0.1px] bg-white mt-14"></hr>
           <p className="text-white text-xl mx-auto items-center justify-center flex mt-10">
-            Não possui uma conta?&nbsp;
-            <a href="/register" className="text-blue-500"> Cadastro</a>
+            Don't have an account?&nbsp;
+            <a href="/register" className="text-blue-500"> Sign up</a>
           </p>
         </form>
       </nav>

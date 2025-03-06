@@ -149,7 +149,7 @@ function Calculadora() {
 
       <div className="flex-1 bg-gradient-to-b from-[#C0F0B1] to-white p-5 relative flex flex-col">
         <TitleComponent />
-        <PageName name="Calculadora" />
+        <PageName name="Calculator" />
 
         <div className="flex flex-col items-center mt-[100px] space-y-12">
           <div className="flex flex-col md:flex-row items-center gap-[50px]">
@@ -207,22 +207,22 @@ function Calculadora() {
             onClick={adicionarHistorico}
             className="bg-blue-500 text-white px-4 py-2 rounded-lg mt-4"
           >
-            Adicionar ao Histórico
+            Save the conversion
           </button>
 
           <div className="bg-white p-4 rounded-xl shadow-lg w-full max-w-4xl mt-6 overflow-x-auto">
             <h2 className="text-xl font-bold text-gray-700 mb-4">
-              Histórico
+              Conversions saved
             </h2>
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr>
-                  <th className="border-b p-2">Data</th>
-                  <th className="border-b p-2">Valor Original</th>
-                  <th className="border-b p-2">Moeda de Origem</th>
-                  <th className="border-b p-2">Moeda de Destino</th>
-                  <th className="border-b p-2">Cotação</th>
-                  <th className="border-b p-2">Valor Convertido</th>
+                  <th className="border-b p-2">Date</th>
+                  <th className="border-b p-2">Original Value</th>
+                  <th className="border-b p-2">Source Currency</th>
+                  <th className="border-b p-2">Target Currency</th>
+                  <th className="border-b p-2">Exchange Rate</th>
+                  <th className="border-b p-2">Converted Value</th>
                 </tr>
               </thead>
               <tbody>

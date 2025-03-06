@@ -27,7 +27,7 @@ const Forgot = () => {
     <div class="flex bg-gradient-to-t from-green-500 to-green-400/70 w-full  h-screen">
       <div class="h-[85%] w-[30%] mx-auto items-center my-auto   ">
         <p class="text-white text-4xl font-montserrat-negrito mx-auto flex justify-center ">
-          Redefinir senha
+          Redefine passwrod
         </p>
         <form onSubmit={handleSubmit} class="space-y-9 ">
           <div class="mt-20 pb-60">
@@ -37,7 +37,7 @@ const Forgot = () => {
               <EmailInput
                 email={email}
                 setEmail={setEmail}
-                placeholder={"Insira seu email"}
+                placeholder={"Email here"}
               />
             </div>
             
@@ -52,7 +52,7 @@ const Forgot = () => {
           {novaSenha && (
             <div className="success">
               <p class="text-white font-montserrat-negrito text-xl">
-                Sua nova senha é:&nbsp; &nbsp;
+                Your new password is:&nbsp; &nbsp;
                 <strong class="text-2xl">{novaSenha}</strong>
               </p>
             </div>
@@ -61,7 +61,7 @@ const Forgot = () => {
             type="submit"
             class=" bg-black rounded-xl text-white font-montserrat-negrito text-2xl py-3 px-40 mx-auto flex justify-center "
           >
-            Pedir Senha Nova
+            Ask for new password
           </button>
         </form>
       </div>

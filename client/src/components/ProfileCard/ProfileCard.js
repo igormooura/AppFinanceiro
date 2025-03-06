@@ -26,7 +26,7 @@ const ProfileCard = ({ id }) => {
   return (
     <Link
       to={`/perfil`}
-      className="hover:scale-105 duration-500 mt-2 mb-5 lg:mb-0 flex items-center justify-center mx-auto  lg:ml-auto lg:mr-10 rounded-2xl lg:w-[280px] w-[200px] h-16 border-[1px] border-gray-400 shadow-xl"
+      className="hover:scale-105 duration-500 mt-2 mb-5 lg:mb-0 flex items-center justify-center mx-auto  lg:ml-auto lg:mr-10 rounded-2xl lg:w-[300px] w-[200px] h-16 lg:h-[70px] border-[1px] border-gray-400 shadow-xl"
     >
       <div className="lg:h-10 h-8 w-8 lg:w-10 bg-blue-400 rounded-full my-auto lg:-ml-12 ml-2"></div>
       <div className="ml-2 -space-y-1">

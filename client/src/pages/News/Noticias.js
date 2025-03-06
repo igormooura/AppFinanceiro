@@ -75,10 +75,10 @@ function Noticias(){
     };
   
     const tags = [
-      { value: '', label: 'Todas' }, 
-      { value: 'pol', label: 'Política' },
-      { value: 'mund', label: 'Mundo' },
-      { value: 'econ', label: 'Economia' },
+      { value: '', label: 'All' }, 
+      { value: 'pol', label: 'Politcs' },
+      { value: 'mund', label: 'World' },
+      { value: 'econ', label: 'Economy' },
     ];
   
     return (
@@ -88,12 +88,12 @@ function Noticias(){
         <div className="flex-1 overflow-y-auto bg-gradient-to-b from-[#C0F0B1] to-white p-5 relative">
           <Title />
           <div className="flex items-center">
-            <PageName name="Notícias" />
+            <PageName name="News" />
             <div className="bg-gray-50/20 h-14 items-center flex shadow-lg shadow-zinc-500 w-[650px] ml-auto mr-10 mt-[70px]">
               <input
                 type="text"
                 className="h-full p-2 w-[75%] focus:border-white active:border-white"
-                placeholder="Buscar por notícia"
+                placeholder="Search for an article"
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
                 required
@@ -102,7 +102,7 @@ function Noticias(){
                 className="w-[25%] bg-red-900/80 h-full text-white font-montserrat-fino text-2xl"
                 onClick={handleSearch}
               >
-                Procurar
+                Search
               </button>
             </div>
           </div>

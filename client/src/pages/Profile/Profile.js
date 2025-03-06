@@ -118,8 +118,7 @@ const saveProfile = async () => {
       <div className="flex-1 bg-gradient-to-b from-[#C0F0B1] to-white p-5">
         <div className="ml-10 mt-5">
           <div className="text-left">
-            <h2 className="text-3xl font-semibold text-gray-700">Bem-vindo, {nome}!</h2>
-            <p className="text-gray-600">email: {email}</p>
+            <h2 className="text-3xl font-semibold text-gray-700">Welcome, {nome}!</h2>
             <p className="text-lg text-gray-500">{data}</p>
           </div>
         </div>
@@ -147,14 +146,14 @@ const saveProfile = async () => {
                   : "bg-blue-500 font-bold hover:bg-blue-600 text-white hover:scale-105 duration-300"   
               }`}
             >
-              {editMode ? "Salvar" : "Editar"}
+              {editMode ? "Save" : "Edit"}
             </button>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label htmlFor="nome" className="block text-sm font-medium text-gray-700">
-                Primeiro Nome
+                First Name
               </label>
               <input
                 type="text"
@@ -169,7 +168,7 @@ const saveProfile = async () => {
 
             <div>
               <label htmlFor="sobrenome" className="block text-sm font-medium text-gray-700">
-                Sobrenome
+                Surname
               </label>
               <input
                 type="text"
@@ -184,7 +183,7 @@ const saveProfile = async () => {
 
             <div>
               <label htmlFor="telefone" className="block text-sm font-medium text-gray-700">
-                Telefone
+                Cellphone
               </label>
               <input
                 type="text"
@@ -199,7 +198,7 @@ const saveProfile = async () => {
 
             <div>
               <label htmlFor="CPF" className="block text-sm font-medium text-gray-700">
-                CPF
+                CPF (Optional)
               </label>
               <input
                 type="text"
@@ -214,7 +213,7 @@ const saveProfile = async () => {
 
             <div>
               <label htmlFor="genero" className="block text-sm font-medium text-gray-700">
-                Gênero
+                Gender
               </label>
               <select
                 id="genero"
@@ -232,7 +231,7 @@ const saveProfile = async () => {
 
             <div>
               <label htmlFor="pais" className="block text-sm font-medium text-gray-700">
-                País
+                Country
               </label>
               <input
                 type="text"
@@ -247,7 +246,7 @@ const saveProfile = async () => {
           </div>
 
           <div className="mt-6">
-            <h3 className="text-lg font-medium mb-2">Meu email</h3>
+            <h3 className="text-lg font-medium mb-2">My email</h3>
             <div>
              
               <div class = "flex"><div className="flex items-center gap-2nh text-gray-600 bg-white">
