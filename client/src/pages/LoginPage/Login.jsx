@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import EmailInput from "../../components/Inputs/EmailInput/EmailInput";
 import PasswordField from "../../components/Inputs/PasswordInput/Password";
 
-const LoginPage = () => {
+const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -135,4 +135,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default Login;

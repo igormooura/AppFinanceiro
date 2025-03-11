@@ -4,7 +4,7 @@ import Sidebar from "../../components/SideBar/Sidebar";
 import TitleComponent from "../../components/Title/Title";
 import useAuth from "../../hooks/useAuth";
 
-function Calculadora() {
+function Calculator() {
   const { userInfo } = useAuth();
   const user = userInfo ? userInfo.userId : null;
 
@@ -245,4 +245,4 @@ function Calculadora() {
   );
 }
 
-export default Calculadora;
+export default Calculator;

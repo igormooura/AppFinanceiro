@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import useAuth from "../../hooks/useAuth.jsx";
-import Sidebar from "../../components/SideBar/Sidebar.jsx";
-import Title from "../../components/Title/Title.jsx";
-import PageName from "../../components/PageName/PageName.jsx";
-import ProfileCard from "../../components/ProfileCard/ProfileCard.jsx";
+import Sidebar from "../../components/SideBar/Sidebar";
+import Title from "../../components/Title/Title";
+import PageName from "../../components/PageName/PageName";
+import ProfileCard from "../../components/ProfileCard/ProfileCard";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -60,7 +60,7 @@ const Grafico = () => {
       .then((data) => {
         setGraficos(data.graficoList);  
         setUsuarioId(data.user_id);}) 
-      .catch(() => alert("Failed searching graphs"));
+      .catch(() => alert("Erro ao buscar gráficos."));
   }, [userId]);
     useEffect(() => {
     if (activeTab !== null && daysData !== null) {
@@ -188,23 +188,32 @@ const Grafico = () => {
       await axios.delete(`${process.env.REACT_APP_API_LINK}/grafico/${graphId}/usuario/${userId}`);
       setGraficos((prev) => prev.filter((_, index) => index !== tabId));
     } catch (error) {
-      alert("Error deleting graph");
+      alert("Erro ao deletar gráfico.");
     }
   };
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     if (!userId) {
-      alert("User not authenticated.");
+      alert("Usuário não autenticado.");
       return;
     }
+  
+    console.log("Form Data:", formData); // Log form data
+    console.log("User ID:", userId); // Log user ID
+  
+    const payload = {
+      ...formData,
+      value: Number(formData.value), // Convert value to a number
+    };
+  
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_API_LINK}/grafico/${userId}`,
-        formData 
+        payload
       );
       const newGraph = response.data;
-
+  
       setGraficos((prev) => {
         const updatedGraficos = [...prev];
         updatedGraficos[activeTab] = newGraph;
@@ -213,8 +222,8 @@ const Grafico = () => {
       setFormData({ moeda1: "", moeda2: "", value: "" });
       setIsFormOpen(false);
     } catch (error) {
-      alert("Failed to add the graph.");
-      console.error(error);
+      console.error("Error submitting form:", error.response?.data); // Log server response
+      alert("Erro ao adicionar gráfico.");
     }
   };
 
@@ -229,7 +238,6 @@ const Grafico = () => {
         <div class = "">
           
           <ProfileCard id={usuarioId} />
-
         </div>
       </div>
 
@@ -447,7 +455,7 @@ const Grafico = () => {
       {isFormOpen && (
         <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
           <form
-            className="bg-white p-6 rounded-lg shadow-lg space-y-6 w-[500px]"
+            className="bg-white p-6 rounded-lg shadow-lg space-y-4 w-[500px]"
             onSubmit={handleFormSubmit}
           >
             <h3 className="text-xl font-bold">Add</h3>
@@ -480,8 +488,8 @@ const Grafico = () => {
               <option value="avalanche-2">Avalanche (AVAX)</option>
             </select>
 
+            <p className="text-center">→</p>
 
-              <p className="flex items-center justify-center"> → </p>
             <select
               className="border rounded p-2 w-full"
               value={formData.moeda2}

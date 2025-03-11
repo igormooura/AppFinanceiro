@@ -5,7 +5,7 @@ import useAuth from "../../hooks/useAuth";
 import newsData from "./news.json";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-function Noticias(){
+function News(){
     
     const [news, setNews] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -22,7 +22,7 @@ function Noticias(){
         try {
         
           const response  = await axios.post(`${process.env.REACT_APP_API_LINK}/noticias/`,  newsData );
-          console.log("Noticias Enviadas");
+          console.log("News Enviadas");
         }
         catch(error){
           console.error("ERRO", error);
@@ -32,7 +32,7 @@ function Noticias(){
 
     }, []);
     useEffect(() => {
-      const fetchNoticias = async () => {
+      const fetchNews = async () => {
         try {
           const response = await axios.get(`${process.env.REACT_APP_API_LINK}/noticias`, {
             params: {
@@ -42,14 +42,14 @@ function Noticias(){
               search: appliedSearch,
             },
           });
-          setNews(response.data.noticias);
+          setNews(response.data.News);
           setTotalPages(response.data.totalPages);
         } catch (error) {
           console.error("Error", error);
         }
       };
   
-      fetchNoticias();
+      fetchNews();
     }, [currentPage, tag, appliedSearch]);
   
     const handleSearch = () => {
@@ -152,4 +152,4 @@ function Noticias(){
     </div>
 )}
 
-export default Noticias;
+export default News;

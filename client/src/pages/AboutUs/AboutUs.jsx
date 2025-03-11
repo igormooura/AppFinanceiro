@@ -4,7 +4,7 @@ import Title from "../../components/Title/Title";
 import PageName from "../../components/PageName/PageName";
 import useAuth from "../../hooks/useAuth";
 
-function SobreNos() {
+function AboutUs() {
   useAuth();
 
 
@@ -51,4 +51,4 @@ function SobreNos() {
   );
 }
 
-export default SobreNos;
+export default AboutUs;
