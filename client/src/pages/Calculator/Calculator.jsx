@@ -38,10 +38,10 @@ function Calculadora() {
 
           setHistorico(historicoFormatado);
         } else {
-          console.error("Erro ao carregar histórico:", data.error);
+          console.error("Error loading history:", data.error);
         }
       } catch (error) {
-        console.error("Erro ao buscar histórico:", error);
+        console.error("Error fetching history:", error);
       }
     }
 
@@ -59,7 +59,7 @@ function Calculadora() {
           setCotacao(data.rates[moedaDestino]);
         }
       } catch (error) {
-        console.error("Erro ao buscar a cotação:", error);
+        console.error("Error fetching exchange rate:", error);
       }
     }
     buscarCotacao();
@@ -117,7 +117,7 @@ function Calculadora() {
       const data = await response.json();
       
       if (!response.ok) {
-        throw new Error(data.error || "Erro ao salvar conversão");
+        throw new Error(data.error || "Error saving conversion");
       }
   
       const historicoResponse = await fetch(`${process.env.REACT_APP_API_LINK}/calculadora/historico/${user}`);
@@ -139,7 +139,7 @@ function Calculadora() {
         setHistorico(historicoFormatado);
       }
     } catch (error) {
-      console.error("Erro ao salvar conversão:", error);
+      console.error("Error saving conversion:", error);
     }
   };
 

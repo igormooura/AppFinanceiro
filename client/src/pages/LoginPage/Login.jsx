@@ -42,11 +42,11 @@ const LoginPage = () => {
         navigate(`/graph`);
         
       } else {
-        setError("Erro ao fazer login. Tente novamente.");
+        setError("Error on login, please try again");
       }
     } catch (err) {
       console.error(err);
-      setError("E-mail ou senha inválidos.");
+      setError("Invalid email or password");
     } finally {
       setIsLoading(false);
     }

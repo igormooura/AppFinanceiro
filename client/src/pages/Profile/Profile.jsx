@@ -52,8 +52,8 @@ function Profile() {
           setPais(userData.country);
           setEmail(userData.email);
         } catch (error) {
-          console.error("Erro ao carregar dados do perfil", error);
-          alert("Erro ao carregar perfil. Tente novamente.");
+          console.error("Error loading profile data", error);
+          alert("Erro loading page. Try again");
         }
       };
       fetchUserData();
@@ -100,15 +100,15 @@ const saveProfile = async () => {
       updatedProfile
     );
     if (response.status === 200) {
-      alert("Perfil atualizado com sucesso!");
+      alert("Profile updated successfully!");
       setEditMode(false);
     }
   } catch (error) {
-    console.error("Erro ao atualizar perfil", error);
+    console.error("Error updating profile.", error);
     alert(
       error.response?.data?.message ||
       error.message ||
-      "Erro ao salvar perfil. Tente novamente."
+      "Error saving profile. Please try again."
     );
   }
 };
@@ -222,10 +222,10 @@ const saveProfile = async () => {
                 className="mt-1 block w-full px-4 py-3 rounded-lg bg-white text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white border-2 border-gray-300 shadow-2xl"
                 disabled={!editMode}
               >
-                <option value="">Selecione...</option>
-                <option value="masculino">Masculino</option>
-                <option value="feminino">Feminino</option>
-                <option value="outro">Outro</option>
+                <option value="">Select...</option>
+                <option value="masculino">Male</option>
+                <option value="feminino">Female</option>
+                <option value="outro">Others</option>
               </select>
             </div>
 

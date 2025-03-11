@@ -31,10 +31,10 @@ const ProfileCard = ({ id }) => {
       <div className="lg:h-10 h-8 w-8 lg:w-10 bg-blue-400 rounded-full my-auto lg:-ml-12 ml-2"></div>
       <div className="ml-2 -space-y-1">
         <p className="text-md ml-2 lg:text-xl font-semibold text-black">
-          {userData?.nome|| "carregando..."}
+          {userData?.nome|| "Loading..."}
         </p>
         <p className="text-gray-400 text-sm lg:text-md px-2">
-          {userData?.email || "carregando..."}
+          {userData?.email || "Loading..."}
         </p>
       </div>
     </Link>

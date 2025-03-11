@@ -60,7 +60,7 @@ const Grafico = () => {
       .then((data) => {
         setGraficos(data.graficoList);  
         setUsuarioId(data.user_id);}) 
-      .catch(() => alert("Erro ao buscar gráficos."));
+      .catch(() => alert("Failed searching graphs"));
   }, [userId]);
     useEffect(() => {
     if (activeTab !== null && daysData !== null) {
@@ -188,14 +188,14 @@ const Grafico = () => {
       await axios.delete(`${process.env.REACT_APP_API_LINK}/grafico/${graphId}/usuario/${userId}`);
       setGraficos((prev) => prev.filter((_, index) => index !== tabId));
     } catch (error) {
-      alert("Erro ao deletar gráfico.");
+      alert("Error deleting graph");
     }
   };
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     if (!userId) {
-      alert("Usuário não autenticado.");
+      alert("User not authenticated.");
       return;
     }
     try {
@@ -213,7 +213,7 @@ const Grafico = () => {
       setFormData({ moeda1: "", moeda2: "", value: "" });
       setIsFormOpen(false);
     } catch (error) {
-      alert("Erro ao adicionar gráfico.");
+      alert("Failed to add the graph.");
       console.error(error);
     }
   };
@@ -230,38 +230,6 @@ const Grafico = () => {
           
           <ProfileCard id={usuarioId} />
 
-          {/* <form>
-            <div className="lg:w-[350px] w-[200px] mt-2 ml-3 lg:ml-0 lg:mr-10 hidden rounded-full bg-green-100 h-9 lg:flex shadow-lg shadow-gray-500 items-center">
-              <a className="flex justify-center ml-3" href="#">
-                <button className="shadow-2xl">
-                  <svg
-                    viewBox="0 0 24 24"
-                    className="h-6 w-6 text-gray-600"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M2 5.5C2 4.94772 2.44772 4.5 3 4.5H21C21.5523 4.5 22 4.94772 22 5.5V6.5C22 7.05228 21.5523 7.5 21 7.5H3C2.44772 7.5 2 7.05228 2 6.5V5.5Z"
-                      fill="#000000"
-                    ></path>
-                    <path
-                      d="M2 11.5C2 10.9477 2.44772 10.5 3 10.5H21C21.5523 10.5 22 10.9477 22 11.5V12.5C22 13.0523 21.5523 13.5 21 13.5H3C2.44772 13.5 2 13.0523 2 12.5V11.5Z"
-                      fill="#000000"
-                    ></path>
-                    <path
-                      d="M3 16.5C2.44772 16.5 2 16.9477 2 17.5V18.5C2 19.0523 2.44772 19.5 3 19.5H21C21.5523 19.5 22 19.0523 22 18.5V17.5C22 16.9477 21.5523 16.5 21 16.5H3Z"
-                      fill="#000000"
-                    ></path>
-                  </svg>
-                </button>
-              </a>
-              <input
-                placeholder="Search Currency"
-                className="mx-auto w-[75%] flex bg-transparent h-full focus:outline-none focus:border-white justify-center"
-              ></input>
-              <img src="static/lupa.png" className="w-6 h-6 mr-3"></img>
-            </div>
-          </form> */}
         </div>
       </div>
 
@@ -479,7 +447,7 @@ const Grafico = () => {
       {isFormOpen && (
         <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
           <form
-            className="bg-white p-6 rounded-lg shadow-lg space-y-4"
+            className="bg-white p-6 rounded-lg shadow-lg space-y-6 w-[500px]"
             onSubmit={handleFormSubmit}
           >
             <h3 className="text-xl font-bold">Add</h3>
@@ -512,6 +480,8 @@ const Grafico = () => {
               <option value="avalanche-2">Avalanche (AVAX)</option>
             </select>
 
+
+              <p className="flex items-center justify-center"> → </p>
             <select
               className="border rounded p-2 w-full"
               value={formData.moeda2}

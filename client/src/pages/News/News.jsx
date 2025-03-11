@@ -45,7 +45,7 @@ function Noticias(){
           setNews(response.data.noticias);
           setTotalPages(response.data.totalPages);
         } catch (error) {
-          console.error("Erro ao buscar notícias:", error);
+          console.error("Error", error);
         }
       };
   
