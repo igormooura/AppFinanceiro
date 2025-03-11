@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Sidebar from "../../components/SideBar/Sidebar.jsx";
 import axios from "axios"; 
-import useAuth from "../../hooks/useAuth.js";
+import useAuth from "../../hooks/useAuth.jsx";
 import { useParams } from "react-router-dom";
 
 function Profile() {

@@ -39,7 +39,7 @@ const LoginPage = () => {
         } else {
           localStorage.removeItem("rememberMe");
         }
-        navigate(`/grafico`);
+        navigate(`/graph`);
         
       } else {
         setError("Erro ao fazer login. Tente novamente.");
@@ -107,7 +107,7 @@ const LoginPage = () => {
             </div>
   
             <div className="ml-auto justify-end text-end text-sm flex mr-1">
-              <a href="/esquecer" className="text-blue-600 font-semibold">
+              <a href="/forgot" className="text-blue-600 font-semibold">
                 Forgot password?
               </a>
             </div>

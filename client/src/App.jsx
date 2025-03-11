@@ -29,12 +29,12 @@ function App() {
             
             <Route path="/" element={<Login/>}/>
             <Route path="/register" element={<Register />} />
-            <Route path="/esquecer" element={<Forgot />} />
-            <Route path="/grafico" element={<Graph />} />
-            <Route path="/sobrenos" element={<AboutUs />} />
-            <Route path="/noticias" element={<News/>}/>
-            <Route path="/perfil" element={<Profile/>} />
-            <Route path="/calculadora" element={<Calculator/>}/>
+            <Route path="/forgot" element={<Forgot />} />
+            <Route path="/graph" element={<Graph />} />
+            <Route path="/aboutus" element={<AboutUs />} />
+            <Route path="/news" element={<News/>}/>
+            <Route path="/profile" element={<Profile/>} />
+            <Route path="/calculator" element={<Calculator/>}/>
           </Routes>
         </BrowserRouter>
       );

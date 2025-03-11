@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import useAuth from "../../hooks/useAuth.js";
+import useAuth from "../../hooks/useAuth.jsx";
 import Sidebar from "../../components/SideBar/Sidebar.jsx";
 import Title from "../../components/Title/Title.jsx";
 import PageName from "../../components/PageName/PageName.jsx";
