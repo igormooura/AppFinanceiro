@@ -26,11 +26,12 @@ const UserSchema = new mongoose.Schema({
 
 
 UserSchema.path("graficos").validate(function (value) {
-  return value.length <= 3;
-}, "não é permitido mais que 3 gráficos.");
+  console.log(value.length);
+  return value.length <= 4;
+});
 
 UserSchema.path("historicoConversoes").validate(function (value) {
   return value.length <= 5;
-}, "não é permitido mais de 5 conversões");
+});
 
 module.exports = mongoose.model("Usuario", UserSchema);

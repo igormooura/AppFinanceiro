@@ -22,8 +22,8 @@ exports.createGrafico = async (req, res) => {
       return res.status(404).json({ error: "Usuário não encontrado." });
     }
 
-    if (usuario.graficos.length >= 3) {
-      return res.status(400).json({ error: "Usuário já possui o máximo de 3 gráficos." });
+    if (usuario.graficos.length >= 4) {
+      return res.status(400).json({ error: "Usuário já possui o máximo de 4 gráficos." });
     }
 
     const graficoSalvo = new Grafico({

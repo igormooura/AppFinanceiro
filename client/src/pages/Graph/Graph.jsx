@@ -199,12 +199,11 @@ const Grafico = () => {
       return;
     }
   
-    console.log("Form Data:", formData); // Log form data
-    console.log("User ID:", userId); // Log user ID
+
   
     const payload = {
       ...formData,
-      value: Number(formData.value), // Convert value to a number
+      value: Number(formData.value), 
     };
   
     try {
@@ -222,7 +221,7 @@ const Grafico = () => {
       setFormData({ moeda1: "", moeda2: "", value: "" });
       setIsFormOpen(false);
     } catch (error) {
-      console.error("Error submitting form:", error.response?.data); // Log server response
+      console.error("Error submitting form:", error.response?.data); 
       alert("Erro ao adicionar gráfico.");
     }
   };
