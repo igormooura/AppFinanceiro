@@ -10,7 +10,7 @@ function useAuth() {
   useEffect(() => {
     if (!token) {
       navigate("/");
-      alert("Logue para acessar.");
+      alert("Please log in to access.");
       return;
     }
 
@@ -24,10 +24,10 @@ function useAuth() {
           localStorage.removeItem("token");
           setToken("");  
           navigate("/");
-          alert("Sessão expirada. Logue novamente.");
+          alert("Session expired. Please log in again.");
           return;
         } else if (!response.ok) {
-          throw new Error("Erro ao verificar autenticação.");
+          throw new Error("Error verifying authentication.");
         }
         return response.json();
       })
@@ -37,21 +37,19 @@ function useAuth() {
         setToken(token); 
       })
       .catch((error) => {
-        console.error("Erro:", error);
+        console.error("Error:", error);
       });
   }, [navigate, token]);
 
   const logout = () => {
-    localStorage.removeItem("token"); // Remove o token do localStorage
-    setToken(""); // Limpa o token no estado
-    setIsAuthenticated(false); // Define o usuário como não autenticado
-    setUserInfo(null); // Limpa as informações do usuário
-    navigate("/"); // Redireciona para a página inicial
+    localStorage.removeItem("token");
+    setToken("");
+    setIsAuthenticated(false);
+    setUserInfo(null);
+    navigate("/");
   };
 
   return { isAuthenticated, userInfo, token, logout };  
 }
-
-
 
 export default useAuth;
