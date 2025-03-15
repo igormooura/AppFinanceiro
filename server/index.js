@@ -6,8 +6,6 @@ const cors = require("cors");
 
 const calculadoraRoutes = require("./Routes/CalculadoraRoutes.js");
 const graficoRoutes = require("./Routes/GraficoRoutes.js");
-const noticiaRoutes = require("./Routes/NoticiaRoutes.js");
-const sobreNosRoutes = require("./Routes/SobreNosRoutes.js");
 const usuarioRoutes = require("./Routes/UsuarioRoutes.js");
 const authPerfilRoutes = require("./Routes/AuthPerfilRoutes.js");
 
@@ -30,9 +28,7 @@ mongoose.connect('mongodb+srv://' + process.env.MONGO_USERNAME + ':' + process.e
   });
 
 app.use("/calculadora", calculadoraRoutes); 
-app.use("/grafico", graficoRoutes);  
-app.use("/noticias", noticiaRoutes);  
-app.use("/sobrenos", sobreNosRoutes); 
+app.use("/grafico", graficoRoutes);   
 app.use("/usuarios", usuarioRoutes);  
 app.use("/auth", authPerfilRoutes); 
 
