@@ -37,7 +37,7 @@ function Profile() {
     if (userId) {
       const fetchUserData = async () => {
         try {
-          const userIdToFetch = id || userId;
+          const userIdToFetch = id || userId; 
           if (!userIdToFetch) return;
 
           const response = await axios.get(
@@ -45,7 +45,7 @@ function Profile() {
           );
           const userData = response.data;
 
-          setUsuarioId(userData._id);
+          setUsuarioId(userData._id); 
           setNome(userData.nome);
           setSobrenome(userData.sobrenome);
           setTelefone(userData.telefone);
@@ -61,6 +61,10 @@ function Profile() {
       fetchUserData();
     }
   }, [id, userId]);
+
+// userId is provided by the useAuth hook for authentication purposes.
+// usuarioId is provided by the response data of this hook.
+// Both IDs refer to the same user but are used in different contexts.
 
   const handleGeneroChange = (event) => setGenero(event.target.value);
 
@@ -94,12 +98,9 @@ function Profile() {
         alert("ID do usuário não encontrado.");
         return;
       }
-      console.log(user);
-      console.log(userId);
-      console.log(usuarioId);
 
       const response = await axios.put(
-        `${process.env.REACT_APP_API_LINK}/usuarios/perfil/${userId}`,
+        `${process.env.REACT_APP_API_LINK}/usuarios/perfil/${userId}`, 
         updatedProfile
       );
       if (response.status === 200) {
