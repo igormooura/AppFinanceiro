@@ -3,7 +3,11 @@ import axios from "axios";
 
 const DeleteButton = ({ userIdToFetch }) => {
   const handleDelete = async () => {
-    if (window.confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
+    if (
+      window.confirm(
+        "Are you sure you want to delete your account? This action cannot be undone."
+      )
+    ) {
       try {
         const response = await axios.delete(
           `${process.env.REACT_APP_API_LINK}/usuarios/perfil/${userIdToFetch}`
@@ -14,8 +18,12 @@ const DeleteButton = ({ userIdToFetch }) => {
           window.location.href = "/";
         }
       } catch (error) {
-        console.error("Erro ao deletar conta:", error);
-        alert(error.response?.data?.message || error.message || "Erro ao deletar conta. Tente novamente.");
+        console.error("Error deleting account:", error);
+        alert(
+          error.response?.data?.message ||
+            error.message ||
+            "Error deleting account. Try again."
+        );
       }
     }
   };
