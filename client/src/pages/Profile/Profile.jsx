@@ -174,7 +174,7 @@ function Profile() {
           <ProfileEmail email={email} editMode={editMode} setEmail={setEmail} />
 
           <div className="mt-6">
-            <DeleteButton userIdToFetch={usuarioId} />
+            <DeleteButton userIdToFetch={usuarioId} userId={userId} />
           </div>
         </div>
       </div>

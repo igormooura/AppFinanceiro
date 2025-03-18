@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 
-const DeleteButton = ({ userIdToFetch }) => {
+const DeleteButton = ({ userIdToFetch, userId }) => {
   const handleDelete = async () => {
     if (
       window.confirm(
@@ -13,7 +13,11 @@ const DeleteButton = ({ userIdToFetch }) => {
           `${process.env.REACT_APP_API_LINK}/usuarios/perfil/${userIdToFetch}`
         );
 
-        if (response.status === 200) {
+        const response2 = await axios.delete(
+          `${process.env.REACT_APP_API_LINK}/auth/perfil/${userId}`
+        );
+
+        if (response.status === 200 &&  response2.status === 200) {
           alert("Account deleted successfully!");
           window.location.href = "/";
         }
