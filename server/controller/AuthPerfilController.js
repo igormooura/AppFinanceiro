@@ -128,3 +128,24 @@ exports.forgotPassword = async (req, res) => {
     res.status(500).json({ error: "Erro interno do servidor." });
   }
 };
+
+exports.deleteAuthPerfil = async (req, res) => {
+  try {
+    const { id } = req.params;
+    if (!id) {
+      return res.status(400).json({ error: "ID do perfil de autenticação não fornecido." });
+    }
+
+    const authPerfilDeletado = await AuthPerfil.findByIdAndDelete(id);
+    if (!authPerfilDeletado) {
+      return res.status(404).json({ error: "Perfil de autenticação não encontrado." });
+    }
+
+    await Usuario.findByIdAndDelete(authPerfilDeletado.usuarioId);
+
+    res.status(200).json({ message: "Perfil de autenticação e usuário associado deletados com sucesso." });
+  } catch (error) {
+    console.error("Erro ao deletar perfil de autenticação:", error);
+    res.status(500).json({ error: "Erro interno do servidor." });
+  }
+};

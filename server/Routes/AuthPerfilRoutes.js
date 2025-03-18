@@ -6,7 +6,8 @@ const authMiddleware = require("../middleware/AuthMiddleware.js")
 const router = express.Router();
 router.post("/login", authPerfilController.loginUser); 
 router.post("/cadastrar", authPerfilController.createUser); 
-router.post("/esquecersenha", authPerfilController.forgotPassword); 
+router.post("/esquecersenha", authPerfilController.forgotPassword);
+router.delete("/perfil/:id", authPerfilController.deleteAuthPerfil);
 
 router.get("/verify-auth", authMiddleware, (req, res) => {
     res.status(200).json({ 
