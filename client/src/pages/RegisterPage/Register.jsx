@@ -88,8 +88,8 @@ const Register = () => {
                             className="w-full px-4 py-3 rounded-lg bg-white text-gray-800 border-2 border-gray-300 shadow-2xl"
                         >
                             <option value="">Select</option>
-                            <option value="Masculino">Male</option>
-                            <option value="Feminino">Female</option>
+                            <option value="Male">Male</option>
+                            <option value="female">Female</option>
                             <option value="Outro">Other</option>
                         </select>
                     </div>
@@ -124,7 +124,7 @@ const Register = () => {
                         {error && <p className="text-sm text-center text-red-500 drop-shadow">{error}</p>}
                         {isRedirecting && (
                             <div className="text-sm text-center text-yellow-500 drop-shadow">
-                                Redirecionando para o login...
+                                Redirecting to login...
                             </div>
                         )}
                     </div>

@@ -1,5 +1,6 @@
 import React from "react";
 
+
 const ProfileForm = ({
   nome,
   sobrenome,
@@ -89,8 +90,8 @@ const ProfileForm = ({
           disabled={!editMode}
         >
           <option value="">Select...</option>
-          <option value="masculino">Male</option>
-          <option value="feminino">Female</option>
+          <option value="Male">Male</option>
+          <option value="female">Female</option>
           <option value="outro">Others</option>
         </select>
       </div>

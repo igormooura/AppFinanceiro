@@ -68,6 +68,8 @@ function Profile() {
 
   const handleGeneroChange = (event) => setGenero(event.target.value);
 
+  
+
   const handleTelefoneChange = (e) => {
     let value = e.target.value.replace(/\D/g, "");
     if (value.length > 10) {
@@ -151,7 +153,7 @@ function Profile() {
                   : "bg-blue-500 font-bold hover:bg-blue-600 text-white hover:scale-105 duration-300"
               }`}
             >
-              {editMode ? "Salvar" : "Editar"}
+              {editMode ? "Save" : "Edit"}
             </button>
           </div>
 

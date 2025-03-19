@@ -26,7 +26,6 @@ const UserSchema = new mongoose.Schema({
 
 
 UserSchema.path("graficos").validate(function (value) {
-  console.log(value.length);
   return value.length <= 4;
 });
 
