@@ -8,21 +8,21 @@ exports.realizarConversao = async (req, res) => {
 
   if (valor === undefined || typeof valor !== "number" || !moedaOrigem || !moedaDestino || !userId) {
     return res.status(400).json({
-      error: "Parâmetros inválidos. Informe valor, moedaOrigem, moedaDestino e userId.",
+      error: "Invalid parameters. Provide value, source currency, destination currency, and userId.",
     });
   }
 
   try {
     const usuarioAuth = await Auth.findById(userId);
     if (!usuarioAuth) {
-      return res.status(404).json({ error: "Usuário não encontrado." });
+      return res.status(404).json({ error: "User not found." });
     }
 
     const response = await axios.get(`https://api.exchangerate-api.com/v4/latest/${moedaOrigem}`);
     const taxas = response.data.rates;
 
     if (!taxas[moedaDestino]) {
-      return res.status(400).json({ error: "Conversão não suportada entre essas moedas." });
+      return res.status(400).json({ error: "Conversion not supported between these currencies." });
     }
 
     const taxa = taxas[moedaDestino];
@@ -38,8 +38,7 @@ exports.realizarConversao = async (req, res) => {
     await novaConversao.save();
     
   } catch (error) {
-    console.error("Erro ao realizar conversão:", error);
-    res.status(500).json({ error: "Erro ao realizar conversão." });
+    res.status(500).json({ error: "Error performing conversion." });
   }
 };
 
@@ -50,8 +49,8 @@ exports.getHistoricoByUser = async (req, res) => {
     const historico = await Conversao.find({ user_id: userId });
     res.status(200).json(historico);
   } catch (error) {
-    console.error("Erro ao buscar histórico de conversões:", error);
-    res.status(500).json({ error: "Erro ao buscar histórico de conversões." });
+    console.error("Error fetching conversion history:", error);
+    res.status(500).json({ error: "Error fetching conversion history." });
   }
 };
 
@@ -60,7 +59,7 @@ exports.adicionarHistorico = async (req, res) => {
 
   if (valor === undefined || typeof valor !== "number" || !moedaOrigem || !moedaDestino || !userId) {
     return res.status(400).json({
-      error: "Parâmetros inválidos. Informe valor, moedaOrigem, moedaDestino e userId.",
+      error: "Invalid parameters. Provide value, source currency, destination currency, and userId.",
     });
   }
 
@@ -69,7 +68,7 @@ exports.adicionarHistorico = async (req, res) => {
     const taxas = response.data.rates;
 
     if (!taxas[moedaDestino]) {
-      return res.status(400).json({ error: "Conversão não suportada entre essas moedas." });
+      return res.status(400).json({ error: "Conversion not supported between these currencies." });
     }
 
     const taxa = taxas[moedaDestino];
@@ -86,7 +85,6 @@ exports.adicionarHistorico = async (req, res) => {
 
     res.status(201).json(novaConversao);
   } catch (error) {
-    console.error("Erro ao adicionar histórico:", error);
-    res.status(500).json({ error: "Erro ao adicionar histórico." });
+    res.status(500).json({ error: "Error adding history." });
   }
 };

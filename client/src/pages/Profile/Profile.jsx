@@ -95,7 +95,7 @@ function Profile() {
 
     try {
       if (!usuarioId) {
-        alert("ID do usuário não encontrado.");
+        alert("User id not founded.");
         return;
       }
 
@@ -104,7 +104,7 @@ function Profile() {
         updatedProfile
       );
       if (response.status === 200) {
-        alert("Perfil atualizado com sucesso!");
+        alert("Profile successfully updated!");
         setEditMode(false);
       }
     } catch (error) {
@@ -112,7 +112,7 @@ function Profile() {
       alert(
         error.response?.data?.message ||
           error.message ||
-          "Erro ao salvar perfil. Tente novamente."
+          "Error saving profile."
       );
     }
   };

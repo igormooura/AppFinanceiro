@@ -31,7 +31,7 @@ const Register = () => {
                 email,
                 senha: password,
             });
-            setSuccess("Conta cadastrada com sucesso! 🎉");
+            setSuccess("Account successfully registered! 🎉");
             setError(""); 
             setIsRedirecting(true);
             setTimeout(() => {
@@ -87,10 +87,10 @@ const Register = () => {
                             onChange={(e) => setGenero(e.target.value)}
                             className="w-full px-4 py-3 rounded-lg bg-white text-gray-800 border-2 border-gray-300 shadow-2xl"
                         >
-                            <option value="">Selecione</option>
-                            <option value="Masculino">Masculino</option>
-                            <option value="Feminino">Feminino</option>
-                            <option value="Outro">Outro</option>
+                            <option value="">Select</option>
+                            <option value="Masculino">Male</option>
+                            <option value="Feminino">Female</option>
+                            <option value="Outro">Other</option>
                         </select>
                     </div>
 
@@ -101,7 +101,7 @@ const Register = () => {
                             value={country}
                             onChange={(e) => setCountry(e.target.value)}
                             className="w-full px-4 py-3 rounded-lg bg-white text-gray-800 border-2 border-gray-300 shadow-2xl"
-                            placeholder="Ex: Brasil"
+                            placeholder="Ex: Brazil"
                         />
                     </div>
 

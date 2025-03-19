@@ -9,21 +9,20 @@ exports.createGrafico = async (req, res) => {
 
     const userId = req.params.userId.trim();
     if (!mongoose.Types.ObjectId.isValid(userId)) {
-      return res.status(400).json({ error: "ID de usuário inválido." });
+      return res.status(400).json({ error: "Invalid user ID." });
     }
     if (!moeda1 || value === undefined || !moeda2 || !userId) {
-      return res.status(400).json({ error: "Campos obrigatórios não preenchidos." });
+      return res.status(400).json({ error: "Required fields not filled." });
     }
 
-
-    const usuarioAuth = await Auth.findById(userId);;
+    const usuarioAuth = await Auth.findById(userId);
     const usuario = await Usuario.findById(usuarioAuth.usuarioId);
     if (!usuario) {
-      return res.status(404).json({ error: "Usuário não encontrado." });
+      return res.status(404).json({ error: "User not found." });
     }
 
     if (usuario.graficos.length >= 4) {
-      return res.status(400).json({ error: "Usuário já possui o máximo de 4 gráficos." });
+      return res.status(400).json({ error: "User already has the maximum of 4 charts." });
     }
 
     const graficoSalvo = new Grafico({
@@ -38,21 +37,20 @@ exports.createGrafico = async (req, res) => {
 
     res.status(201).json(graficoSalvo);
   } catch (error) {
-    console.error("Error:", error); 
-    res.status(500).json({ error: "Erro ao criar gráfico." });
+    console.error("Error:", error);
+    res.status(500).json({ error: "Error creating chart." });
   }
 };
 
-
 exports.getGraficoByUser = async (req, res) => {
-  const user_id_old = req.params.userId; 
+  const user_id_old = req.params.userId;
   const usuarioAuth = await Auth.findById(user_id_old);
   const user_id = usuarioAuth.usuarioId;
   try {
-    const graficoList = await Grafico.find({ user_id }); 
-    res.status(200).json({ user_id, graficoList });  
+    const graficoList = await Grafico.find({ user_id });
+    res.status(200).json({ user_id, graficoList });
   } catch (error) {
-    res.status(500).json({ message: 'Error fetching grafico', error });
+    res.status(500).json({ message: 'Error fetching chart', error });
   }
 };
 
@@ -62,14 +60,14 @@ exports.deleteGrafico = async (req, res) => {
 
     const usuarioAuth = await Auth.findById(req.params.userId);
     if (!usuarioAuth) {
-      return res.status(404).json({ error: "Usuário não encontrado." });
+      return res.status(404).json({ error: "User not found." });
     }
 
     const userId = usuarioAuth.usuarioId;
- 
+
     const graficoDeletado = await Grafico.findOne({ _id: id, user_id: userId });
     if (!graficoDeletado) {
-      return res.status(404).json({ error: "Gráfico não encontrado ou não pertence ao usuário." });
+      return res.status(404).json({ error: "Chart not found or does not belong to the user." });
     }
 
     await Grafico.findByIdAndDelete(id);
@@ -78,13 +76,12 @@ exports.deleteGrafico = async (req, res) => {
       $pull: { graficos: id },
     });
 
-    res.status(200).json({ message: "Gráfico deletado com sucesso." });
+    res.status(200).json({ message: "Chart successfully deleted." });
   } catch (error) {
     console.error("Error:", error);
-    res.status(500).json({ error: "Erro ao deletar gráfico." });
+    res.status(500).json({ error: "Error deleting chart." });
   }
 };
-
 
 exports.updateGrafico = async (req, res) => {
   try {
@@ -93,27 +90,26 @@ exports.updateGrafico = async (req, res) => {
     const graficoAtualizado = await Grafico.findByIdAndUpdate(
       id,
       { moeda, valor, variavel },
-      { new: true } 
+      { new: true }
     );
     if (!graficoAtualizado) {
-      return res.status(404).json({ error: "Gráfico não encontrado." });
+      return res.status(404).json({ error: "Chart not found." });
     }
     res.status(200).json(graficoAtualizado);
   } catch (error) {
-    res.status(500).json({ error: "Erro ao atualizar gráfico." });
+    res.status(500).json({ error: "Error updating chart." });
   }
 };
-
 
 exports.getGraficoByMoeda = async (req, res) => {
   try {
     const { moeda } = req.params;
-    const grafico = await Grafico.findOne({ moeda: moeda.toUpperCase() }); 
+    const grafico = await Grafico.findOne({ moeda: moeda.toUpperCase() });
     if (!grafico) {
-      return res.status(404).json({ error: "Gráfico não encontrado para essa moeda." });
+      return res.status(404).json({ error: "Chart not found for this currency." });
     }
     res.status(200).json(grafico);
   } catch (error) {
-    res.status(500).json({ error: "Erro ao buscar gráfico." });
+    res.status(500).json({ error: "Error fetching chart." });
   }
 };

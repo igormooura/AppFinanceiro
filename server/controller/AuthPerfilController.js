@@ -23,7 +23,7 @@ exports.createUser = async (req, res) => {
 
     const usuarioExistente = await AuthPerfil.findOne({ email });
     if (usuarioExistente) {
-      return res.status(400).json({ error: "E-mail já cadastrado." });
+      return res.status(400).json({ error: "E-mail already registered." });
     }
 
     const novoUsuario = new Usuario({
@@ -54,8 +54,8 @@ exports.createUser = async (req, res) => {
     await session.abortTransaction();
     session.endSession();
 
-    console.error("Erro ao criar usuário:", error);
-    res.status(500).json({ error: "Erro interno do servidor." });
+    console.error("Error creating user: ", error);
+    res.status(500).json({ error: "Internal error." });
   }
 };
 
@@ -66,17 +66,17 @@ exports.loginUser = async (req, res) => {
     if (!email || !senha) {
       return res
         .status(400)
-        .json({ error: "Campos obrigatórios não preenchidos." });
+        .json({ error: "Required fields not filled." });
     }
 
     const usuario = await AuthPerfil.findOne({ email });
     if (!usuario) {
-      return res.status(404).json({ error: "Usuário não encontrado." });
+      return res.status(404).json({ error: "User not found." });
     }
 
     const senhaCorreta = await bcrypt.compare(senha, usuario.senha);
     if (!senhaCorreta) {
-      return res.status(401).json({ error: "Senha incorreta." });
+      return res.status(401).json({ error: "Incorrect password." });
     }
 
     // token JWT
@@ -87,7 +87,7 @@ exports.loginUser = async (req, res) => {
     );
 
     res.status(200).json({
-      message: "Login realizado com sucesso.",
+      message: "Login successful",
       token,
       usuario: {
         id: usuario._id,
@@ -95,8 +95,8 @@ exports.loginUser = async (req, res) => {
       },
     });
   } catch (error) {
-    console.error("Erro ao realizar login:", error);
-    res.status(500).json({ error: "Erro interno do servidor." });
+    console.error("Error logging in:", error);
+    res.status(500).json({ error: "Internal server error." });
   }
 };
 
@@ -105,12 +105,12 @@ exports.forgotPassword = async (req, res) => {
     const { email } = req.body;
 
     if (!email) {
-      return res.status(400).json({ error: "E-mail não fornecido." });
+      return res.status(400).json({ error: "Email not provided." });
     }
 
     const usuario = await AuthPerfil.findOne({ email });
     if (!usuario) {
-      return res.status(404).json({ error: "Usuário não encontrado." });
+      return res.status(404).json({ error: "User not found." });
     }
 
     const novaSenha = Math.random().toString(36).slice(-8); 
@@ -120,12 +120,12 @@ exports.forgotPassword = async (req, res) => {
     await usuario.save();
 
     res.status(200).json({
-      message: "Senha redefinida com sucesso. Confira sua nova senha.",
+      message: "Password successfully reset. Check your new password.",
       novaSenha,
     });
   } catch (error) {
-    console.error("Erro ao redefinir senha:", error);
-    res.status(500).json({ error: "Erro interno do servidor." });
+    console.error("Error resetting password:", error);
+    res.status(500).json({ error: "Internal server error." });
   }
 };
 
@@ -133,19 +133,18 @@ exports.deleteAuthPerfil = async (req, res) => {
   try {
     const { id } = req.params;
     if (!id) {
-      return res.status(400).json({ error: "ID do perfil de autenticação não fornecido." });
+      return res.status(400).json({ error: "Authentication profile ID not provided." });
     }
 
     const authPerfilDeletado = await AuthPerfil.findByIdAndDelete(id);
     if (!authPerfilDeletado) {
-      return res.status(404).json({ error: "Perfil de autenticação não encontrado." });
+      return res.status(404).json({ error: "Authentication profile not found." });
     }
 
     await Usuario.findByIdAndDelete(authPerfilDeletado.usuarioId);
 
-    res.status(200).json({ message: "Perfil de autenticação e usuário associado deletados com sucesso." });
+    res.status(200).json({ message: "Authentication profile and associated user successfully deleted." });
   } catch (error) {
-    console.error("Erro ao deletar perfil de autenticação:", error);
-    res.status(500).json({ error: "Erro interno do servidor." });
+    res.status(500).json({ error: "Internal server error." });
   }
 };
