@@ -27,7 +27,6 @@ const Sidebar = () => {
 
   const handleLogout = () => {
     logout(); 
-    alert("Você saiu da sua conta."); 
   };
 
   return (
